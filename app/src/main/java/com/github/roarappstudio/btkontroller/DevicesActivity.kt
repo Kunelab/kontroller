@@ -64,8 +64,11 @@ class DevicesActivity : Activity() {
             return
         }
 
+        // appRegistered, not btHid != null: the proxy can be up while the registration never
+        // completed, and in that state the old check claimed everything was fine while every
+        // tap did nothing.
         hint.setText(
-            if (BluetoothController.btHid == null) R.string.devices_not_registered
+            if (!BluetoothController.appRegistered) R.string.devices_not_registered
             else R.string.devices_hint
         )
 
@@ -117,7 +120,7 @@ class DevicesActivity : Activity() {
 
         labels.setOnClickListener {
             val hid = BluetoothController.btHid
-            if (hid == null) {
+            if (hid == null || !BluetoothController.appRegistered) {
                 Toast.makeText(this, R.string.devices_not_registered, Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
@@ -140,10 +143,13 @@ class DevicesActivity : Activity() {
                         labels.postDelayed({ refresh() }, REFRESH_DELAY_MS)
                     }
                     .show()
-            } else {
-                hid.connect(device)
+            } else if (BluetoothController.connectTo(device)) {
                 // The state change arrives asynchronously; show it once it has settled.
                 labels.postDelayed({ refresh() }, REFRESH_DELAY_MS)
+            } else {
+                // The return value used to be discarded, so a refused connect looked exactly
+                // like a tap that had not registered.
+                Toast.makeText(this, R.string.devices_connect_failed, Toast.LENGTH_LONG).show()
             }
         }
 

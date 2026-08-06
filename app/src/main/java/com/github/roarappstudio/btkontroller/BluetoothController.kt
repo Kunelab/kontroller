@@ -9,6 +9,8 @@ import android.bluetooth.BluetoothHidDeviceAppSdpSettings
 import android.bluetooth.BluetoothManager
 import android.bluetooth.BluetoothProfile
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import com.github.roarappstudio.btkontroller.reports.FeatureReport
 
@@ -54,11 +56,44 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
      */
     var preferredHost: String? = null
 
+    /**
+     * True once the stack has confirmed the HID app is registered.
+     *
+     * Not the same as `btHid != null`, which only means the profile proxy arrived.
+     * `registerApp()` can be accepted and then never complete -- see [registrationWatchdog]
+     * -- and in that state the app looks ready while nothing works.
+     */
+    @Volatile
+    var appRegistered = false
+        private set
+
     private val owners = mutableSetOf<Owner>()
+
+    private val mainHandler = Handler(Looper.getMainLooper())
 
     private var deviceListener: ((BluetoothHidDevice, BluetoothDevice) -> Unit)? = null
     private var disconnectListener: (() -> Unit)? = null
     private var registeredListener: (() -> Unit)? = null
+    private var registrationFailedListener: (() -> Unit)? = null
+
+    /**
+     * Fires when [BluetoothHidDevice.registerApp] was accepted but the stack never called
+     * back to say the app is registered.
+     *
+     * Android allows one registered HID app at a time, and if a process holding a
+     * registration dies without unregistering -- a crash, a force-stop, an uninstall
+     * mid-session -- the stack can keep the dead one. `registerApp()` then returns
+     * successfully, `onAppStatusChanged` never arrives, and every `connect()` silently does
+     * nothing. Nothing distinguishes it from a working app that simply has no host, which is
+     * why it has to be detected explicitly rather than left to the user to guess.
+     *
+     * Only a Bluetooth restart clears it.
+     */
+    private val registrationWatchdog = Runnable {
+        if (appRegistered) return@Runnable
+        Log.e(TAG, "registerApp() was accepted but never completed -- stale registration?")
+        registrationFailedListener?.invoke()
+    }
 
     /**
      * Registers [owner] as needing the HID profile and acquires the proxy if it is not up
@@ -98,6 +133,7 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
         deviceListener = null
         disconnectListener = null
         registeredListener = null
+        registrationFailedListener = null
     }
 
     private fun init(ctx: Context): Boolean {
@@ -120,12 +156,14 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
     }
 
     private fun teardown() {
+        mainHandler.removeCallbacks(registrationWatchdog)
         btHid?.let { hid ->
             hid.unregisterApp()
             btAdapter?.closeProfileProxy(BluetoothProfile.HID_DEVICE, hid)
         }
         btHid = null
         hostDevice = null
+        appRegistered = false
         clearListeners()
     }
 
@@ -156,10 +194,9 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
      * no host to reconnect to.
      */
     fun reconnect(): Boolean {
-        val hid = btHid ?: return false
         val target = hostDevice ?: lastHost ?: return false
         Log.i(TAG, "Reconnecting to $target")
-        return hid.connect(target)
+        return connectTo(target)
     }
 
     fun getDisconnector(callback: () -> Unit) {
@@ -169,6 +206,32 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
     /** Fired once the HID app is registered, i.e. once it is worth becoming discoverable. */
     fun onRegistered(callback: () -> Unit) {
         registeredListener = callback
+    }
+
+    /** Fired when registration was accepted but never completed. See [registrationWatchdog]. */
+    fun onRegistrationFailed(callback: () -> Unit) {
+        registrationFailedListener = callback
+        // A listener attached after the deadline has already passed still needs telling.
+        if (btHid != null && !appRegistered) {
+            mainHandler.removeCallbacks(registrationWatchdog)
+            mainHandler.postDelayed(registrationWatchdog, REGISTRATION_TIMEOUT_MS)
+        }
+    }
+
+    /**
+     * Opens the HID link to [device].
+     *
+     * Returns false when the stack refuses, which callers must surface: a silent no-op here
+     * is indistinguishable from a working app that is simply not connected yet, and that is
+     * precisely the confusion a wedged registration causes.
+     */
+    fun connectTo(device: BluetoothDevice): Boolean {
+        val hid = btHid ?: return false
+        if (!appRegistered) {
+            Log.e(TAG, "connect() requested before the HID app is registered")
+            return false
+        }
+        return hid.connect(device)
     }
 
     /*****************************************************/
@@ -193,6 +256,11 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
             return
         }
         this.btHid = btHid
+        // registerApp() returning true only means the call was accepted. Give the stack a
+        // few seconds to actually confirm it, then assume it is wedged.
+        mainHandler.removeCallbacks(registrationWatchdog)
+        mainHandler.postDelayed(registrationWatchdog, REGISTRATION_TIMEOUT_MS)
+
         // The executor runs inline, so every callback below arrives on a Bluetooth binder
         // thread. That is deliberate: onGetReport/onSetReport have to answer within the
         // HIDP handshake timeout and must not queue behind whatever the UI thread is doing.
@@ -258,10 +326,12 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
 
     override fun onAppStatusChanged(pluggedDevice: BluetoothDevice?, registered: Boolean) {
         super.onAppStatusChanged(pluggedDevice, registered)
+        appRegistered = registered
         if (!registered) {
             Log.w(TAG, "HID app registration was lost")
             return
         }
+        mainHandler.removeCallbacks(registrationWatchdog)
 
         registeredListener?.invoke()
 
@@ -307,6 +377,12 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
             DescriptorCollection.MOUSE_KEYBOARD_COMBO
         )
     }
+
+    /**
+     * How long the stack gets to confirm the registration. It normally answers in a few
+     * milliseconds; a wedged one never answers at all.
+     */
+    private const val REGISTRATION_TIMEOUT_MS = 4000L
 
     private val qosOut by lazy {
         BluetoothHidDeviceAppQosSettings(
