@@ -13,7 +13,6 @@
     <string name="action_devices">الأجهزة</string>
     <string name="action_send_clipboard">إرسال الحافظة</string>
 
-    <string name="status_connected">التطبيق متصل عبر البلوتوث</string>
     <string name="status_not_connected">التطبيق غير متصل عبر البلوتوث</string>
     <string name="action_ble_status_tool_tip">التطبيق غير متصل عبر البلوتوث</string>
 
@@ -43,7 +42,6 @@
 
     <string name="clipboard_empty">الحافظة فارغة.</string>
     <string name="clipboard_sending">جارٍ كتابة %1$d حرفًا…</string>
-    <string name="clipboard_truncated">الحافظة طويلة — سيتم إرسال أول %1$d حرف.</string>
 
     <string name="settings_title">الإعدادات</string>
     <string name="settings_header_pointer">المؤشر</string>

@@ -24,6 +24,7 @@ class HelpActivity : Activity() {
         setTheme(ThemeSupport.appStyle(this))
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_help)
+        SystemBars.applyTo(this)
 
         if (!firstRun) actionBar?.setDisplayHomeAsUpEnabled(true)
 

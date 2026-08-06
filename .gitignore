@@ -1,6 +1,12 @@
 *.iml
 .gradle
 /local.properties
+
+# Release signing. keystore.properties.example is the checked-in template.
+/keystore.properties
+*.jks
+*.keystore
+
 /.idea/caches
 /.idea/libraries
 /.idea/modules.xml

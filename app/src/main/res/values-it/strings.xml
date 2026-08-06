@@ -11,7 +11,6 @@
     <string name="action_tool_tip">Tasti modificatori: (N) rilascia Ctrl/Alt/Maiusc dopo ogni battuta, (P) li tiene premuti finché non torni indietro</string>
     <string name="action_disconnect">Disconnetti</string>
 
-    <string name="status_connected">App connessa via Bluetooth</string>
     <string name="status_not_connected">App non connessa via Bluetooth</string>
     <string name="action_ble_status_tool_tip">App non connessa via Bluetooth</string>
 
@@ -106,7 +105,6 @@
 
     <string name="clipboard_empty">Gli appunti sono vuoti.</string>
     <string name="clipboard_sending">Digitazione di %1$d caratteri…</string>
-    <string name="clipboard_truncated">Gli appunti sono lunghi: verranno inviati i primi %1$d caratteri.</string>
     <string name="error_not_connected">Non ancora connesso a un computer.</string>
 
     <string name="settings_header_remote">Telecomando</string>

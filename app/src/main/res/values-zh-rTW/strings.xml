@@ -13,7 +13,6 @@
     <string name="action_devices">裝置</string>
     <string name="action_send_clipboard">傳送剪貼簿</string>
 
-    <string name="status_connected">已透過藍牙連線</string>
     <string name="status_not_connected">未透過藍牙連線</string>
     <string name="action_ble_status_tool_tip">未透過藍牙連線</string>
 
@@ -43,7 +42,6 @@
 
     <string name="clipboard_empty">剪貼簿是空的。</string>
     <string name="clipboard_sending">正在輸入 %1$d 個字元…</string>
-    <string name="clipboard_truncated">剪貼簿內容較長，僅傳送前 %1$d 個字元。</string>
 
     <string name="settings_title">設定</string>
     <string name="settings_header_pointer">指標</string>

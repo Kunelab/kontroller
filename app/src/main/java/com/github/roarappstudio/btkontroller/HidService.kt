@@ -11,6 +11,8 @@ import android.content.pm.ServiceInfo
 import android.os.Build
 import android.os.IBinder
 import android.util.Log
+import com.github.roarappstudio.btkontroller.Prefs.autoPair
+import com.github.roarappstudio.btkontroller.Prefs.preferredHost
 
 /**
  * Owns the Bluetooth HID registration for as long as the user wants to stay connected.
@@ -38,7 +40,14 @@ class HidService : Service() {
 
         startForegroundCompat()
 
-        if (!BluetoothController.init(this)) {
+        // START_STICKY can bring this back with no activity ever having run, so the
+        // connection preferences have to be loaded here too. Without the pinned host the
+        // service would fall back to connecting to any bonded device.
+        val prefs = Prefs.of(this)
+        BluetoothController.autoPairFlag = prefs.autoPair
+        BluetoothController.preferredHost = prefs.preferredHost
+
+        if (!BluetoothController.acquire(this, BluetoothController.Owner.SERVICE)) {
             Log.e(TAG, "No HID Device profile available; stopping service")
             stopSelf()
             return START_NOT_STICKY
@@ -46,8 +55,14 @@ class HidService : Service() {
         return START_STICKY
     }
 
+    /**
+     * Drops this service's claim on the registration but does not necessarily end it: if
+     * the activity is still in the foreground it holds its own claim and the link stays up.
+     * Releasing unconditionally is what used to kill the HID link when the user turned
+     * "stay connected" off while looking at the trackpad.
+     */
     override fun onDestroy() {
-        BluetoothController.release()
+        BluetoothController.release(BluetoothController.Owner.SERVICE)
         super.onDestroy()
     }
 

@@ -13,7 +13,6 @@
     <string name="action_devices">อุปกรณ์</string>
     <string name="action_send_clipboard">ส่งคลิปบอร์ด</string>
 
-    <string name="status_connected">แอปเชื่อมต่อผ่านบลูทูธแล้ว</string>
     <string name="status_not_connected">แอปยังไม่ได้เชื่อมต่อผ่านบลูทูธ</string>
     <string name="action_ble_status_tool_tip">แอปยังไม่ได้เชื่อมต่อผ่านบลูทูธ</string>
 
@@ -43,7 +42,6 @@
 
     <string name="clipboard_empty">คลิปบอร์ดว่างเปล่า</string>
     <string name="clipboard_sending">กำลังพิมพ์ %1$d อักขระ…</string>
-    <string name="clipboard_truncated">คลิปบอร์ดยาวเกินไป — จะส่ง %1$d อักขระแรก</string>
 
     <string name="settings_title">การตั้งค่า</string>
     <string name="settings_header_pointer">ตัวชี้</string>

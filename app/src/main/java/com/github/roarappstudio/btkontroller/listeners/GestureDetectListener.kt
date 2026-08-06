@@ -1,297 +1,242 @@
 package com.github.roarappstudio.btkontroller.listeners
 
-import android.util.Log
+import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.ViewConfiguration
 import com.github.roarappstudio.btkontroller.senders.RelativeMouseSender
-import java.util.*
-import kotlin.concurrent.schedule
+import kotlin.math.abs
 
-class GestureDetectListener(val rMouseSender : RelativeMouseSender) : GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
+/**
+ * Taps, double taps, two-finger taps and two-finger scroll on the trackpad.
+ *
+ * [GestureDetector] handles the single-pointer gestures; the multi-pointer ones need the raw
+ * event stream, which it does not expose, so [onTouchEvent] sees every event first (see
+ * [com.github.roarappstudio.btkontroller.extraLibraries.CustomGestureDetector]).
+ *
+ * ### The two-finger tap
+ *
+ * This was the app's most-reported broken gesture, and it was broken three ways. It timed
+ * the window from the *first* finger touching down, so the clock was already running before
+ * the second finger arrived; the window was [ViewConfiguration.getTapTimeout] (100 ms),
+ * which is a threshold for a single finger and far too tight for landing and lifting two;
+ * and there was no movement guard, so the start of a two-finger scroll could be read as a
+ * tap. All three are fixed here: the window starts when the *second* finger lands, it is
+ * [ViewConfiguration.getDoubleTapTimeout] (300 ms), and any pointer travelling further than
+ * the touch slop cancels the candidate.
+ *
+ * ### Suppressing the single tap that follows
+ *
+ * A two-finger tap ends with a normal one-finger up, so [GestureDetector] reports a single
+ * tap for it too. That tap is identified by [MotionEvent.getDownTime], which is the same for
+ * every event in one gesture, so the right click records the gesture it fired for and
+ * [onSingleTapConfirmed] drops exactly that one. The previous sticky boolean could not
+ * expire: if the gesture ended as a drag instead of a tap, nothing consumed the flag and it
+ * swallowed the *next* genuine click.
+ */
+class GestureDetectListener(
+    context: Context,
+    private val mouse: RelativeMouseSender
+) : GestureDetector.SimpleOnGestureListener() {
 
-    val TAP = 0
-    val DOUBLE_TAP = 1
+    private val touchSlop = ViewConfiguration.get(context).scaledTouchSlop
+    private val handler = Handler(Looper.getMainLooper())
 
-    val DOUBLE_TAP_TIMEOUT = ViewConfiguration
-        .getDoubleTapTimeout().toLong()
-    var mViewScaledTouchSlop: Float = 0.toFloat()
-    //internal var mGestureName: EditText
+    private var pointerCount = 0
 
-    private var mCurrentDownEvent: MotionEvent? = null
+    // --- two-finger tap ---------------------------------------------------------------
+    private var twoFingerCandidate = false
+    private var secondFingerDownAt = 0L
+    private var anchorX = FloatArray(2)
+    private var anchorY = FloatArray(2)
 
-    private var mPtrCount = 0
+    /** downTime of the gesture that already produced a right click, or 0. */
+    private var rightClickedGesture = 0L
 
+    // --- double-tap-and-hold (drag) ---------------------------------------------------
+    private var holdingLeftButton = false
+    private var holdArmed = false
+    private val startHold = Runnable {
+        if (holdArmed && !holdingLeftButton) {
+            holdingLeftButton = true
+            mouse.sendLeftClickOn()
+        }
+    }
 
-    private var possibleTwoFingerTapFlag =0
-    private var mPossibleTwoFingerTapStartTime=System.currentTimeMillis()
-    private var mPrimStartTouchEventX = 0f
-    private var mPrimStartTouchEventY = 0f
-    private var mSecStartTouchEventX = 0f
-    private var mSecStartTouchEventY = 0f
-    private var mPrimSecStartTouchDistance = 0f
-    private var notAConfirmedDoubleTapFlag=0
-    private var disableSingleTapFlag=0
-    private var previousScrollX : Float = 0f
-    private var previousScrollY : Float = 0f
+    // --- scroll -----------------------------------------------------------------------
+    private var scrolled = false
 
-
-    private var testerp1=0
-    private var testerp2 =0
-    private var stopScrollFlag=0
-
-    internal var downTimestamp = System.currentTimeMillis()
-    fun onTouchEvent(ev: MotionEvent?): Boolean {
-        if(ev !=null) {
-            val action = ev.action and MotionEvent.ACTION_MASK
-            if(ev.pointerCount==1)
-            {
-                if(stopScrollFlag==1)
-                {
-                    rMouseSender.mouseReport.hScroll=0
-                    rMouseSender.mouseReport.vScroll=0
-                    stopScrollFlag=0
+    /**
+     * Raw event stream, seen before [GestureDetector] gets it. Returns true only to claim an
+     * event the detector must not also interpret.
+     */
+    fun onTouchEvent(event: MotionEvent): Boolean {
+        when (event.actionMasked) {
+            MotionEvent.ACTION_DOWN -> {
+                pointerCount = 1
+                twoFingerCandidate = false
+                // The scroll fields stay set in the shared report after a two-finger drag.
+                // Zero them as the next gesture starts so it does not carry stale detents.
+                if (scrolled) {
+                    mouse.clearScroll()
+                    scrolled = false
                 }
-
             }
 
-            // prepend("onTouchEvent() ptrs:" + ev.getPointerCount() + " "
-            // + actionToString(action));
-            when (action) {
-                MotionEvent.ACTION_POINTER_DOWN -> {
-                    mPtrCount++
-                    if (ev.pointerCount > 1) {
-
-                        testerp1=ev.getPointerId(0)//remove at end of testing
-                        testerp2=ev.getPointerId(1)
-
-
-
-                        mSecStartTouchEventX = ev.getX(1)
-                        mSecStartTouchEventY = ev.getY(1)
-                        mPrimSecStartTouchDistance = distance(ev, 0, 1)
-                        if (ev.pointerCount == 2) possibleTwoFingerTapFlag = 1
-//                    if (mCurrentDownEvent != null)
-//                        mCurrentDownEvent.recycle()
-                        mCurrentDownEvent = MotionEvent.obtain(ev)
-
-                        //    if (System.currentTimeMillis() - downTimestamp > 50) {
-
-//                        if (!mHandler.hasMessages(TAP)) {
-//                            mHandler.sendEmptyMessageDelayed(
-//                                TAP,
-//                                DOUBLE_TAP_TIMEOUT
-//                            )
-//                        } else {
-//                            mHandler.removeMessages(TAP)
-//                            mHandler.sendEmptyMessageDelayed(
-//                                DOUBLE_TAP,
-//                                DOUBLE_TAP_TIMEOUT
-//                            )
-//                        }
-
-                        //        }
-
-                        downTimestamp = System.currentTimeMillis()
-
-                        // return true to prevent other actions.
-                        return true
+            MotionEvent.ACTION_POINTER_DOWN -> {
+                pointerCount = event.pointerCount
+                if (event.pointerCount == 2) {
+                    twoFingerCandidate = true
+                    secondFingerDownAt = event.eventTime
+                    for (i in 0..1) {
+                        anchorX[i] = event.getX(i)
+                        anchorY[i] = event.getY(i)
                     }
+                } else {
+                    // Three or more fingers is not a tap we recognise.
+                    twoFingerCandidate = false
                 }
-                MotionEvent.ACTION_POINTER_UP -> mPtrCount--
-                MotionEvent.ACTION_DOWN -> {
+                return true
+            }
 
-                    mPtrCount++
+            MotionEvent.ACTION_MOVE -> {
+                if (twoFingerCandidate && movedBeyondSlop(event)) twoFingerCandidate = false
+            }
 
-                    mPossibleTwoFingerTapStartTime = System.currentTimeMillis()
+            MotionEvent.ACTION_POINTER_UP, MotionEvent.ACTION_UP -> {
+                val lifted = event.actionMasked == MotionEvent.ACTION_UP
+                if (twoFingerCandidate && isWithinTapWindow(event)) {
+                    twoFingerCandidate = false
+                    rightClickedGesture = event.downTime
+                    mouse.sendRightClick()
                 }
-                MotionEvent.ACTION_UP -> {
-                    mPtrCount--
+                pointerCount = if (lifted) 0 else event.pointerCount - 1
+                if (lifted) releaseHold()
+            }
 
-                    if(possibleTwoFingerTapFlag == 1)
-                    {
-                        possibleTwoFingerTapFlag = 0
-
-                    if (mPtrCount == 0 && ((System.currentTimeMillis() - mPossibleTwoFingerTapStartTime) <= ViewConfiguration.getTapTimeout()) ) {
-
-                        disableSingleTapFlag =1
-                        Log.i("thisistwofinger", "two finger single tap is implemented")
-
-                        rMouseSender.sendRightClick()
-                    }
-
-                    }
-
-
-                }
+            MotionEvent.ACTION_CANCEL -> {
+                pointerCount = 0
+                twoFingerCandidate = false
+                releaseHold()
             }
         }
         return false
     }
-    override fun onDoubleTap(e: MotionEvent): Boolean {
-        Log.i("doubleddht","this is on double tap $e")
 
-        return false
-    }
+    private fun isWithinTapWindow(event: MotionEvent): Boolean =
+        event.eventTime - secondFingerDownAt <= TWO_FINGER_TAP_TIMEOUT
 
-    override fun onDoubleTapEvent(e: MotionEvent): Boolean {
-        Log.i("doubleddhe","this is on double tap event $e")
-        if(mPtrCount==1)
-        {
-            if(e!=null) {
-                if (e.action == MotionEvent.ACTION_DOWN)
-                    Timer().schedule(150L) {
-                        if(mPtrCount==1)
-                        {
-                            notAConfirmedDoubleTapFlag=1;
-                            rMouseSender.sendLeftClickOn()
-                            Log.i("doubleddhtnew","this is on double tap and hold and also $DOUBLE_TAP_TIMEOUT and $e ")
-
-                        }
-                    }
-
-
-            }
-
-
+    private fun movedBeyondSlop(event: MotionEvent): Boolean {
+        for (i in 0 until minOf(event.pointerCount, 2)) {
+            if (abs(event.getX(i) - anchorX[i]) > touchSlop) return true
+            if (abs(event.getY(i) - anchorY[i]) > touchSlop) return true
         }
-        if(mPtrCount==0)
-        {
-            if(e!=null) {
-                if (e.action == MotionEvent.ACTION_UP) {
-                    if (notAConfirmedDoubleTapFlag == 0) {
-                        rMouseSender.sendDoubleTapClick()
-                        Log.i("doubleddhtnew", "this is on double tap confirmed $e")
-                    } else {
-                        notAConfirmedDoubleTapFlag=0
-                        rMouseSender.sendLeftClickOff()
-
-
-                    }
-                }
-            }
-        }
-
         return false
     }
 
     override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
-        Log.i("doubleddhs","this is on single tap confirmed $e")
-        if(disableSingleTapFlag==1)
-        {
-            disableSingleTapFlag=0
+        // Exactly the tap the two-finger gesture already answered with a right click.
+        if (e.downTime == rightClickedGesture) {
+            rightClickedGesture = 0L
+            return false
         }
-        else {
-            rMouseSender.sendTestClick()
+        mouse.sendLeftClick()
+        return false
+    }
+
+    /**
+     * The second tap of a double tap. Held down it starts a drag; released quickly it is an
+     * ordinary double click.
+     */
+    override fun onDoubleTapEvent(e: MotionEvent): Boolean {
+        when (e.actionMasked) {
+            MotionEvent.ACTION_DOWN -> {
+                holdArmed = true
+                handler.postDelayed(startHold, HOLD_DELAY_MS)
+            }
+
+            MotionEvent.ACTION_MOVE -> {
+                // Dragging before the hold timer fires: start the drag now rather than
+                // losing the first part of the movement.
+                if (holdArmed && !holdingLeftButton) {
+                    handler.removeCallbacks(startHold)
+                    startHold.run()
+                }
+            }
+
+            MotionEvent.ACTION_UP -> {
+                if (holdingLeftButton) releaseHold() else {
+                    cancelHold()
+                    mouse.sendDoubleClick()
+                }
+            }
+
+            MotionEvent.ACTION_CANCEL -> releaseHold()
         }
         return false
     }
 
-    override fun onSingleTapUp(e: MotionEvent): Boolean {
-        Log.i("doubleddhu","this is on single tap up $e")
-        //
-        return true
-    }
+    override fun onScroll(
+        e1: MotionEvent?,
+        e2: MotionEvent,
+        distanceX: Float,
+        distanceY: Float
+    ): Boolean {
+        if (pointerCount != 2) return false
 
-    override fun onDown(e: MotionEvent): Boolean {
-        Log.d("ggkjh", "onDown: $e")
-       return false
+        // One wheel detent per callback in whichever direction the fingers moved. The
+        // horizontal axis needs a small deadband because a vertical two-finger drag always
+        // carries a little sideways drift. Thresholds are unchanged from the version
+        // verified against a real host -- only the shape of the code is different.
+        val vertical = when {
+            distanceY > 0f -> -1
+            distanceY < 0f -> 1
+            else -> 0
+        }
+        val horizontal = when {
+            distanceX > HORIZONTAL_DEADBAND -> 1
+            distanceX < -HORIZONTAL_DEADBAND -> -1
+            else -> 0
+        }
 
-    }
-
-    override fun onFling(e1: MotionEvent?, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
-       Log.i("this is a fling e1 ","$e1")
-        Log.i("this is a fling e2 ","$e2")
-        Log.i("this is a fling vx ","$velocityX")
-        Log.i("this is a fling vy ","$velocityY")
-
-
+        mouse.sendScroll(vertical, horizontal)
+        scrolled = true
         return false
     }
 
-    override fun onScroll(e1: MotionEvent?, e2: MotionEvent, distanceX: Float, distanceY: Float): Boolean {
-
-
-        if(mPtrCount==2) {
-
-//            var dy :Int = distanceY.roundToInt()
-//            if (dy> 127) dy=127
-//            else if (dy< -127) dy=-127
-//
-//            var dx :Int = distanceX.roundToInt()
-//            if (dx> 127) dx=127
-//            else if (dx< -127) dx=-127
-//
-//
-//            rMouseSender.sendScroll(dy,dx)
-
-            var dy: Int =0
-            var dx :Int =0
-            if(distanceY>0) dy= -1
-
-            else if(distanceY<0) dy = 1
-            else if(distanceY==0f) dy=0
-            //else dy=0
-
-            if(distanceX>2) dx= 1
-
-            else if(distanceX<-2) dx = -1
-            //else if(distanceX==0f) dx=0
-            else dx=0
-
-
-            if (dx > 127) dx = 127
-            else if (dx < -127) dx = -127
-
-
-
-
-
-
-
-                rMouseSender.sendScroll(dy, dx)
-
-
-                stopScrollFlag=1
-//            if(e1?.getPointerId(0)==testerp1) {
-//
-//                Log.i("scroller", "This is e1 as $e1")
-//
-//                Log.i("scroller", "This is e2 as $e2")
-//                Log.i("scroller", "This is distanceX as $distanceX")
-//                Log.i("scroller", "This is distanceY as $distanceY")
-//            }
-//            else if(e1?.getPointerId(1)==testerp2 )
-//            {
-//                Log.i("scrollex", "This is e1 as $e1")
-//
-//                Log.i("scrollex", "This is e2 as $e2")
-//                Log.i("scrollex", "This is distanceX as $distanceX")
-//                Log.i("scrollex", "This is distanceY as $distanceY")
-//            }
-
-
-        }
-        return false
-    }
-
-    override fun onLongPress(e: MotionEvent) {
-
-    }
-
-    override fun onShowPress(e: MotionEvent) {
-
-    }
-
-    fun distance(event: MotionEvent, first: Int, second: Int): Float {
-        if (event.pointerCount >= 2) {
-            val x = event.getX(first) - event.getX(second)
-            val y = event.getY(first) - event.getY(second)
-
-            return Math.sqrt((x * x + y * y).toDouble()).toFloat()
-        } else {
-            return 0f
+    /** Lets go of a drag, if one is in progress, and disarms a pending one. */
+    private fun releaseHold() {
+        cancelHold()
+        if (holdingLeftButton) {
+            holdingLeftButton = false
+            mouse.sendLeftClickOff()
         }
     }
 
+    private fun cancelHold() {
+        holdArmed = false
+        handler.removeCallbacks(startHold)
+    }
+
+    /** Drops anything pending. Call when the trackpad goes away. */
+    fun cancel() {
+        releaseHold()
+        twoFingerCandidate = false
+        pointerCount = 0
+    }
+
+    private companion object {
+        /**
+         * Measured from the second finger landing. The single-finger tap timeout (100 ms)
+         * was what made this gesture near-impossible to perform.
+         */
+        val TWO_FINGER_TAP_TIMEOUT = ViewConfiguration.getDoubleTapTimeout().toLong()
+
+        /** How long the second tap must stay down before it becomes a drag. */
+        const val HOLD_DELAY_MS = 150L
+
+        const val HORIZONTAL_DEADBAND = 2f
+    }
 }

@@ -11,7 +11,6 @@
     <string name="action_tool_tip">Modifikatortasten: (N) lässt Strg/Alt/Umschalt nach jedem Tastendruck los, (P) hält sie gedrückt, bis du zurückschaltest</string>
     <string name="action_disconnect">Trennen</string>
 
-    <string name="status_connected">App über Bluetooth verbunden</string>
     <string name="status_not_connected">App nicht über Bluetooth verbunden</string>
     <string name="action_ble_status_tool_tip">App nicht über Bluetooth verbunden</string>
 
@@ -106,7 +105,6 @@
 
     <string name="clipboard_empty">Die Zwischenablage ist leer.</string>
     <string name="clipboard_sending">%1$d Zeichen werden getippt…</string>
-    <string name="clipboard_truncated">Zwischenablage ist lang — die ersten %1$d Zeichen werden gesendet.</string>
     <string name="error_not_connected">Noch nicht mit einem Computer verbunden.</string>
 
     <string name="settings_header_remote">Fernbedienung</string>

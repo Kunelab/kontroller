@@ -18,25 +18,81 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
 
     const val TAG = "BluetoothController"
 
+    /** Who currently needs the HID registration alive. See [acquire] / [release]. */
+    enum class Owner { ACTIVITY, SERVICE }
+
     val featureReport = FeatureReport()
 
     var btAdapter: BluetoothAdapter? = null
         private set
+
+    /**
+     * Written from a Bluetooth binder thread (see the executor passed to `registerApp`)
+     * and read from the UI thread, so both of these have to be volatile.
+     */
+    @Volatile
     var btHid: BluetoothHidDevice? = null
+
+    @Volatile
     var hostDevice: BluetoothDevice? = null
+
     var autoPairFlag = false
-    var mpluggedDevice: BluetoothDevice? = null
+
+    /**
+     * MAC address of the host the user pinned in [DevicesActivity], or null for "whatever
+     * turns up". When set, auto-connect will only ever target this device -- keystrokes
+     * (and the clipboard) then cannot be delivered to some other bonded device that
+     * happens to appear first.
+     */
+    var preferredHost: String? = null
+
+    private val owners = mutableSetOf<Owner>()
 
     private var deviceListener: ((BluetoothHidDevice, BluetoothDevice) -> Unit)? = null
     private var disconnectListener: (() -> Unit)? = null
     private var registeredListener: (() -> Unit)? = null
 
     /**
-     * Acquires the HID_DEVICE profile proxy. Returns false when the device has no
-     * Bluetooth adapter or the proxy request was rejected -- which is also what happens
-     * on ROMs that ship without the Bluetooth HID Device profile.
+     * Registers [owner] as needing the HID profile and acquires the proxy if it is not up
+     * yet. Returns false when the device has no Bluetooth adapter or the proxy request was
+     * rejected -- which is also what happens on ROMs that ship without the Bluetooth HID
+     * Device profile.
      */
-    fun init(ctx: Context): Boolean {
+    fun acquire(ctx: Context, owner: Owner): Boolean {
+        owners += owner
+        return init(ctx)
+    }
+
+    /**
+     * Drops [owner]'s claim, tearing the registration down only once nobody is left.
+     *
+     * The reference counting is the point. Teardown used to be unconditional, so stopping
+     * the foreground service unregistered the HID app even when the activity was in the
+     * foreground still using it: toggling "stay connected" off in Settings and returning to
+     * the trackpad silently killed the link, because [SelectDeviceActivity.onStart] calls
+     * `HidService.stop()` and the service's `onDestroy` then ran after the activity had
+     * already re-registered its listeners.
+     */
+    fun release(owner: Owner) {
+        owners -= owner
+        if (owners.isEmpty()) teardown()
+    }
+
+    /**
+     * Drops the callbacks without touching the registration.
+     *
+     * They capture the Activity, and this object outlives it, so anything that goes away
+     * has to call this or it leaks its whole view hierarchy. That is exactly what happened
+     * on every rotation and theme change while "stay connected" was on: teardown was
+     * skipped, so nothing ever cleared them.
+     */
+    fun clearListeners() {
+        deviceListener = null
+        disconnectListener = null
+        registeredListener = null
+    }
+
+    private fun init(ctx: Context): Boolean {
         // BluetoothAdapter.getDefaultAdapter() is deprecated as of API 31.
         val adapter = btAdapter
             ?: ctx.getSystemService(BluetoothManager::class.java)?.adapter
@@ -55,17 +111,14 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
         return requested
     }
 
-    /** Tears down the HID registration. Call only when the app is really going away. */
-    fun release() {
+    private fun teardown() {
         btHid?.let { hid ->
             hid.unregisterApp()
             btAdapter?.closeProfileProxy(BluetoothProfile.HID_DEVICE, hid)
         }
         btHid = null
         hostDevice = null
-        deviceListener = null
-        disconnectListener = null
-        registeredListener = null
+        clearListeners()
     }
 
     fun getSender(callback: (BluetoothHidDevice, BluetoothDevice) -> Unit) {
@@ -109,6 +162,11 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
             return
         }
         this.btHid = btHid
+        // The executor runs inline, so every callback below arrives on a Bluetooth binder
+        // thread. That is deliberate: onGetReport/onSetReport have to answer within the
+        // HIDP handshake timeout and must not queue behind whatever the UI thread is doing.
+        // The cost is that shared state is cross-thread, which is why btHid and hostDevice
+        // are @Volatile and everything touching views hops via runOnUiThread.
         btHid.registerApp(sdpRecord, null, qosOut, { it.run() }, this)
 
         // Upstream called the hidden BluetoothAdapter.setScanMode(Int, Int) by
@@ -188,12 +246,22 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
         ).orEmpty()
         Log.d(TAG, "Known HID hosts: $knownDevices")
 
-        mpluggedDevice = pluggedDevice
         if (!autoPairFlag) return
 
-        val target = pluggedDevice ?: knownDevices.firstOrNull() ?: return
+        // With a host pinned, that host or nothing. Without one, fall back to whatever the
+        // stack offers -- which is convenient but means anything the phone has ever been
+        // bonded with can become the keystroke sink, so DevicesActivity nudges towards
+        // pinning one.
+        val pinned = preferredHost
+        val target = if (pinned != null) {
+            (knownDevices + listOfNotNull(pluggedDevice)).firstOrNull { it.address == pinned }
+                ?: return
+        } else {
+            pluggedDevice ?: knownDevices.firstOrNull() ?: return
+        }
+
         if (btHid?.getConnectionState(target) == BluetoothProfile.STATE_DISCONNECTED) {
-            Log.i(TAG, "Auto-pairing to $target")
+            Log.i(TAG, "Auto-connecting to $target")
             btHid?.connect(target)
         }
     }
