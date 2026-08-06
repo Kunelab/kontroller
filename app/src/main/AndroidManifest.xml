@@ -34,8 +34,8 @@
     <uses-feature android:name="android.hardware.sensor.gyroscope" android:required="false" />
     <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="false" />
 
+    <!-- No android:name: the Application subclass did nothing but call super.onCreate(). -->
     <application
-        android:name=".Kontroller"
         android:allowBackup="false"
         android:label="@string/app_name"
         android:icon="@mipmap/ic_launcher_ble_round"

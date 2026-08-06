@@ -13,7 +13,6 @@
     <string name="action_devices">Cihazlar</string>
     <string name="action_send_clipboard">Panoyu gönder</string>
 
-    <string name="status_connected">Uygulama Bluetooth ile bağlı</string>
     <string name="status_not_connected">Uygulama Bluetooth ile bağlı değil</string>
     <string name="action_ble_status_tool_tip">Uygulama Bluetooth ile bağlı değil</string>
 
@@ -43,7 +42,6 @@
 
     <string name="clipboard_empty">Pano boş.</string>
     <string name="clipboard_sending">%1$d karakter yazılıyor…</string>
-    <string name="clipboard_truncated">Pano uzun — ilk %1$d karakter gönderiliyor.</string>
 
     <string name="settings_title">Ayarlar</string>
     <string name="settings_header_pointer">İmleç</string>

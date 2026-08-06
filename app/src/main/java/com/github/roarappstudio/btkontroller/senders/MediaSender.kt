@@ -1,5 +1,6 @@
 package com.github.roarappstudio.btkontroller.senders
 
+import android.annotation.SuppressLint
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothHidDevice
 import android.util.Log
@@ -39,6 +40,9 @@ class MediaSender(
         send()
     }
 
+    // A sender only exists once a host has connected, which cannot happen without
+    // BLUETOOTH_CONNECT; SelectDeviceActivity.onStart re-checks before getting this far.
+    @SuppressLint("MissingPermission")
     private fun send() {
         if (!hidDevice.sendReport(host, ID, report)) {
             Log.e(TAG, "Media report wasn't sent")

@@ -2,7 +2,9 @@ package com.github.roarappstudio.btkontroller
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
 import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothDevice
 import android.content.ClipboardManager
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -29,6 +31,7 @@ import com.github.roarappstudio.btkontroller.Prefs.gyroInvertY
 import com.github.roarappstudio.btkontroller.Prefs.gyroPointer
 import com.github.roarappstudio.btkontroller.Prefs.hostLayout
 import com.github.roarappstudio.btkontroller.Prefs.keepScreenOn
+import com.github.roarappstudio.btkontroller.Prefs.preferredHost
 import com.github.roarappstudio.btkontroller.Prefs.sensitivityFactor
 import com.github.roarappstudio.btkontroller.Prefs.stayConnected
 import com.github.roarappstudio.btkontroller.extraLibraries.CustomGestureDetector
@@ -40,8 +43,7 @@ import com.github.roarappstudio.btkontroller.senders.KeyboardSender
 import com.github.roarappstudio.btkontroller.senders.MediaSender
 import com.github.roarappstudio.btkontroller.senders.RelativeMouseSender
 
-@SuppressLint("MissingPermission") // gated by AppPermissions in SplashScreen
-class SelectDeviceActivity : Activity(), KeyEvent.Callback {
+class SelectDeviceActivity : Activity() {
 
     private lateinit var trackpad: TrackpadView
     private lateinit var clickBarView: View
@@ -54,13 +56,18 @@ class SelectDeviceActivity : Activity(), KeyEvent.Callback {
 
     private var bluetoothStatus: MenuItem? = null
 
-    /** 0 = each modifier is released after every keystroke, 1 = modifiers are held. */
-    private var modifierHoldState: Int = 0
+    /** False releases each modifier after every keystroke; true holds them. */
+    private var holdModifiers = false
 
     private var keyboardSender: KeyboardSender? = null
     private var mouseSender: RelativeMouseSender? = null
     private var mediaSender: MediaSender? = null
     private var viewListener: ViewListener? = null
+    private var gestureListener: GestureDetectListener? = null
+    private var pointer: PointerPump? = null
+
+    /** Cancels an in-flight clipboard send if the screen goes away mid-way. */
+    private var clipboardJob: Runnable? = null
 
     /**
      * One instance for the whole activity lifetime, with its sender swapped on (re)connect.
@@ -84,6 +91,7 @@ class SelectDeviceActivity : Activity(), KeyEvent.Callback {
         setTheme(appliedTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_select_device)
+        SystemBars.applyTo(this)
 
         trackpad = findViewById(R.id.mouseView)
         clickBarView = findViewById(R.id.clickBar)
@@ -132,18 +140,26 @@ class SelectDeviceActivity : Activity(), KeyEvent.Callback {
             return
         }
 
-        setConnected(BluetoothController.hostDevice != null)
-        applyPreferences()
+        // The permission gate lives in SplashScreen, but this activity is also reachable
+        // straight from the foreground service's notification, and permissions can be
+        // revoked while the app is running. Without this, every Bluetooth call below throws
+        // SecurityException instead of showing a message.
+        if (!AppPermissions.allEssentialGranted(this)) {
+            Toast.makeText(this, R.string.error_bluetooth_permission, Toast.LENGTH_LONG).show()
+            finish()
+            return
+        }
 
-        if (!BluetoothController.init(this)) {
+        setConnected(BluetoothController.hostDevice)
+
+        if (!BluetoothController.acquire(this, BluetoothController.Owner.ACTIVITY)) {
             Toast.makeText(this, R.string.error_no_hid_profile, Toast.LENGTH_LONG).show()
             return
         }
 
-        val adapter = BluetoothController.btAdapter
-        if (adapter != null && !adapter.isEnabled) {
-            startActivity(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE))
-        }
+        applyPreferences()
+
+        promptToEnableBluetooth()
 
         // Registration survives onStop now, so on a restart the callback below may never
         // fire again -- ask directly when the HID app is already up.
@@ -157,29 +173,36 @@ class SelectDeviceActivity : Activity(), KeyEvent.Callback {
                 val sender = RelativeMouseSender(hidDevice, host)
                 mouseSender = sender
 
-                val gestureDetector =
-                    CustomGestureDetector(this, GestureDetectListener(sender))
+                val pump = PointerPump(sender)
+                pointer = pump
 
-                val listener = ViewListener(sender)
+                val gestures = GestureDetectListener(this, sender)
+                gestureListener = gestures
+                val gestureDetector = CustomGestureDetector(this, gestures)
+
+                val listener = ViewListener(pump)
                 viewListener = listener
 
-                val composite = CompositeListener()
-                composite.registerListener(
-                    View.OnTouchListener { _, event -> gestureDetector.onTouchEvent(event) }
+                trackpad.setOnTouchListener(
+                    CompositeListener(
+                        { _, event -> gestureDetector.onTouchEvent(event) },
+                        listener
+                    )
                 )
-                composite.registerListener(listener)
-                trackpad.setOnTouchListener(composite)
 
-                gyro.sender = sender
+                gyro.pointer = pump
                 mediaSender = MediaSender(hidDevice, host)
 
                 applyPointerPreferences()
-                setConnected(true)
+                setConnected(host)
             }
         }
 
         BluetoothController.getDisconnector {
-            runOnUiThread { setConnected(false) }
+            runOnUiThread {
+                cancelClipboard()
+                setConnected(null)
+            }
         }
     }
 
@@ -196,20 +219,39 @@ class SelectDeviceActivity : Activity(), KeyEvent.Callback {
      * so the HID service was torn down at exactly the moment the host PC was resolving
      * it. The host then saw the phone as an audio/AVRCP device with no keyboard or mouse.
      *
-     * When "stay connected" is on, [HidService] owns the registration and it must survive
-     * this activity entirely, so nothing is released here.
+     * When "stay connected" is on, [HidService] holds its own claim and the registration
+     * survives this activity entirely; [BluetoothController.release] only tears it down once
+     * nobody is left.
+     *
+     * The listeners are a separate matter and are always dropped. They capture this
+     * activity, and [BluetoothController] is a singleton that outlives it, so leaving them
+     * in place leaked the whole view hierarchy on every rotation and theme change -- which
+     * is exactly what happened before, because teardown was skipped in the common case and
+     * nothing else ever cleared them.
      */
     override fun onDestroy() {
         super.onDestroy()
-        if (!Prefs.of(this).stayConnected) {
-            BluetoothController.release()
+
+        cancelClipboard()
+        BluetoothController.clearListeners()
+        gestureListener?.cancel()
+        mouseSender?.cancelPending()
+        pointer?.reset()
+
+        // A rotation destroys and rebuilds this activity immediately. Unregistering the HID
+        // app in between would make the host drop the link every time the phone turns.
+        if (!isChangingConfigurations) {
+            BluetoothController.release(BluetoothController.Owner.ACTIVITY)
         }
+
         stopGyro()
-        gyro.sender = null
+        gyro.pointer = null
         keyboardSender = null
         mouseSender = null
         mediaSender = null
         viewListener = null
+        gestureListener = null
+        pointer = null
         discoverableRequested = false
     }
 
@@ -220,6 +262,7 @@ class SelectDeviceActivity : Activity(), KeyEvent.Callback {
         clickBarView.visibility = if (prefs.clickBar) View.VISIBLE else View.GONE
         mediaBarView.visibility = if (prefs.mediaKeys) View.VISIBLE else View.GONE
         BluetoothController.autoPairFlag = prefs.autoPair
+        BluetoothController.preferredHost = prefs.preferredHost
         hostLayout = prefs.hostLayout
         invalidateOptionsMenu()
 
@@ -294,6 +337,10 @@ class SelectDeviceActivity : Activity(), KeyEvent.Callback {
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                 view.isPressed = false
                 if (left) sender.sendLeftClickOff() else sender.sendRightClickOff()
+                // Press and release are driven from the raw touch stream so the button can
+                // be held down for a drag, but the view still has to report the click for
+                // TalkBack and for anything else driving it accessibly.
+                if (event.actionMasked == MotionEvent.ACTION_UP) view.performClick()
             }
         }
         return true
@@ -304,7 +351,7 @@ class SelectDeviceActivity : Activity(), KeyEvent.Callback {
      * [HidInputConnection]) and from hardware key events arriving at the activity.
      */
     private fun forwardKey(event: KeyEvent): Boolean =
-        keyboardSender?.sendKeyboard(event.keyCode, event, modifierHoldState) ?: false
+        keyboardSender?.sendKeyboard(event, holdModifiers) ?: false
 
     /**
      * Sends a typed character.
@@ -332,14 +379,17 @@ class SelectDeviceActivity : Activity(), KeyEvent.Callback {
     }
 
     /**
-     * Types the clipboard to the host, one character at a time.
+     * Asks before typing the clipboard, naming the host it will go to.
      *
-     * Keystrokes are paced on the main thread rather than blasted from a background thread:
-     * the HID report object is shared with normal typing, so serialising through the looper
-     * avoids interleaving two writers.
+     * The clipboard is where passwords and tokens live, and the HID link delivers to
+     * whatever is on the other end -- which is not necessarily the machine the user has in
+     * mind. A one-tap menu item that silently types it out is too easy to hit by accident,
+     * so the target device and the length are shown first.
      */
+    @SuppressLint("MissingPermission") // onStart bails out if BLUETOOTH_CONNECT is missing
     private fun sendClipboard() {
-        if (keyboardSender == null) {
+        val host = BluetoothController.hostDevice
+        if (keyboardSender == null || host == null) {
             Toast.makeText(this, R.string.error_not_connected, Toast.LENGTH_SHORT).show()
             return
         }
@@ -357,33 +407,69 @@ class SelectDeviceActivity : Activity(), KeyEvent.Callback {
         }
 
         val toSend = text.take(CLIPBOARD_MAX_CHARS)
-        if (text.length > CLIPBOARD_MAX_CHARS) {
-            Toast.makeText(
-                this,
-                getString(R.string.clipboard_truncated, CLIPBOARD_MAX_CHARS),
-                Toast.LENGTH_LONG
-            ).show()
+        val message = if (text.length > CLIPBOARD_MAX_CHARS) {
+            getString(
+                R.string.clipboard_confirm_truncated,
+                host.name ?: host.address,
+                text.length,
+                CLIPBOARD_MAX_CHARS
+            )
         } else {
-            Toast.makeText(
-                this,
-                getString(R.string.clipboard_sending, toSend.length),
-                Toast.LENGTH_SHORT
-            ).show()
+            getString(R.string.clipboard_confirm, host.name ?: host.address, toSend.length)
         }
 
+        AlertDialog.Builder(this)
+            .setTitle(R.string.clipboard_confirm_title)
+            .setMessage(message)
+            .setNegativeButton(android.R.string.cancel, null)
+            .setPositiveButton(R.string.clipboard_confirm_send) { _, _ -> typeOut(toSend) }
+            .show()
+    }
+
+    /**
+     * Types [text] to the host, one character at a time.
+     *
+     * Paced on the main thread rather than blasted from a background thread: the HID report
+     * object is shared with normal typing, so serialising through the looper avoids
+     * interleaving two writers. A single self-reposting runnable does the pacing -- posting
+     * one message per character queued up to five thousand of them at once, none of which
+     * could be cancelled when the screen went away.
+     */
+    private fun typeOut(text: String) {
         val handler = window.decorView.handler ?: return
-        toSend.forEachIndexed { index, ch ->
-            handler.postDelayed({
-                when (ch) {
-                    '\n', '\r' -> forwardKey(
-                        KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER)
-                    )
+        cancelClipboard()
+
+        Toast.makeText(
+            this,
+            getString(R.string.clipboard_sending, text.length),
+            Toast.LENGTH_SHORT
+        ).show()
+
+        var index = 0
+        val job = object : Runnable {
+            override fun run() {
+                if (clipboardJob !== this || keyboardSender == null) return
+                when (val ch = text[index]) {
+                    '\n', '\r' ->
+                        forwardKey(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER))
 
                     '\t' -> forwardKey(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_TAB))
                     else -> forwardChar(ch)
                 }
-            }, index * CLIPBOARD_DELAY_MS)
+                if (++index < text.length) {
+                    handler.postDelayed(this, CLIPBOARD_DELAY_MS)
+                } else {
+                    clipboardJob = null
+                }
+            }
         }
+        clipboardJob = job
+        handler.post(job)
+    }
+
+    private fun cancelClipboard() {
+        clipboardJob?.let { window.decorView.handler?.removeCallbacks(it) }
+        clipboardJob = null
     }
 
     /**
@@ -391,6 +477,15 @@ class SelectDeviceActivity : Activity(), KeyEvent.Callback {
      * did this with a reflective call to the hidden setScanMode(), which no longer exists
      * on Android 12+; ACTION_REQUEST_DISCOVERABLE is the supported equivalent.
      */
+    @SuppressLint("MissingPermission") // onStart bails out if BLUETOOTH_CONNECT is missing
+    private fun promptToEnableBluetooth() {
+        val adapter = BluetoothController.btAdapter ?: return
+        if (!adapter.isEnabled) {
+            startActivity(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE))
+        }
+    }
+
+    @SuppressLint("MissingPermission") // onStart bails out if BLUETOOTH_SCAN is missing
     private fun ensureDiscoverable() {
         val adapter = BluetoothController.btAdapter ?: return
         if (discoverableRequested) return
@@ -406,17 +501,28 @@ class SelectDeviceActivity : Activity(), KeyEvent.Callback {
         }
     }
 
-    private fun setConnected(connected: Boolean) {
-        val icon = if (connected) {
+    /**
+     * Reflects the link state, naming the host rather than just saying "connected".
+     *
+     * Which device is on the other end matters: everything typed here goes to whatever
+     * holds the HID link, so the user has to be able to see that it is their PC and not
+     * some other bonded device that got there first.
+     */
+    @SuppressLint("MissingPermission") // onStart bails out if BLUETOOTH_CONNECT is missing
+    private fun setConnected(host: BluetoothDevice?) {
+        val icon = if (host != null) {
             R.drawable.ic_action_app_connected
         } else {
             R.drawable.ic_action_app_not_connected
         }
-        val tooltip = getString(
-            if (connected) R.string.status_connected else R.string.status_not_connected
-        )
+        val label = if (host != null) {
+            getString(R.string.status_connected_to, host.name ?: host.address)
+        } else {
+            getString(R.string.status_not_connected)
+        }
         bluetoothStatus?.setIcon(icon)
-        bluetoothStatus?.tooltipText = tooltip
+        bluetoothStatus?.tooltipText = label
+        actionBar?.subtitle = label
     }
 
     /**
@@ -452,7 +558,7 @@ class SelectDeviceActivity : Activity(), KeyEvent.Callback {
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyboardSender != null &&
             event != null &&
-            KeyboardReport.KeyEventMap[event.keyCode] != null
+            KeyboardReport.usageFor(event.keyCode) != null
         ) {
             return true
         }
@@ -462,7 +568,7 @@ class SelectDeviceActivity : Activity(), KeyEvent.Callback {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.select_device_activity_menu, menu)
         bluetoothStatus = menu?.findItem(R.id.ble_app_connection_status)
-        setConnected(BluetoothController.hostDevice != null)
+        setConnected(BluetoothController.hostDevice)
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -472,6 +578,7 @@ class SelectDeviceActivity : Activity(), KeyEvent.Callback {
         return super.onPrepareOptionsMenu(menu)
     }
 
+    @SuppressLint("MissingPermission") // onStart bails out if BLUETOOTH_CONNECT is missing
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         R.id.action_devices -> {
             startActivity(Intent(this, DevicesActivity::class.java))
@@ -499,19 +606,20 @@ class SelectDeviceActivity : Activity(), KeyEvent.Callback {
         }
 
         R.id.check_modifier_state -> {
-            modifierHoldState = if (modifierHoldState == 1) 0 else 1
-            if (modifierHoldState == 0) {
+            holdModifiers = !holdModifiers
+            if (holdModifiers) {
+                item.title = getString(R.string.action_check_held)
+            } else {
                 item.title = getString(R.string.action_check)
                 keyboardSender?.sendNullKeys()
-            } else {
-                item.title = getString(R.string.action_check_held)
             }
             true
         }
 
         R.id.action_disconnect -> {
             BluetoothController.btHid?.disconnect(BluetoothController.hostDevice)
-            setConnected(false)
+            cancelClipboard()
+            setConnected(null)
             true
         }
 

@@ -11,7 +11,6 @@
     <string name="action_tool_tip">Touches de modification : (N) relâche Ctrl/Alt/Maj après chaque frappe, (P) les maintient enfoncées jusqu\'à ce que vous reveniez en arrière</string>
     <string name="action_disconnect">Déconnecter</string>
 
-    <string name="status_connected">Application connectée en Bluetooth</string>
     <string name="status_not_connected">Application non connectée en Bluetooth</string>
     <string name="action_ble_status_tool_tip">Application non connectée en Bluetooth</string>
 
@@ -106,7 +105,6 @@
 
     <string name="clipboard_empty">Le presse-papiers est vide.</string>
     <string name="clipboard_sending">Saisie de %1$d caractères…</string>
-    <string name="clipboard_truncated">Presse-papiers trop long — envoi des %1$d premiers caractères.</string>
     <string name="error_not_connected">Pas encore connecté à un ordinateur.</string>
 
     <string name="settings_header_remote">Télécommande</string>

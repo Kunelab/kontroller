@@ -13,7 +13,6 @@
     <string name="action_devices">Устройства</string>
     <string name="action_send_clipboard">Отправить буфер обмена</string>
 
-    <string name="status_connected">Приложение подключено по Bluetooth</string>
     <string name="status_not_connected">Приложение не подключено по Bluetooth</string>
     <string name="action_ble_status_tool_tip">Приложение не подключено по Bluetooth</string>
 
@@ -43,7 +42,6 @@
 
     <string name="clipboard_empty">Буфер обмена пуст.</string>
     <string name="clipboard_sending">Ввод %1$d символов…</string>
-    <string name="clipboard_truncated">Буфер обмена длинный — отправляются первые %1$d символов.</string>
 
     <string name="settings_title">Настройки</string>
     <string name="settings_header_pointer">Указатель</string>

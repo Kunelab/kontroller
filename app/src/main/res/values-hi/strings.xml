@@ -13,7 +13,6 @@
     <string name="action_devices">डिवाइस</string>
     <string name="action_send_clipboard">क्लिपबोर्ड भेजें</string>
 
-    <string name="status_connected">ऐप ब्लूटूथ से कनेक्ट है</string>
     <string name="status_not_connected">ऐप ब्लूटूथ से कनेक्ट नहीं है</string>
     <string name="action_ble_status_tool_tip">ऐप ब्लूटूथ से कनेक्ट नहीं है</string>
 
@@ -43,7 +42,6 @@
 
     <string name="clipboard_empty">क्लिपबोर्ड खाली है।</string>
     <string name="clipboard_sending">%1$d अक्षर टाइप किए जा रहे हैं…</string>
-    <string name="clipboard_truncated">क्लिपबोर्ड लंबा है — पहले %1$d अक्षर भेजे जा रहे हैं।</string>
 
     <string name="settings_title">सेटिंग</string>
     <string name="settings_header_pointer">पॉइंटर</string>

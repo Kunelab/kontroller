@@ -26,7 +26,7 @@
 
     <!-- Devices -->
     <string name="devices_title">Devices</string>
-    <string name="devices_hint">Paired devices. Tap one to connect or disconnect it.</string>
+    <string name="devices_hint">Paired devices. Tap one to connect or disconnect it. Tap the star to always connect to that one.</string>
     <string name="devices_none">No paired devices yet. Pair this phone from the computer first — see the guide.</string>
     <string name="devices_not_registered">Not registered as a keyboard yet. Go back to the trackpad and wait a moment, then try again.</string>
     <string name="devices_no_bluetooth">No Bluetooth adapter available.</string>
@@ -34,13 +34,23 @@
     <string name="device_state_connecting">Connecting… · %1$s</string>
     <string name="device_state_disconnected">Not connected · %1$s</string>
 
+    <!-- Preferred host -->
+    <string name="device_preferred">Preferred host — connects to this one only</string>
+    <string name="device_pin">Always connect to this device</string>
+    <string name="device_unpin">Stop always connecting to this device</string>
+    <string name="device_pinned_toast">%1$s is now the preferred host.</string>
+    <string name="device_unpinned_toast">No preferred host — will connect to any paired device.</string>
+
     <!-- Clipboard -->
     <string name="clipboard_empty">The clipboard is empty.</string>
     <string name="clipboard_sending">Typing %1$d characters…</string>
-    <string name="clipboard_truncated">Clipboard is long — sending the first %1$d characters.</string>
+    <string name="clipboard_confirm_title">Send clipboard?</string>
+    <string name="clipboard_confirm">Type %2$d characters from the clipboard to %1$s.\n\nAnything in the clipboard, including passwords, will be typed out on that device.</string>
+    <string name="clipboard_confirm_truncated">Type the clipboard to %1$s.\n\nIt is %2$d characters long, so only the first %3$d will be sent.\n\nAnything in the clipboard, including passwords, will be typed out on that device.</string>
+    <string name="clipboard_confirm_send">Send</string>
     <string name="error_not_connected">Not connected to a host yet.</string>
 
-    <string name="status_connected">App connected via bluetooth</string>
+    <string name="status_connected_to">Connected to %1$s</string>
     <string name="status_not_connected">App not connected via bluetooth</string>
     <!-- Kept for the menu item's default title/tooltip in the XML. -->
     <string name="action_ble_status_tool_tip">App not connected via bluetooth</string>

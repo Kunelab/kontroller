@@ -13,7 +13,6 @@
     <string name="action_devices">Urządzenia</string>
     <string name="action_send_clipboard">Wyślij schowek</string>
 
-    <string name="status_connected">Aplikacja połączona przez Bluetooth</string>
     <string name="status_not_connected">Aplikacja nie jest połączona przez Bluetooth</string>
     <string name="action_ble_status_tool_tip">Aplikacja nie jest połączona przez Bluetooth</string>
 
@@ -43,7 +42,6 @@
 
     <string name="clipboard_empty">Schowek jest pusty.</string>
     <string name="clipboard_sending">Wpisywanie %1$d znaków…</string>
-    <string name="clipboard_truncated">Schowek jest długi — wysyłane jest pierwszych %1$d znaków.</string>
 
     <string name="settings_title">Ustawienia</string>
     <string name="settings_header_pointer">Wskaźnik</string>

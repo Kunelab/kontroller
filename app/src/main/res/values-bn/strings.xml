@@ -13,7 +13,6 @@
     <string name="action_devices">ডিভাইস</string>
     <string name="action_send_clipboard">ক্লিপবোর্ড পাঠান</string>
 
-    <string name="status_connected">অ্যাপ ব্লুটুথে সংযুক্ত</string>
     <string name="status_not_connected">অ্যাপ ব্লুটুথে সংযুক্ত নয়</string>
     <string name="action_ble_status_tool_tip">অ্যাপ ব্লুটুথে সংযুক্ত নয়</string>
 
@@ -43,7 +42,6 @@
 
     <string name="clipboard_empty">ক্লিপবোর্ড খালি।</string>
     <string name="clipboard_sending">%1$d অক্ষর টাইপ করা হচ্ছে…</string>
-    <string name="clipboard_truncated">ক্লিপবোর্ড দীর্ঘ — প্রথম %1$d অক্ষর পাঠানো হচ্ছে।</string>
 
     <string name="settings_title">সেটিংস</string>
     <string name="settings_header_pointer">পয়েন্টার</string>

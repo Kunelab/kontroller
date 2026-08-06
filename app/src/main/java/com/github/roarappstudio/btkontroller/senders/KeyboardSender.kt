@@ -1,43 +1,54 @@
 package com.github.roarappstudio.btkontroller.senders
 
-
-
+import android.annotation.SuppressLint
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothHidDevice
 import android.util.Log
 import android.view.KeyEvent
 import com.github.roarappstudio.btkontroller.reports.KeyboardReport
 
-@Suppress("MemberVisibilityCanBePrivate")
-open class KeyboardSender(
-    val hidDevice: BluetoothHidDevice,
-    val host: BluetoothDevice
-
+/**
+ * Keyboard half of the HID link, on report ID 8.
+ *
+ * Call on the main thread only: the report is one shared mutable [ByteArray], so a second
+ * writer would interleave modifier bits into someone else's packet.
+ */
+class KeyboardSender(
+    private val hidDevice: BluetoothHidDevice,
+    private val host: BluetoothDevice
 ) {
-    val keyboardReport = KeyboardReport()
-    //val keyPosition : IntArray = IntArray(6){0}
+    private val keyboardReport = KeyboardReport()
 
-
-    protected open fun sendKeys() {
+    // A sender only exists once a host has connected, which cannot happen without
+    // BLUETOOTH_CONNECT; SelectDeviceActivity.onStart re-checks before getting this far.
+    @SuppressLint("MissingPermission")
+    private fun sendKeys() {
         if (!hidDevice.sendReport(host, KeyboardReport.ID, keyboardReport.bytes)) {
             Log.e(TAG, "Report wasn't sent")
         }
     }
 
-    protected open fun customSender(modifier_checked_state: Int) {
-        sendKeys()
-        if(modifier_checked_state==0) sendNullKeys()
-        else {
-            keyboardReport.key1=0.toByte()
-            sendKeys()
-        }
-    }
+    /**
+     * Sends one key press and its release.
+     *
+     * With [holdModifiers] set the modifier bits stay set after the release, which is what
+     * the (P) toggle in the action bar is for -- it lets a soft keyboard build Ctrl+click
+     * style combinations one tap at a time.
+     */
+    fun sendKeyboard(event: KeyEvent, holdModifiers: Boolean): Boolean {
+        val usage = KeyboardReport.usageFor(event.keyCode) ?: return false
 
-    protected open fun setModifiers(event:KeyEvent) {
-        if(event.isShiftPressed) keyboardReport.leftShift=true
-        if(event.isAltPressed) keyboardReport.leftAlt=true
-        if(event.isCtrlPressed) keyboardReport.leftControl=true
-        if(event.isMetaPressed) keyboardReport.leftGui=true
+        applyModifiers(event)
+        keyboardReport.key1 = usage.toByte()
+        sendKeys()
+
+        if (holdModifiers) {
+            keyboardReport.key1 = 0
+            sendKeys()
+        } else {
+            sendNullKeys()
+        }
+        return true
     }
 
     /**
@@ -61,188 +72,27 @@ open class KeyboardSender(
         return true
     }
 
+    /** Releases everything, modifiers included. */
     fun sendNullKeys() {
-        keyboardReport.bytes.fill(0)
-        if (!hidDevice.sendReport(host, KeyboardReport.ID, keyboardReport.bytes)) {
-            Log.e(TAG, "Report wasn't sent")
+        keyboardReport.reset()
+        sendKeys()
+    }
+
+    private fun applyModifiers(event: KeyEvent) {
+        if (event.isShiftPressed) keyboardReport.leftShift = true
+        if (event.isAltPressed) keyboardReport.leftAlt = true
+        if (event.isCtrlPressed) keyboardReport.leftControl = true
+        if (event.isMetaPressed) keyboardReport.leftGui = true
+
+        // These three arrive as their own Android keycodes but are shifted positions on a
+        // US keyboard, so the shift has to be added by hand.
+        when (event.keyCode) {
+            KeyEvent.KEYCODE_AT, KeyEvent.KEYCODE_POUND, KeyEvent.KEYCODE_STAR ->
+                keyboardReport.leftShift = true
         }
     }
 
-    fun keyEventHandler(keyEventCode: Int, event : KeyEvent, modifier_checked_state: Int,keyCode:Int): Boolean{
-
-
-        val byteKey = KeyboardReport.KeyEventMap[keyEventCode]
-
-        if(byteKey!=null)
-        {
-            setModifiers(event)
-            if(event.keyCode== KeyEvent.KEYCODE_AT || event.keyCode== KeyEvent.KEYCODE_POUND || event.keyCode== KeyEvent.KEYCODE_STAR)
-            {
-                keyboardReport.leftShift=true
-            }
-            keyboardReport.key1=byteKey.toByte()
-            customSender(modifier_checked_state)
-
-            return true
-        }
-        else
-        {
-            return false
-        }
-
-
-
-    }
-
-
-    fun sendKeyboard(keyCode : Int, event : KeyEvent, modifier_checked_state :Int): Boolean {
-
-
-        return keyEventHandler(event.keyCode,event,modifier_checked_state,keyCode)
-
-
-//        return when (event.keyCode) {
-//            KeyEvent.KEYCODE_A -> {
-//                if(event.isShiftPressed) keyboardReport.leftShift=true
-//                //else keyboardReport.leftShift = false
-//                if(event.isAltPressed) keyboardReport.leftAlt=true
-//                //else keyboardReport.leftAlt=false
-//                if(event.isCtrlPressed) keyboardReport.leftControl=true
-//                //else keyboardReport.leftControl=false
-//                if(event.isMetaPressed) keyboardReport.leftGui=true
-//                //else keyboardReport.leftGui=false
-//
-//                keyboardReport.key1=KeyboardReport.KEYCODE_A.toByte()
-//                customSender(modifier_checked_state)
-//
-//                true
-//            }
-//
-//            KeyEvent.KEYCODE_B -> {
-//                setModifiers(event)
-//
-//                keyboardReport.key1=KeyboardReport.KEYCODE_B.toByte()
-//                customSender(modifier_checked_state)
-//
-//                true
-//            }
-//
-//            else -> false
-//        }
-
-    }
-
-
-
-
-
-
-//fun sendTestMouseMove() {
-//    mouseReport.dxLsb = 20
-//    mouseReport.dyLsb = 20
-//    mouseReport.dxMsb = 20
-//    mouseReport.dyMsb = 20
-//    sendMouse()
-//}
-//
-//fun sendTestClick() {
-//    mouseReport.leftButton = true
-//    sendMouse()
-//    mouseReport.leftButton = false
-//    sendMouse()
-////        Timer().schedule(20L) {
-////
-////        }
-//}
-//fun sendDoubleTapClick() {
-//    mouseReport.leftButton = true
-//    sendMouse()
-//    Timer().schedule(100L) {
-//        mouseReport.leftButton = false
-//        sendMouse()
-//        Timer().schedule(100L) {
-//            mouseReport.leftButton = true
-//            sendMouse()
-//            Timer().schedule(100L) {
-//                mouseReport.leftButton = false
-//                sendMouse()
-//            }
-//
-//
-//
-//
-//        }
-//    }
-//}
-//
-//
-//
-//fun sendLeftClickOn() {
-//    mouseReport.leftButton = true
-//    sendMouse()
-//
-//
-//}
-//fun sendLeftClickOff() {
-//    mouseReport.leftButton = false
-//    sendMouse()
-//
-//}
-//fun sendRightClick() {
-//    mouseReport.rightButton = true
-//    sendMouse()
-//    Timer().schedule(50L) {
-//        mouseReport.rightButton= false
-//        sendMouse()
-//    }
-//}
-//
-//fun sendScroll(vscroll:Int,hscroll:Int){
-//
-//    var hscrollmutable=0
-//    var vscrollmutable =0
-//
-//    hscrollmutable=hscroll
-//    vscrollmutable= vscroll
-//
-////        var dhscroll= hscrollmutable-previoushscroll
-////        var dvscroll= vscrollmutable-previousvscroll
-////
-////        dhscroll = Math.abs(dhscroll)
-////        dvscroll = Math.abs(dvscroll)
-////        if(dvscroll>=dhscroll)
-////        {
-////            hscrollmutable=0
-////
-////        }
-////        else
-////        {
-////            vscrollmutable=0
-////        }
-//    var vs:Int =(vscrollmutable)
-//    var hs:Int =(hscrollmutable)
-//    Log.i("vscroll ",vscroll.toString())
-//    Log.i("vs ",vs.toString())
-//    Log.i("hscroll ",hscroll.toString())
-//    Log.i("hs ",hs.toString())
-//
-//
-//    mouseReport.vScroll=vs.toByte()
-//    mouseReport.hScroll= hs.toByte()
-//
-//    sendMouse()
-//
-////        previousvscroll=-1*vscroll
-////        previoushscroll=hscroll
-//
-//
-//}
-
-
-
-
-    companion object {
+    private companion object {
         const val TAG = "KeyboardSender"
     }
-
 }

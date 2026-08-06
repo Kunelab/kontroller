@@ -4,31 +4,29 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import com.github.roarappstudio.btkontroller.senders.RelativeMouseSender
 import kotlin.math.abs
-import kotlin.math.roundToInt
 
 /**
  * "Air mouse": moves the pointer by tilting the phone.
  *
  * This replaces upstream's `SensorSender`, which could never have worked -- it sent an
- * [com.github.roarappstudio.btkontroller.reports.AbsMouseReport] on report ID 2, and ID 2
- * only exists in the unused `MOUSE_ABSOLUTE` descriptor. The active
- * `MOUSE_KEYBOARD_COMBO` descriptor has no absolute-pointer report at all, so movement has
- * to be sent as relative deltas on report ID 4 like the trackpad does.
+ * absolute-pointer report on report ID 2, and ID 2 only existed in a descriptor the app
+ * never registered. The active `MOUSE_KEYBOARD_COMBO` descriptor has no absolute-pointer
+ * report at all, so movement has to be sent as relative deltas on report ID 4 like the
+ * trackpad does.
  *
  * Rotation is read as yaw/pitch from the rotation vector and differentiated between
  * samples, so what reaches the host is the *change* in aim rather than an absolute angle.
  *
- * Exactly one instance is kept for the lifetime of the activity and [sender] is swapped when
- * the HID link changes. Creating a fresh instance per connection used to leave the previous
- * one registered with SensorManager, so the pointer kept moving after the setting was
- * switched off.
+ * Exactly one instance is kept for the lifetime of the activity and [pointer] is swapped
+ * when the HID link changes. Creating a fresh instance per connection used to leave the
+ * previous one registered with SensorManager, so the pointer kept moving after the setting
+ * was switched off.
  */
 class GyroPointer : SensorEventListener {
 
     /** Null while there is no HID connection to send to. */
-    var sender: RelativeMouseSender? = null
+    var pointer: PointerPump? = null
 
     /** Pointer speed multiplier, shared with the trackpad setting. */
     var sensitivity: Float = 1f
@@ -48,7 +46,7 @@ class GyroPointer : SensorEventListener {
     }
 
     override fun onSensorChanged(event: SensorEvent) {
-        val target = sender ?: return
+        val target = pointer ?: return
 
         SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values)
         SensorManager.getOrientation(rotationMatrix, orientation)
@@ -80,9 +78,9 @@ class GyroPointer : SensorEventListener {
         if (invertX) dx = -dx
         if (invertY) dy = -dy
 
-        val moveX = dx.roundToInt()
-        val moveY = dy.roundToInt()
-        if (moveX != 0 || moveY != 0) target.sendMove(moveX, moveY)
+        // Handed over as floats: the pump keeps the fraction, so a slow steady tilt
+        // accumulates into movement instead of rounding to zero on every sample.
+        target.move(dx, dy)
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) = Unit

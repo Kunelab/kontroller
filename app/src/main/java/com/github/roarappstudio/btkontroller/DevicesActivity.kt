@@ -11,13 +11,20 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import com.github.roarappstudio.btkontroller.Prefs.preferredHost
 
 /**
- * Lists the paired hosts and lets you connect or disconnect a chosen one.
+ * Lists the paired hosts and lets you connect or disconnect a chosen one, or pin one as the
+ * device to always connect to.
  *
  * `SelectDeviceActivity` has always been misnamed -- it never listed devices. This is the
  * screen that name implies: bonded devices, their live HID connection state, and a tap to
  * connect or drop the link.
+ *
+ * The star matters for more than convenience. Auto-connect otherwise targets whichever
+ * bonded device the stack offers first, and whatever ends up holding the link receives
+ * every keystroke -- so pinning is how the user says which machine is allowed to be the
+ * other end.
  */
 @SuppressLint("MissingPermission") // gated by AppPermissions in SplashScreen
 class DevicesActivity : Activity() {
@@ -29,6 +36,7 @@ class DevicesActivity : Activity() {
         setTheme(ThemeSupport.appStyle(this))
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_devices)
+        SystemBars.applyTo(this)
         actionBar?.setDisplayHomeAsUpEnabled(true)
 
         list = findViewById(R.id.deviceList)
@@ -67,21 +75,25 @@ class DevicesActivity : Activity() {
         val state = BluetoothController.btHid?.getConnectionState(device)
         val connected = state == BluetoothProfile.STATE_CONNECTED
         val connecting = state == BluetoothProfile.STATE_CONNECTING
+        val pinned = Prefs.of(this).preferredHost == device.address
 
-        val row = LinearLayout(this).apply {
+        val labels = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
+            layoutParams = LinearLayout.LayoutParams(
+                0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f
+            )
             setPadding(0, dp(14), 0, dp(14))
             isClickable = true
             setBackgroundResource(R.drawable.click_button)
         }
 
-        row.addView(TextView(this).apply {
+        labels.addView(TextView(this).apply {
             text = device.name ?: device.address
             textSize = 16f
             setTextColor(themeColor(android.R.attr.textColorPrimary))
         })
 
-        row.addView(TextView(this).apply {
+        labels.addView(TextView(this).apply {
             text = getString(
                 when {
                     connected -> R.string.device_state_connected
@@ -94,7 +106,15 @@ class DevicesActivity : Activity() {
             setTextColor(themeColor(android.R.attr.textColorSecondary))
         })
 
-        row.setOnClickListener {
+        if (pinned) {
+            labels.addView(TextView(this).apply {
+                setText(R.string.device_preferred)
+                textSize = 13f
+                setTextColor(themeColor(android.R.attr.colorAccent))
+            })
+        }
+
+        labels.setOnClickListener {
             val hid = BluetoothController.btHid
             if (hid == null) {
                 Toast.makeText(this, R.string.devices_not_registered, Toast.LENGTH_LONG).show()
@@ -103,7 +123,26 @@ class DevicesActivity : Activity() {
             if (connected) hid.disconnect(device) else hid.connect(device)
 
             // The state change arrives asynchronously; show it once it has settled.
-            row.postDelayed({ refresh() }, REFRESH_DELAY_MS)
+            labels.postDelayed({ refresh() }, REFRESH_DELAY_MS)
+        }
+
+        val star = TextView(this).apply {
+            text = if (pinned) STAR_FILLED else STAR_OUTLINE
+            textSize = 22f
+            gravity = Gravity.CENTER
+            minWidth = dp(56)
+            setPadding(dp(8), dp(14), dp(8), dp(14))
+            contentDescription =
+                getString(if (pinned) R.string.device_unpin else R.string.device_pin)
+            setTextColor(
+                themeColor(
+                    if (pinned) android.R.attr.colorAccent
+                    else android.R.attr.textColorSecondary
+                )
+            )
+            isClickable = true
+            setBackgroundResource(R.drawable.click_button)
+            setOnClickListener { togglePinned(device, pinned) }
         }
 
         val separator = View(this).apply {
@@ -116,9 +155,33 @@ class DevicesActivity : Activity() {
         return LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             gravity = Gravity.START
-            addView(row)
+            addView(LinearLayout(context).apply {
+                orientation = LinearLayout.HORIZONTAL
+                gravity = Gravity.CENTER_VERTICAL
+                addView(labels)
+                addView(star)
+            })
             addView(separator)
         }
+    }
+
+    /**
+     * Pins or unpins the device auto-connect is allowed to target. Unpinning goes back to
+     * "any bonded device", which is convenient but means anything the phone has ever paired
+     * with can pick up the keyboard.
+     */
+    private fun togglePinned(device: BluetoothDevice, wasPinned: Boolean) {
+        val address = if (wasPinned) null else device.address
+        Prefs.of(this).preferredHost = address
+        BluetoothController.preferredHost = address
+
+        val message = if (wasPinned) {
+            getString(R.string.device_unpinned_toast)
+        } else {
+            getString(R.string.device_pinned_toast, device.name ?: device.address)
+        }
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        refresh()
     }
 
     private fun themeColor(attr: Int): Int {
@@ -142,5 +205,9 @@ class DevicesActivity : Activity() {
 
     private companion object {
         const val REFRESH_DELAY_MS = 1500L
+
+        /** Plain glyphs rather than drawables -- no asset, and they theme with the text. */
+        const val STAR_FILLED = "★"
+        const val STAR_OUTLINE = "☆"
     }
 }

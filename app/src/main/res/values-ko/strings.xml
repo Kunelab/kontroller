@@ -13,7 +13,6 @@
     <string name="action_devices">기기</string>
     <string name="action_send_clipboard">클립보드 보내기</string>
 
-    <string name="status_connected">블루투스로 연결됨</string>
     <string name="status_not_connected">블루투스로 연결되지 않음</string>
     <string name="action_ble_status_tool_tip">블루투스로 연결되지 않음</string>
 
@@ -43,7 +42,6 @@
 
     <string name="clipboard_empty">클립보드가 비어 있습니다.</string>
     <string name="clipboard_sending">%1$d자 입력 중…</string>
-    <string name="clipboard_truncated">클립보드가 길어 처음 %1$d자만 보냅니다.</string>
 
     <string name="settings_title">설정</string>
     <string name="settings_header_pointer">포인터</string>

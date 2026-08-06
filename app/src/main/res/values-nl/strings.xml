@@ -13,7 +13,6 @@
     <string name="action_devices">Apparaten</string>
     <string name="action_send_clipboard">Klembord verzenden</string>
 
-    <string name="status_connected">App verbonden via bluetooth</string>
     <string name="status_not_connected">App niet verbonden via bluetooth</string>
     <string name="action_ble_status_tool_tip">App niet verbonden via bluetooth</string>
 
@@ -43,7 +42,6 @@
 
     <string name="clipboard_empty">Het klembord is leeg.</string>
     <string name="clipboard_sending">%1$d tekens typen…</string>
-    <string name="clipboard_truncated">Klembord is lang — de eerste %1$d tekens worden verzonden.</string>
 
     <string name="settings_title">Instellingen</string>
     <string name="settings_header_pointer">Aanwijzer</string>

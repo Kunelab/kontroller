@@ -48,6 +48,7 @@ class SettingsActivity : Activity() {
         setTheme(ThemeSupport.appStyle(this))
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
+        SystemBars.applyTo(this)
         actionBar?.setDisplayHomeAsUpEnabled(true)
 
         sensitivityLabel = findViewById(R.id.sensitivityLabel)

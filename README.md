@@ -30,7 +30,10 @@ The original commit history is preserved in this repository.
 adb install -r app/build/outputs/apk/debug/app-debug.apk
 ```
 
-There are no third-party dependencies.
+There are no third-party dependencies. The release APK is ~330 KB.
+
+To build a signed release, copy `keystore.properties.example` to `keystore.properties`
+(gitignored) and fill it in. Without one the build still works and produces an unsigned APK.
 
 ## Using it
 
@@ -82,6 +85,12 @@ menu or the bottom of Settings.
 The overflow menu also has **Devices**, which lists the paired devices with their live HID
 connection state; tap one to connect or disconnect it. (It lists everything the phone is
 paired with, speakers included — only a host can actually accept a keyboard connection.)
+
+Tap the **star** next to a device to make it the preferred host. This matters for more than
+convenience: everything typed goes to whatever holds the HID link, the clipboard included,
+and with no preferred host set *Connect automatically* will target whichever bonded device
+the Bluetooth stack offers first. Pinning one is how you say which machine is allowed to be
+on the other end. The action bar shows the host currently connected.
 
 ## Pairing with a Linux host (BlueZ)
 
@@ -264,11 +273,6 @@ Scroll, drag & drop and double click confirmed by hand.
 
 ## Known limitations
 
-- **The two-finger tap right click is unreliable.** Both fingers must land *and* lift within
-  `ViewConfiguration.getTapTimeout()` (100 ms), measured from the first finger touching
-  down, which is very hard to hit. Use the Right click button instead. Fixing the gesture
-  properly means timing from the second finger's touchdown, widening the window, and adding
-  a movement guard so two-finger scrolls are not misread as taps.
 - **The gyro pointer's gain is a first guess.** `PIXELS_PER_RADIAN` (900) and the noise floor
   were picked analytically, not tuned against a real screen, so it may feel too fast or too
   twitchy and want adjusting.
@@ -278,3 +282,66 @@ Scroll, drag & drop and double click confirmed by hand.
   implemented.
 - `applicationId` is still `com.github.roarappstudio.btkontroller`. Changing it is a
   one-line edit, but it installs as a separate app rather than upgrading in place.
+- **"Keep screen on" has no switch.** The preference is read and applied, and the strings
+  exist and are translated, but `activity_settings.xml` never got the row — so the setting
+  documented above is currently unreachable and always off.
+- **No tests and no CI.** The report bit-packing, the `HostLayout` tables and `sendMove`'s
+  clamping are pure functions and the obvious place to start.
+- Strings added after the initial translation pass are English-only in the other 21 locales;
+  `MissingTranslation` is reported as a warning rather than failing the build.
+
+## Post-review changes
+
+A review of the whole project produced the following. The findings each fix are described in
+the code, next to the thing they fix.
+
+**Package size.** `proguard-rules.pro` contained `-keep class **`, `-keepclassmembers class
+*{*;}` and `-keepattributes *`, so R8 ran but kept everything, kotlin-stdlib included: 2.19 MB
+of dex in a 2.32 MB APK. Those rules are gone and `shrinkResources` is on. **2377 KB → 330 KB.**
+
+**Lifecycle.**
+- `HidService.onDestroy` released the HID registration unconditionally, so turning "stay
+  connected" off and returning to the trackpad unregistered the HID app while the activity
+  was still using it, and the app silently stopped working until restarted.
+  `BluetoothController` now reference-counts its owners and only tears down when the last
+  one goes.
+- The three callbacks on `BluetoothController` capture the activity and were only cleared on
+  teardown — which was skipped in the default configuration — so every rotation and theme
+  change leaked a whole view hierarchy. They are now always cleared in `onDestroy`, and a
+  configuration change no longer drops the host's link.
+- `SelectDeviceActivity` re-checks the Bluetooth permissions in `onStart`. It is reachable
+  straight from the service notification, bypassing the gate in `SplashScreen`.
+
+**Edge to edge.** At `targetSdk` 36 Android no longer insets the window, and nothing in the
+app asked for insets, so the click buttons and media row drew behind the navigation bar.
+`SystemBars` applies them. *(Written against the framework API; not yet verified on a device.)*
+
+**Pointer.** Movement was sent straight from `ACTION_MOVE` — 120-240 Hz of touch samples into
+a link that carries 50-100 reports a second — and rounded to whole pixels per event, so slow
+movement at low sensitivity was discarded entirely. `PointerPump` coalesces onto the frame
+clock and carries the sub-pixel remainder.
+
+**Gestures.** `GestureDetectListener` was rewritten. The two-finger right click listed above
+as unreliable now times from the second finger landing rather than the first, uses the
+300 ms double-tap window rather than the 100 ms single-tap one, and cancels if either
+pointer travels past the touch slop. The single tap that follows is identified by
+`MotionEvent.downTime` instead of a sticky flag that could swallow a later click.
+
+**Threads.** Clicks scheduled their release with `Timer().schedule`, spawning a non-daemon
+thread per click (three per double click) that mutated the shared report off the main
+thread. All timing is now on the main looper. Clipboard sending posts one self-reposting
+runnable instead of up to 5000 uncancellable messages.
+
+**Host safety.** A host can be pinned from **Devices**; auto-connect then targets only that
+device instead of whichever bonded device appears first. The action bar names the connected
+host, and **Send clipboard** confirms first, naming the target.
+
+**Dead code.** Deleted `Sender`, `MouseReport`, `AbsMouseReport`, `TrackpadMouseReport`,
+`TestTrackpadMouseReport`, the empty `Kontroller` application class, ten unused HID
+descriptors (`DescriptorCollection` 769 → 164 lines), ~200 lines of commented-out code, the
+per-event debug logging in the touch path, twelve PNGs shadowed by `drawable-anydpi`
+vectors, and four unused launcher-icon resources.
+
+**Lint.** `assembleRelease` could not previously complete: `lintVital` fails on
+`MissingTranslation`, and `app_name` was untranslated in all 21 locales. Real errors
+(`MissingPermission` on all four HID send paths) are fixed and lint now runs clean.

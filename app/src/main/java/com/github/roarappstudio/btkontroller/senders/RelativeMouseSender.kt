@@ -1,43 +1,49 @@
 package com.github.roarappstudio.btkontroller.senders
 
+import android.annotation.SuppressLint
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothHidDevice
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import com.github.roarappstudio.btkontroller.reports.ScrollableTrackpadMouseReport
-import java.util.*
-import kotlin.concurrent.schedule
 
-@Suppress("MemberVisibilityCanBePrivate")
-open class RelativeMouseSender(
-    val hidDevice: BluetoothHidDevice,
-    val host: BluetoothDevice
-
+/**
+ * Mouse half of the HID link: movement, buttons and scroll, all on report ID 4.
+ *
+ * Every method here must be called on the main thread. The report object is a single shared
+ * mutable [ByteArray], so two writers would interleave button bits into each other's
+ * packets. Timed sequences (the release half of a click) are therefore posted to the main
+ * looper rather than run on a background timer.
+ *
+ * Movement does not go through here directly -- it is coalesced by
+ * [com.github.roarappstudio.btkontroller.PointerPump], which calls [sendMove] once a frame.
+ */
+class RelativeMouseSender(
+    private val hidDevice: BluetoothHidDevice,
+    private val host: BluetoothDevice
 ) {
     val mouseReport = ScrollableTrackpadMouseReport()
-    var previousvscroll :Int=0
-    var previoushscroll :Int =0
 
+    /**
+     * Clicks are a press followed by a release some milliseconds later. This used to be
+     * `Timer().schedule { }`, which spun up a fresh non-daemon thread per click -- three of
+     * them for a double click -- and mutated the shared report off the main thread.
+     */
+    private val handler = Handler(Looper.getMainLooper())
 
-    protected open fun sendMouse() {
+    // A sender only exists once a host has connected, which cannot happen without
+    // BLUETOOTH_CONNECT; SelectDeviceActivity.onStart re-checks before getting this far.
+    @SuppressLint("MissingPermission")
+    private fun sendMouse() {
         if (!hidDevice.sendReport(host, ScrollableTrackpadMouseReport.ID, mouseReport.bytes)) {
             Log.e(TAG, "Report wasn't sent")
         }
     }
 
-    fun sendTestMouseMove() {
-        mouseReport.dxLsb = 20
-        mouseReport.dyLsb = 20
-        mouseReport.dxMsb = 20
-        mouseReport.dyMsb = 20
-        sendMouse()
-    }
-
     /**
      * Sends a relative pointer movement. The report's X/Y fields are 12-bit signed values
      * split across two bytes each, so deltas are clamped to +/-2047.
-     *
-     * Both the trackpad and the gyro pointer go through here; the byte packing and the
-     * report ID used to be duplicated inline in ViewListener.
      */
     fun sendMove(dx: Int, dy: Int) {
         val cx = dx.coerceIn(-MAX_DELTA, MAX_DELTA)
@@ -52,69 +58,21 @@ open class RelativeMouseSender(
     }
 
     /**
-     * Clears the movement fields so the host does not keep applying the last delta.
-     * Button and scroll state in the shared report are deliberately left untouched, which
-     * is what lets a held button survive a finger lift.
+     * Press/release variants, used both by the on-screen click buttons and by the gesture
+     * detector. Holding the button down rather than sending a pulse is what makes
+     * drag-and-drop work: the button bit stays set in the shared report while the trackpad
+     * sends movement.
      */
-    fun stopMove() = sendMove(0, 0)
-
-    fun sendTestClick() {
-        mouseReport.leftButton = true
-        sendMouse()
-        mouseReport.leftButton = false
-        sendMouse()
-//        Timer().schedule(20L) {
-//
-//        }
-    }
-    fun sendDoubleTapClick() {
-        mouseReport.leftButton = true
-        sendMouse()
-        Timer().schedule(100L) {
-            mouseReport.leftButton = false
-            sendMouse()
-            Timer().schedule(100L) {
-                mouseReport.leftButton = true
-                sendMouse()
-                Timer().schedule(100L) {
-                    mouseReport.leftButton = false
-                    sendMouse()
-                }
-
-
-
-
-            }
-        }
-    }
-
-
-
     fun sendLeftClickOn() {
         mouseReport.leftButton = true
         sendMouse()
-
-
     }
+
     fun sendLeftClickOff() {
         mouseReport.leftButton = false
         sendMouse()
-
-    }
-    fun sendRightClick() {
-        mouseReport.rightButton = true
-        sendMouse()
-        Timer().schedule(50L) {
-            mouseReport.rightButton= false
-            sendMouse()
-        }
     }
 
-    /**
-     * Press/release variants for the on-screen click buttons. Holding the button down
-     * rather than sending a pulse is what makes drag-and-drop work: the button bit stays
-     * set in the shared report while the trackpad sends movement.
-     */
     fun sendRightClickOn() {
         mouseReport.rightButton = true
         sendMouse()
@@ -125,55 +83,64 @@ open class RelativeMouseSender(
         sendMouse()
     }
 
-    fun sendScroll(vscroll:Int,hscroll:Int){
-
-        var hscrollmutable=0
-        var vscrollmutable =0
-
-        hscrollmutable=hscroll
-        vscrollmutable= vscroll
-
-//        var dhscroll= hscrollmutable-previoushscroll
-//        var dvscroll= vscrollmutable-previousvscroll
-//
-//        dhscroll = Math.abs(dhscroll)
-//        dvscroll = Math.abs(dvscroll)
-//        if(dvscroll>=dhscroll)
-//        {
-//            hscrollmutable=0
-//
-//        }
-//        else
-//        {
-//            vscrollmutable=0
-//        }
-        var vs:Int =(vscrollmutable)
-        var hs:Int =(hscrollmutable)
-        Log.i("vscroll ",vscroll.toString())
-        Log.i("vs ",vs.toString())
-        Log.i("hscroll ",hscroll.toString())
-        Log.i("hs ",hs.toString())
-
-
-        mouseReport.vScroll=vs.toByte()
-        mouseReport.hScroll= hs.toByte()
-
-        sendMouse()
-
-//        previousvscroll=-1*vscroll
-//        previoushscroll=hscroll
-
-
+    /** A complete left click: press, then release on the next looper pass. */
+    fun sendLeftClick() {
+        sendLeftClickOn()
+        handler.postDelayed(::sendLeftClickOff, CLICK_HOLD_MS)
     }
 
+    /** A complete right click. */
+    fun sendRightClick() {
+        sendRightClickOn()
+        handler.postDelayed(::sendRightClickOff, CLICK_HOLD_MS)
+    }
 
+    /**
+     * Two full clicks close enough together that the host reads them as a double click.
+     * The whole sequence takes 150 ms, comfortably inside the 400-500 ms a host typically
+     * allows.
+     */
+    fun sendDoubleClick() {
+        sendLeftClickOn()
+        handler.postDelayed(::sendLeftClickOff, CLICK_HOLD_MS)
+        handler.postDelayed(::sendLeftClickOn, CLICK_HOLD_MS * 2)
+        handler.postDelayed(::sendLeftClickOff, CLICK_HOLD_MS * 3)
+    }
 
+    /**
+     * Sends one scroll step. Values are wheel *detents*, not pixels, so +/-1 per report is
+     * the normal magnitude.
+     */
+    fun sendScroll(vScroll: Int, hScroll: Int) {
+        mouseReport.vScroll = vScroll.coerceIn(-MAX_SCROLL, MAX_SCROLL).toByte()
+        mouseReport.hScroll = hScroll.coerceIn(-MAX_SCROLL, MAX_SCROLL).toByte()
+        sendMouse()
+    }
+
+    /** Clears the scroll fields in the shared report without sending anything itself. */
+    fun clearScroll() {
+        mouseReport.vScroll = 0
+        mouseReport.hScroll = 0
+    }
+
+    /** Drops any pending click releases. Call when the link goes away. */
+    fun cancelPending() {
+        handler.removeCallbacksAndMessages(null)
+    }
 
     companion object {
-        const val TAG = "TrackPadSender"
+        private const val TAG = "RelativeMouseSender"
 
         /** Largest delta the 12-bit signed X/Y fields can carry. */
         const val MAX_DELTA = 2047
-    }
 
+        /** The scroll fields are single signed bytes. */
+        private const val MAX_SCROLL = 127
+
+        /**
+         * How long a button stays down for a synthetic click. Real hardware measures around
+         * 10 ms; 50 ms is unmistakable to the host and still fast enough to feel instant.
+         */
+        private const val CLICK_HOLD_MS = 50L
+    }
 }

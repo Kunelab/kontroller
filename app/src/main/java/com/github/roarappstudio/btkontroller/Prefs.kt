@@ -46,6 +46,7 @@ object Prefs {
     private const val KEY_ORIENTATION = "orientation"
     private const val KEY_HELP_SHOWN = "help_shown"
     private const val KEY_HOST_LAYOUT = "host_layout"
+    private const val KEY_PREFERRED_HOST = "preferred_host"
 
     /** Sensitivity is stored as a percentage so it survives as a plain Int. */
     const val SENSITIVITY_MIN = 25
@@ -142,4 +143,17 @@ object Prefs {
     var SharedPreferences.helpShown: Boolean
         get() = getBoolean(KEY_HELP_SHOWN, false)
         set(value) = edit().putBoolean(KEY_HELP_SHOWN, value).apply()
+
+    /**
+     * MAC address of the host to auto-connect to, or null for "whichever one turns up".
+     *
+     * Everything typed goes to whatever holds the HID link, the clipboard included, so
+     * leaving this unset means any device the phone has ever been bonded with can end up
+     * receiving keystrokes. Pinning one in [DevicesActivity] restricts auto-connect to it.
+     */
+    var SharedPreferences.preferredHost: String?
+        get() = getString(KEY_PREFERRED_HOST, null)
+        set(value) = edit().apply {
+            if (value == null) remove(KEY_PREFERRED_HOST) else putString(KEY_PREFERRED_HOST, value)
+        }.apply()
 }

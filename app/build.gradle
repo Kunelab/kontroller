@@ -3,6 +3,15 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+// Release signing is driven by a keystore.properties next to this file's project root.
+// It is gitignored, so a clone without one still builds -- the release APK just comes out
+// unsigned, exactly as it did before. Create it from keystore.properties.example.
+def keystorePropertiesFile = rootProject.file('keystore.properties')
+def keystoreProperties = new Properties()
+if (keystorePropertiesFile.exists()) {
+    keystorePropertiesFile.withInputStream { keystoreProperties.load(it) }
+}
+
 android {
     namespace 'com.github.roarappstudio.btkontroller'
     compileSdk 36
@@ -24,11 +33,44 @@ android {
         jvmTarget = '17'
     }
 
+    signingConfigs {
+        release {
+            if (keystoreProperties.containsKey('storeFile')) {
+                storeFile rootProject.file(keystoreProperties['storeFile'])
+                storePassword keystoreProperties['storePassword']
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+            }
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled true
+            // Without this the 22 locales and the unused launcher/action-bar drawables are
+            // all packaged even when nothing references them.
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            if (keystoreProperties.containsKey('storeFile')) {
+                signingConfig signingConfigs.release
+            }
         }
+    }
+
+    lint {
+        // MissingTranslation is an error by default, which meant `assembleRelease` could
+        // not complete: app_name, action_check and action_check_held have never been
+        // translated in any of the 21 locales, and every string added from here on starts
+        // out untranslated too. An untranslated string falls back to English, which is a
+        // cosmetic gap, not a broken build -- so it is reported and not fatal.
+        warning 'MissingTranslation'
+
+        // Deliberate: the trackpad and the click buttons are driven from the raw touch
+        // stream because a HID button has to be able to stay held down across a drag.
+        // The click buttons do call performClick(); the pad itself has no click semantics.
+        disable 'ClickableViewAccessibility'
+
+        abortOnError true
     }
 
     bundle {
