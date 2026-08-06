@@ -36,6 +36,14 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
     @Volatile
     var hostDevice: BluetoothDevice? = null
 
+    /**
+     * The most recent host, kept after it disconnects so [reconnect] has something to aim
+     * at. [hostDevice] is cleared on disconnect because it means "connected right now".
+     */
+    @Volatile
+    var lastHost: BluetoothDevice? = null
+        private set
+
     var autoPairFlag = false
 
     /**
@@ -121,14 +129,37 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
         clearListeners()
     }
 
+    /**
+     * Registers [callback] to run whenever a host connects, and runs it immediately if one
+     * already is.
+     *
+     * The listener is kept in *both* cases. It used to return early after the immediate
+     * call, so when the activity started with the link already up -- the normal case, since
+     * "stay connected" is on by default -- the callback was fired once and thrown away.
+     * `deviceListener` was then null for the rest of the process, and the next
+     * reconnection rebuilt nothing: no senders, no status update. Disconnecting once left
+     * the app permanently unable to come back without a restart.
+     */
     fun getSender(callback: (BluetoothHidDevice, BluetoothDevice) -> Unit) {
-        btHid?.let { hidd ->
-            hostDevice?.let { host ->
-                callback(hidd, host)
-                return
-            }
-        }
         deviceListener = callback
+
+        val hid = btHid ?: return
+        val host = hostDevice ?: return
+        callback(hid, host)
+    }
+
+    /**
+     * Opens the HID link again after a manual disconnect.
+     *
+     * Auto-connect only runs on registration, so once the user (or a misclick) has dropped
+     * the link there is otherwise nothing that brings it back. Returns false when there is
+     * no host to reconnect to.
+     */
+    fun reconnect(): Boolean {
+        val hid = btHid ?: return false
+        val target = hostDevice ?: lastHost ?: return false
+        Log.i(TAG, "Reconnecting to $target")
+        return hid.connect(target)
     }
 
     fun getDisconnector(callback: () -> Unit) {
@@ -214,6 +245,7 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
         if (state == BluetoothProfile.STATE_CONNECTED) {
             if (device != null) {
                 hostDevice = device
+                lastHost = device
                 btHid?.let { deviceListener?.invoke(it, device) }
             } else {
                 Log.e(TAG, "Connected state with no device")

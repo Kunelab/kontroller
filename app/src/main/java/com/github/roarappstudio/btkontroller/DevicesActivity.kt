@@ -2,6 +2,7 @@ package com.github.roarappstudio.btkontroller
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothProfile
 import android.os.Bundle
@@ -120,10 +121,30 @@ class DevicesActivity : Activity() {
                 Toast.makeText(this, R.string.devices_not_registered, Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
-            if (connected) hid.disconnect(device) else hid.connect(device)
 
-            // The state change arrives asynchronously; show it once it has settled.
-            labels.postDelayed({ refresh() }, REFRESH_DELAY_MS)
+            // Connecting is harmless, so it just happens. Disconnecting is not: this list is
+            // a column of tap targets and a stray tap on the connected host drops the link
+            // mid-use, which is exactly the misclick worth guarding against.
+            if (connected) {
+                AlertDialog.Builder(this)
+                    .setTitle(R.string.device_disconnect_title)
+                    .setMessage(
+                        getString(
+                            R.string.device_disconnect_message,
+                            device.name ?: device.address
+                        )
+                    )
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .setPositiveButton(R.string.action_disconnect) { _, _ ->
+                        hid.disconnect(device)
+                        labels.postDelayed({ refresh() }, REFRESH_DELAY_MS)
+                    }
+                    .show()
+            } else {
+                hid.connect(device)
+                // The state change arrives asynchronously; show it once it has settled.
+                labels.postDelayed({ refresh() }, REFRESH_DELAY_MS)
+            }
         }
 
         val star = TextView(this).apply {

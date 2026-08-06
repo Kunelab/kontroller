@@ -12,6 +12,10 @@
     <string name="action_check_held">(P)</string>
     <string name="action_tool_tip">Modifier keys: (N) releases Ctrl/Alt/Shift after every keystroke, (P) holds them down until you switch back</string>
     <string name="action_disconnect">Disconnect</string>
+    <string name="action_connect">Connect</string>
+    <string name="error_nothing_to_reconnect">No host to reconnect to — pick one under Devices.</string>
+    <string name="device_disconnect_title">Disconnect?</string>
+    <string name="device_disconnect_message">Stop using this phone as a keyboard and mouse for %1$s?</string>
     <string name="action_devices">Devices</string>
     <string name="action_send_clipboard">Send clipboard</string>
 

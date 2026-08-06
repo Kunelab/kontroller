@@ -195,15 +195,37 @@ class SelectDeviceActivity : Activity() {
 
                 applyPointerPreferences()
                 setConnected(host)
+                invalidateOptionsMenu()
             }
         }
 
         BluetoothController.getDisconnector {
-            runOnUiThread {
-                cancelClipboard()
-                setConnected(null)
-            }
+            runOnUiThread { onHostDisconnected() }
         }
+    }
+
+    /**
+     * Drops everything bound to the link that just went away.
+     *
+     * The senders hold the `BluetoothHidDevice` and the host they were built for, so keeping
+     * them after a disconnect leaves the app half-alive: reports go nowhere but nothing says
+     * so. They are rebuilt from scratch by the [BluetoothController.getSender] callback when
+     * a host connects again.
+     */
+    private fun onHostDisconnected() {
+        cancelClipboard()
+        gestureListener?.cancel()
+        mouseSender?.cancelPending()
+        pointer?.reset()
+
+        keyboardSender = null
+        mouseSender = null
+        mediaSender = null
+        gyro.pointer = null
+        pointer = null
+
+        setConnected(null)
+        invalidateOptionsMenu()
     }
 
     override fun onStop() {
@@ -575,6 +597,11 @@ class SelectDeviceActivity : Activity() {
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
         menu?.findItem(R.id.action_send_clipboard)?.isVisible =
             Prefs.of(this).clipboardAction
+
+        val connected = BluetoothController.hostDevice != null
+        menu?.findItem(R.id.action_disconnect)?.setTitle(
+            if (connected) R.string.action_disconnect else R.string.action_connect
+        )
         return super.onPrepareOptionsMenu(menu)
     }
 
@@ -616,10 +643,17 @@ class SelectDeviceActivity : Activity() {
             true
         }
 
+        // One item, both directions: with no way back from the trackpad screen, a single
+        // stray tap on Disconnect meant restarting the app.
         R.id.action_disconnect -> {
-            BluetoothController.btHid?.disconnect(BluetoothController.hostDevice)
-            cancelClipboard()
-            setConnected(null)
+            if (BluetoothController.hostDevice != null) {
+                BluetoothController.btHid?.disconnect(BluetoothController.hostDevice)
+                onHostDisconnected()
+            } else if (!BluetoothController.reconnect()) {
+                Toast.makeText(this, R.string.error_nothing_to_reconnect, Toast.LENGTH_SHORT)
+                    .show()
+            }
+            invalidateOptionsMenu()
             true
         }
 
