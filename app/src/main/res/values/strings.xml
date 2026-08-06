@@ -12,6 +12,10 @@
     <string name="action_check_held">(P)</string>
     <string name="action_tool_tip">Modifier keys: (N) releases Ctrl/Alt/Shift after every keystroke, (P) holds them down until you switch back</string>
     <string name="action_disconnect">Disconnect</string>
+    <string name="action_connect">Connect</string>
+    <string name="error_nothing_to_reconnect">No host to reconnect to — pick one under Devices.</string>
+    <string name="device_disconnect_title">Disconnect?</string>
+    <string name="device_disconnect_message">Stop using this phone as a keyboard and mouse for %1$s?</string>
     <string name="action_devices">Devices</string>
     <string name="action_send_clipboard">Send clipboard</string>
 
@@ -40,6 +44,7 @@
     <string name="device_unpin">Stop always connecting to this device</string>
     <string name="device_pinned_toast">%1$s is now the preferred host.</string>
     <string name="device_unpinned_toast">No preferred host — will connect to any paired device.</string>
+    <string name="devices_connect_failed">Could not start the connection. Try turning Bluetooth off and on, then reopen the app.</string>
 
     <!-- Clipboard -->
     <string name="clipboard_empty">The clipboard is empty.</string>
@@ -50,8 +55,13 @@
     <string name="clipboard_confirm_send">Send</string>
     <string name="error_not_connected">Not connected to a host yet.</string>
 
+    <!-- Shown as the action bar subtitle, which is narrow: keep both short or they clip. -->
     <string name="status_connected_to">Connected to %1$s</string>
-    <string name="status_not_connected">App not connected via bluetooth</string>
+    <string name="status_not_connected">Not connected</string>
+
+    <string name="error_registration_title">Bluetooth needs restarting</string>
+    <string name="error_registration_message">Android did not finish registering this phone as a keyboard.\n\nThis happens when a previous run was killed without disconnecting — the Bluetooth stack keeps holding the old registration and refuses new connections. Only one app can be a Bluetooth keyboard at a time.\n\nTurn Bluetooth off and on again, then reopen this app.</string>
+    <string name="error_registration_open_settings">Bluetooth settings</string>
     <!-- Kept for the menu item's default title/tooltip in the XML. -->
     <string name="action_ble_status_tool_tip">App not connected via bluetooth</string>
 
@@ -151,10 +161,13 @@
     <string name="help_pairing_body">1. Leave this app open and allow the “make discoverable” prompt.\n2. On the host, scan for Bluetooth devices and pair with this phone.\n3. Confirm the passkey on both sides.\n\nAfterwards, leave “Connect automatically” on in Settings and the phone will open the connection itself whenever you open the app.</string>
 
     <string name="help_gestures_title">Gestures</string>
-    <string name="help_gestures_body">• Move pointer — drag one finger\n• Left click — tap, or the Left click button\n• Right click — the Right click button\n• Double click — double tap\n• Drag and drop — hold a click button and drag on the pad\n• Scroll — drag two fingers\n\nA two-finger tap is also a right click, but it needs both fingers down and up within 100 ms, so the button is easier.</string>
+    <string name="help_gestures_body">• Move pointer — drag one finger\n• Left click — tap, or the Left click button\n• Right click — the Right click button\n• Double click — double tap\n• Drag and drop — hold a click button and drag on the pad\n• Scroll — drag two fingers\n\nA two-finger tap is also a right click: put both fingers down and lift them again without sliding.</string>
 
     <string name="help_keyboard_title">Keyboard</string>
     <string name="help_keyboard_body">Tap the keyboard icon to bring up the soft keyboard; whatever you type is sent to the host.\n\nThe (N)/(P) button controls modifier keys. (N) releases Ctrl/Alt/Shift after each keystroke; (P) holds them down so you can build combinations such as Ctrl held while clicking. Remember to switch back to (N), or modifiers stay stuck.\n\nGboard has no Ctrl, Esc, arrows or function keys. A keyboard app that does — Unexpected Keyboard or Hacker’s Keyboard — makes shortcuts such as Shift+F10 (context menu) possible.</string>
+
+    <string name="help_stuck_title">If nothing connects at all</string>
+    <string name="help_stuck_body">If tapping a device under Devices does nothing, and Connect does nothing either, the phone\'s Bluetooth stack is most likely stuck.\n\nAndroid allows only one app at a time to act as a Bluetooth keyboard. If a previous run was killed without disconnecting — it crashed, was force-stopped, or was reinstalled while connected — the stack keeps holding that dead registration and quietly refuses every new connection. The app cannot clear this itself.\n\nTurn Bluetooth off, wait a few seconds, turn it back on, then reopen this app. That releases the stale registration and connecting works again.\n\nIf the app notices this has happened it will offer the same advice in a dialog.</string>
 
     <string name="help_trouble_title">If the host sees no keyboard</string>
     <string name="help_trouble_body">On Linux, a plain “connect” often brings up audio profiles instead of the keyboard. Either rely on “Connect automatically” so the phone initiates, or connect the HID profile explicitly:\n\nbluetoothctl connect &lt;MAC&gt; 00001124-0000-1000-8000-00805f9b34fb\n\nIf the host still shows no keyboard, BlueZ may have cached a service list from before this app registered. Remove the cache file for this phone under /var/lib/bluetooth and reconnect; the pairing itself survives.</string>

@@ -81,6 +81,9 @@ class SelectDeviceActivity : Activity() {
     private var discoverableRequested = false
     private var keyboardShown = false
 
+    /** The stuck-stack dialog is worth showing once, not on every retry. */
+    private var stuckStackDialogShown = false
+
     private val sensorManager by lazy { getSystemService(SensorManager::class.java) }
 
     /** Re-read in onStart so a change in Settings takes effect without a restart. */
@@ -165,6 +168,7 @@ class SelectDeviceActivity : Activity() {
         // fire again -- ask directly when the HID app is already up.
         if (BluetoothController.btHid != null) ensureDiscoverable()
         BluetoothController.onRegistered { runOnUiThread { ensureDiscoverable() } }
+        BluetoothController.onRegistrationFailed { runOnUiThread { showStuckStackDialog() } }
 
         BluetoothController.getSender { hidDevice, host ->
             runOnUiThread {
@@ -195,15 +199,37 @@ class SelectDeviceActivity : Activity() {
 
                 applyPointerPreferences()
                 setConnected(host)
+                invalidateOptionsMenu()
             }
         }
 
         BluetoothController.getDisconnector {
-            runOnUiThread {
-                cancelClipboard()
-                setConnected(null)
-            }
+            runOnUiThread { onHostDisconnected() }
         }
+    }
+
+    /**
+     * Drops everything bound to the link that just went away.
+     *
+     * The senders hold the `BluetoothHidDevice` and the host they were built for, so keeping
+     * them after a disconnect leaves the app half-alive: reports go nowhere but nothing says
+     * so. They are rebuilt from scratch by the [BluetoothController.getSender] callback when
+     * a host connects again.
+     */
+    private fun onHostDisconnected() {
+        cancelClipboard()
+        gestureListener?.cancel()
+        mouseSender?.cancelPending()
+        pointer?.reset()
+
+        keyboardSender = null
+        mouseSender = null
+        mediaSender = null
+        gyro.pointer = null
+        pointer = null
+
+        setConnected(null)
+        invalidateOptionsMenu()
     }
 
     override fun onStop() {
@@ -477,6 +503,33 @@ class SelectDeviceActivity : Activity() {
      * did this with a reflective call to the hidden setScanMode(), which no longer exists
      * on Android 12+; ACTION_REQUEST_DISCOVERABLE is the supported equivalent.
      */
+    /**
+     * Explains the one failure the app cannot recover from itself.
+     *
+     * When the Bluetooth stack holds a registration belonging to a process that died without
+     * unregistering, `registerApp()` succeeds and then nothing happens -- no host can
+     * connect and no error is reported anywhere. Only restarting Bluetooth clears it. This
+     * used to present as the app simply not working, with no clue as to why, so it is worth
+     * a dialog that names the remedy.
+     */
+    private fun showStuckStackDialog() {
+        if (isFinishing || isDestroyed || stuckStackDialogShown) return
+        stuckStackDialogShown = true
+
+        AlertDialog.Builder(this)
+            .setTitle(R.string.error_registration_title)
+            .setMessage(R.string.error_registration_message)
+            .setNegativeButton(android.R.string.ok, null)
+            .setPositiveButton(R.string.error_registration_open_settings) { _, _ ->
+                try {
+                    startActivity(Intent(android.provider.Settings.ACTION_BLUETOOTH_SETTINGS))
+                } catch (e: Exception) {
+                    Log.e(TAG, "Could not open Bluetooth settings", e)
+                }
+            }
+            .show()
+    }
+
     @SuppressLint("MissingPermission") // onStart bails out if BLUETOOTH_CONNECT is missing
     private fun promptToEnableBluetooth() {
         val adapter = BluetoothController.btAdapter ?: return
@@ -575,6 +628,11 @@ class SelectDeviceActivity : Activity() {
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
         menu?.findItem(R.id.action_send_clipboard)?.isVisible =
             Prefs.of(this).clipboardAction
+
+        val connected = BluetoothController.hostDevice != null
+        menu?.findItem(R.id.action_disconnect)?.setTitle(
+            if (connected) R.string.action_disconnect else R.string.action_connect
+        )
         return super.onPrepareOptionsMenu(menu)
     }
 
@@ -616,10 +674,17 @@ class SelectDeviceActivity : Activity() {
             true
         }
 
+        // One item, both directions: with no way back from the trackpad screen, a single
+        // stray tap on Disconnect meant restarting the app.
         R.id.action_disconnect -> {
-            BluetoothController.btHid?.disconnect(BluetoothController.hostDevice)
-            cancelClipboard()
-            setConnected(null)
+            if (BluetoothController.hostDevice != null) {
+                BluetoothController.btHid?.disconnect(BluetoothController.hostDevice)
+                onHostDisconnected()
+            } else if (!BluetoothController.reconnect()) {
+                Toast.makeText(this, R.string.error_nothing_to_reconnect, Toast.LENGTH_SHORT)
+                    .show()
+            }
+            invalidateOptionsMenu()
             true
         }
 

@@ -29,6 +29,9 @@
             <TextView style="@style/HelpHeading" android:text="@string/help_keyboard_title" />
             <TextView style="@style/HelpBody" android:text="@string/help_keyboard_body" />
 
+            <TextView style="@style/HelpHeading" android:text="@string/help_stuck_title" />
+            <TextView style="@style/HelpBody" android:text="@string/help_stuck_body" />
+
             <TextView style="@style/HelpHeading" android:text="@string/help_trouble_title" />
             <TextView style="@style/HelpBody" android:text="@string/help_trouble_body" />
 

@@ -2,6 +2,7 @@ package com.github.roarappstudio.btkontroller
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothProfile
 import android.os.Bundle
@@ -63,8 +64,11 @@ class DevicesActivity : Activity() {
             return
         }
 
+        // appRegistered, not btHid != null: the proxy can be up while the registration never
+        // completed, and in that state the old check claimed everything was fine while every
+        // tap did nothing.
         hint.setText(
-            if (BluetoothController.btHid == null) R.string.devices_not_registered
+            if (!BluetoothController.appRegistered) R.string.devices_not_registered
             else R.string.devices_hint
         )
 
@@ -116,14 +120,37 @@ class DevicesActivity : Activity() {
 
         labels.setOnClickListener {
             val hid = BluetoothController.btHid
-            if (hid == null) {
+            if (hid == null || !BluetoothController.appRegistered) {
                 Toast.makeText(this, R.string.devices_not_registered, Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
-            if (connected) hid.disconnect(device) else hid.connect(device)
 
-            // The state change arrives asynchronously; show it once it has settled.
-            labels.postDelayed({ refresh() }, REFRESH_DELAY_MS)
+            // Connecting is harmless, so it just happens. Disconnecting is not: this list is
+            // a column of tap targets and a stray tap on the connected host drops the link
+            // mid-use, which is exactly the misclick worth guarding against.
+            if (connected) {
+                AlertDialog.Builder(this)
+                    .setTitle(R.string.device_disconnect_title)
+                    .setMessage(
+                        getString(
+                            R.string.device_disconnect_message,
+                            device.name ?: device.address
+                        )
+                    )
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .setPositiveButton(R.string.action_disconnect) { _, _ ->
+                        hid.disconnect(device)
+                        labels.postDelayed({ refresh() }, REFRESH_DELAY_MS)
+                    }
+                    .show()
+            } else if (BluetoothController.connectTo(device)) {
+                // The state change arrives asynchronously; show it once it has settled.
+                labels.postDelayed({ refresh() }, REFRESH_DELAY_MS)
+            } else {
+                // The return value used to be discarded, so a refused connect looked exactly
+                // like a tap that had not registered.
+                Toast.makeText(this, R.string.devices_connect_failed, Toast.LENGTH_LONG).show()
+            }
         }
 
         val star = TextView(this).apply {
