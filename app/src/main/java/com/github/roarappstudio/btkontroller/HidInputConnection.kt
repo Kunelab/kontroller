@@ -30,25 +30,43 @@ class HidInputConnection(
 
     override fun commitText(text: CharSequence?, newCursorPosition: Int): Boolean {
         if (text.isNullOrEmpty()) return true
+        text.forEach { sendCharacter(it) }
+        return true
+    }
 
-        val events = charMap.getEvents(text.toString().toCharArray())
+    override fun sendKeyEvent(event: KeyEvent?): Boolean {
+        if (event == null || event.action != KeyEvent.ACTION_DOWN) return true
+
+        // A printable key with no Ctrl/Alt held is text, so it goes through the layout
+        // table; anything else (Enter, arrows, shortcuts) is position-independent enough to
+        // take the keycode path.
+        val ch = event.unicodeChar.toChar()
+        if (event.unicodeChar != 0 && !event.isCtrlPressed && !event.isAltPressed) {
+            sendCharacter(ch)
+        } else {
+            view.dispatchHidKey(event)
+        }
+        return true
+    }
+
+    /**
+     * Prefers the host-layout table, which knows which key *position* produces this
+     * character on the host. Falls back to translating the character into Android key
+     * events, which assumes the host uses US QWERTY positions.
+     */
+    private fun sendCharacter(ch: Char) {
+        if (view.dispatchHidChar(ch)) return
+
+        val events = charMap.getEvents(charArrayOf(ch))
         if (events == null) {
-            Log.w(TAG, "No key events available for \"$text\" on a virtual keyboard")
-            return true
+            Log.w(TAG, "No key events available for '$ch' on a virtual keyboard")
+            return
         }
         // getEvents() returns paired down/up events; the sender emits a full
         // press-and-release per call, so only the down events are forwarded.
         for (event in events) {
             if (event.action == KeyEvent.ACTION_DOWN) view.dispatchHidKey(event)
         }
-        return true
-    }
-
-    override fun sendKeyEvent(event: KeyEvent?): Boolean {
-        if (event != null && event.action == KeyEvent.ACTION_DOWN) {
-            view.dispatchHidKey(event)
-        }
-        return true
     }
 
     override fun deleteSurroundingText(beforeLength: Int, afterLength: Int): Boolean {

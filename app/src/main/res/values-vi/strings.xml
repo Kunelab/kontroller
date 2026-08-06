@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="trackpad_label">Bàn cảm ứng</string>
+
+    <string name="click_left">Nhấp chuột trái</string>
+    <string name="click_right">Nhấp chuột phải</string>
+
+    <string name="action_settings">Cài đặt</string>
+    <string name="action_help">Trợ giúp</string>
+    <string name="action_keyboard_title">Hiện bàn phím</string>
+    <string name="action_tool_tip">Phím bổ trợ: (N) nhả Ctrl/Alt/Shift sau mỗi lần nhấn, (P) giữ chúng đến khi bạn chuyển lại</string>
+    <string name="action_disconnect">Ngắt kết nối</string>
+    <string name="action_devices">Thiết bị</string>
+    <string name="action_send_clipboard">Gửi bảng nhớ tạm</string>
+
+    <string name="status_connected">Ứng dụng đã kết nối qua Bluetooth</string>
+    <string name="status_not_connected">Ứng dụng chưa kết nối qua Bluetooth</string>
+    <string name="action_ble_status_tool_tip">Ứng dụng chưa kết nối qua Bluetooth</string>
+
+    <string name="error_bluetooth_permission">MaxKontroller cần quyền Bluetooth để hoạt động như bàn phím và chuột.</string>
+    <string name="error_no_hid_profile">Thiết bị này không cung cấp cấu hình Bluetooth HID Device, nên không thể dùng làm bàn phím hay chuột.</string>
+    <string name="error_no_gyro">Điện thoại này không có cảm biến quay, nên không dùng được chuột cảm biến.</string>
+    <string name="error_not_connected">Chưa kết nối với máy tính.</string>
+
+    <string name="service_channel">Kết nối</string>
+    <string name="service_title">MaxKontroller đang hoạt động</string>
+    <string name="service_text">Đang hoạt động như bàn phím và chuột Bluetooth.</string>
+    <string name="service_stop">Dừng</string>
+
+    <string name="media_vol_down">Âm lượng −</string>
+    <string name="media_vol_up">Âm lượng +</string>
+    <string name="media_mute">Tắt tiếng</string>
+    <string name="media_home">Trang chủ</string>
+
+    <string name="devices_title">Thiết bị</string>
+    <string name="devices_hint">Các thiết bị đã ghép nối. Nhấn để kết nối hoặc ngắt kết nối.</string>
+    <string name="devices_none">Chưa có thiết bị nào được ghép nối. Hãy ghép nối điện thoại này từ máy tính trước — xem hướng dẫn.</string>
+    <string name="devices_not_registered">Chưa được đăng ký làm bàn phím. Hãy trở lại bàn cảm ứng, đợi một lát rồi thử lại.</string>
+    <string name="devices_no_bluetooth">Không có bộ tiếp hợp Bluetooth nào.</string>
+    <string name="device_state_connected">Đã kết nối · %1$s</string>
+    <string name="device_state_connecting">Đang kết nối… · %1$s</string>
+    <string name="device_state_disconnected">Chưa kết nối · %1$s</string>
+
+    <string name="clipboard_empty">Bảng nhớ tạm đang trống.</string>
+    <string name="clipboard_sending">Đang nhập %1$d ký tự…</string>
+    <string name="clipboard_truncated">Bảng nhớ tạm khá dài — chỉ gửi %1$d ký tự đầu.</string>
+
+    <string name="settings_title">Cài đặt</string>
+    <string name="settings_header_pointer">Con trỏ</string>
+    <string name="settings_header_keyboard">Bàn phím</string>
+    <string name="settings_header_trackpad">Bàn cảm ứng</string>
+    <string name="settings_header_remote">Điều khiển</string>
+    <string name="settings_header_connection">Kết nối</string>
+    <string name="settings_header_appearance">Giao diện</string>
+    <string name="settings_header_help">Trợ giúp</string>
+
+    <string name="setting_sensitivity_title">Tốc độ con trỏ</string>
+    <string name="setting_sensitivity_value">Tốc độ con trỏ: %1$d%%</string>
+    <string name="setting_sensitivity_summary">Con trỏ di chuyển bao xa với một chuyển động ngón tay nhất định. Giá trị 100 là một đối một.</string>
+
+    <string name="setting_gyro_title">Chuột cảm biến</string>
+    <string name="setting_gyro_summary">Di chuyển con trỏ bằng cách nghiêng điện thoại thay vì trượt trên bàn cảm ứng. Nhấn, cuộn và các nút nhấp vẫn hoạt động.</string>
+    <string name="setting_gyro_invert_x">Đảo trái / phải</string>
+    <string name="setting_gyro_invert_y">Đảo lên / xuống</string>
+    <string name="setting_gyro_invert_summary">Đảo một trong hai trục nếu hướng không phù hợp với cách bạn cầm điện thoại.</string>
+
+    <string name="setting_host_layout_title">Bố cục bàn phím của máy tính</string>
+    <string name="setting_host_layout_summary">Bố cục trên máy tính bạn đang điều khiển, không phải trên điện thoại này. Bluetooth truyền vị trí phím chứ không phải ký tự, nên cài đặt này phải khớp với máy tính, nếu không chữ và dấu câu sẽ bị lẫn. Máy tính dùng tiếng Trung, tiếng Hàn, tiếng Hindi, tiếng Ả Rập, tiếng Thái và tiếng Việt đều dùng US QWERTY và tự tạo chữ viết.</string>
+
+    <string name="setting_language_title">Ngôn ngữ ứng dụng</string>
+    <string name="setting_language_summary">Ngôn ngữ của ứng dụng này. Không ảnh hưởng đến nội dung nhập sang máy tính.</string>
+
+    <string name="setting_click_bar_title">Nút nhấp</string>
+    <string name="setting_click_bar_summary">Hiện nút nhấp trái và phải bên dưới bàn cảm ứng, giống như trên laptop. Giữ một nút rồi trượt trên bàn cảm ứng để kéo và thả. Bàn cảm ứng sẽ thu nhỏ để nhường chỗ.</string>
+
+    <string name="setting_media_keys_title">Phím đa phương tiện</string>
+    <string name="setting_media_keys_summary">Hiện một dãy phím âm lượng, phát nhạc và Trang chủ, biến ứng dụng thành điều khiển TV. Tắt theo mặc định.</string>
+
+    <string name="setting_clipboard_title">Gửi bảng nhớ tạm</string>
+    <string name="setting_clipboard_summary">Thêm một mục menu để nhập nội dung bảng nhớ tạm của điện thoại vào máy tính — tiện cho mật khẩu, đường dẫn và văn bản dài.</string>
+
+    <string name="setting_auto_pair_title">Tự động kết nối</string>
+    <string name="setting_auto_pair_summary">Để điện thoại tự mở kết nối tới máy tính đã biết ngay khi ứng dụng khởi động. Đáng tin cậy hơn so với kết nối từ máy tính, vì máy tính thường chọn cấu hình âm thanh.</string>
+
+    <string name="setting_stay_connected_title">Giữ kết nối ở chế độ nền</string>
+    <string name="setting_stay_connected_summary">Tiếp tục hoạt động như bàn phím và chuột khi bạn rời ứng dụng hoặc màn hình tắt. Hiện một thông báo thường trú trong lúc đó.</string>
+
+    <string name="setting_keep_screen_on_title">Giữ màn hình sáng</string>
+    <string name="setting_keep_screen_on_summary">Ngăn màn hình tắt khi ứng dụng đang mở.</string>
+
+    <string name="setting_theme_title">Chủ đề</string>
+    <string name="setting_theme_system">Theo cài đặt của điện thoại</string>
+    <string name="setting_theme_light">Sáng</string>
+    <string name="setting_theme_black">Đen</string>
+
+    <string name="setting_orientation_title">Hướng màn hình</string>
+    <string name="setting_orientation_portrait">Dọc</string>
+    <string name="setting_orientation_landscape">Ngang</string>
+    <string name="setting_orientation_auto">Tự động quay</string>
+    <string name="setting_orientation_gyro_note">Không dùng được tự động quay khi bật chuột cảm biến, vì nghiêng điện thoại để di chuyển con trỏ sẽ làm màn hình quay theo.</string>
+
+    <string name="setting_open_help">Mở hướng dẫn</string>
+
+    <string name="help_title">Bắt đầu</string>
+    <string name="help_continue">Bắt đầu</string>
+
+    <string name="help_intro">MaxKontroller biến điện thoại này thành bàn phím và chuột Bluetooth. Máy tính nhận nó như một bàn phím Bluetooth thông thường, nên không cần cài gì trên máy tính.</string>
+
+    <string name="help_pairing_title">Ghép nối</string>
+    <string name="help_pairing_body">1. Giữ ứng dụng này mở và cho phép yêu cầu «cho phép tìm thấy».\n2. Trên máy tính, tìm thiết bị Bluetooth và ghép nối với điện thoại này.\n3. Xác nhận mã ở cả hai bên.\n\nSau đó hãy bật «Tự động kết nối» trong cài đặt, điện thoại sẽ tự mở kết nối mỗi lần bạn mở ứng dụng.</string>
+
+    <string name="help_gestures_title">Thao tác</string>
+    <string name="help_gestures_body">• Di chuyển con trỏ — trượt một ngón tay\n• Nhấp trái — nhấn, hoặc nút Nhấp chuột trái\n• Nhấp phải — nút Nhấp chuột phải\n• Nhấp đúp — nhấn hai lần\n• Kéo và thả — giữ nút nhấp rồi trượt trên bàn cảm ứng\n• Cuộn — trượt hai ngón tay\n\nNhấn hai ngón tay cũng là nhấp phải, nhưng cả hai ngón phải chạm và rời trong 100 ms, nên dùng nút dễ hơn.</string>
+
+    <string name="help_keyboard_title">Bàn phím</string>
+    <string name="help_keyboard_body">Nhấn biểu tượng bàn phím để hiện bàn phím trên màn hình; mọi thứ bạn nhập đều được gửi tới máy tính.\n\nNút (N)/(P) điều khiển các phím bổ trợ. (N) nhả Ctrl/Alt/Shift sau mỗi lần nhấn; (P) giữ chúng để bạn tạo tổ hợp, ví dụ giữ Ctrl khi nhấp chuột. Hãy nhớ chuyển lại (N), nếu không các phím bổ trợ sẽ bị kẹt.\n\nGboard không có Ctrl, Esc, phím mũi tên hay phím chức năng. Một bàn phím có chúng — Unexpected Keyboard hoặc Hacker\'s Keyboard — cho phép dùng phím tắt như Shift+F10 (menu ngữ cảnh).</string>
+
+    <string name="help_trouble_title">Nếu máy tính không thấy bàn phím</string>
+    <string name="help_trouble_body">Trên Linux, lệnh «connect» thông thường hay bật cấu hình âm thanh thay vì bàn phím. Hãy dùng «Tự động kết nối» để điện thoại chủ động, hoặc kết nối cấu hình HID một cách rõ ràng:\n\nbluetoothctl connect &lt;MAC&gt; 00001124-0000-1000-8000-00805f9b34fb\n\nNếu máy tính vẫn không thấy bàn phím, có thể BlueZ đã lưu danh sách dịch vụ từ trước khi ứng dụng đăng ký. Hãy xóa tệp cache của điện thoại này trong /var/lib/bluetooth rồi kết nối lại; việc ghép nối vẫn được giữ.</string>
+</resources>

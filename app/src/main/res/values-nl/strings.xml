@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="trackpad_label">Touchpad</string>
+
+    <string name="click_left">Linkerklik</string>
+    <string name="click_right">Rechterklik</string>
+
+    <string name="action_settings">Instellingen</string>
+    <string name="action_help">Help</string>
+    <string name="action_keyboard_title">Toetsenbord tonen</string>
+    <string name="action_tool_tip">Modificatietoetsen: (N) laat Ctrl/Alt/Shift na elke aanslag los, (P) houdt ze ingedrukt tot je terugschakelt</string>
+    <string name="action_disconnect">Verbinding verbreken</string>
+    <string name="action_devices">Apparaten</string>
+    <string name="action_send_clipboard">Klembord verzenden</string>
+
+    <string name="status_connected">App verbonden via bluetooth</string>
+    <string name="status_not_connected">App niet verbonden via bluetooth</string>
+    <string name="action_ble_status_tool_tip">App niet verbonden via bluetooth</string>
+
+    <string name="error_bluetooth_permission">MaxKontroller heeft de bluetoothrechten nodig om als toetsenbord en muis te werken.</string>
+    <string name="error_no_hid_profile">Dit apparaat biedt het bluetooth HID Device-profiel niet, dus het kan niet als toetsenbord of muis worden gebruikt.</string>
+    <string name="error_no_gyro">Deze telefoon heeft geen rotatiesensor, dus de gyromuis is niet beschikbaar.</string>
+    <string name="error_not_connected">Nog niet verbonden met een computer.</string>
+
+    <string name="service_channel">Verbinding</string>
+    <string name="service_title">MaxKontroller is actief</string>
+    <string name="service_text">Werkt als bluetooth-toetsenbord en -muis.</string>
+    <string name="service_stop">Stoppen</string>
+
+    <string name="media_vol_down">Vol −</string>
+    <string name="media_vol_up">Vol +</string>
+    <string name="media_mute">Dempen</string>
+    <string name="media_home">Home</string>
+
+    <string name="devices_title">Apparaten</string>
+    <string name="devices_hint">Gekoppelde apparaten. Tik erop om te verbinden of de verbinding te verbreken.</string>
+    <string name="devices_none">Nog geen gekoppelde apparaten. Koppel deze telefoon eerst vanaf de computer — zie de handleiding.</string>
+    <string name="devices_not_registered">Nog niet geregistreerd als toetsenbord. Ga terug naar het touchpad, wacht even en probeer het opnieuw.</string>
+    <string name="devices_no_bluetooth">Geen bluetooth-adapter beschikbaar.</string>
+    <string name="device_state_connected">Verbonden · %1$s</string>
+    <string name="device_state_connecting">Verbinden… · %1$s</string>
+    <string name="device_state_disconnected">Niet verbonden · %1$s</string>
+
+    <string name="clipboard_empty">Het klembord is leeg.</string>
+    <string name="clipboard_sending">%1$d tekens typen…</string>
+    <string name="clipboard_truncated">Klembord is lang — de eerste %1$d tekens worden verzonden.</string>
+
+    <string name="settings_title">Instellingen</string>
+    <string name="settings_header_pointer">Aanwijzer</string>
+    <string name="settings_header_keyboard">Toetsenbord</string>
+    <string name="settings_header_trackpad">Touchpad</string>
+    <string name="settings_header_remote">Afstandsbediening</string>
+    <string name="settings_header_connection">Verbinding</string>
+    <string name="settings_header_appearance">Weergave</string>
+    <string name="settings_header_help">Help</string>
+
+    <string name="setting_sensitivity_title">Aanwijzersnelheid</string>
+    <string name="setting_sensitivity_value">Aanwijzersnelheid: %1$d%%</string>
+    <string name="setting_sensitivity_summary">Hoe ver de aanwijzer beweegt bij een bepaalde vingerbeweging. De waarde 100 is één op één.</string>
+
+    <string name="setting_gyro_title">Gyromuis</string>
+    <string name="setting_gyro_summary">Beweeg de aanwijzer door de telefoon te kantelen in plaats van over het touchpad te vegen. Tikken, scrollen en de klikknoppen blijven werken.</string>
+    <string name="setting_gyro_invert_x">Links / rechts omkeren</string>
+    <string name="setting_gyro_invert_y">Omhoog / omlaag omkeren</string>
+    <string name="setting_gyro_invert_summary">Keer een van de gyro-assen om als de richting niet past bij hoe je de telefoon vasthoudt.</string>
+
+    <string name="setting_host_layout_title">Toetsenbordindeling van de computer</string>
+    <string name="setting_host_layout_summary">De indeling van de computer die je bestuurt, niet die van deze telefoon. Bluetooth verzendt toetsposities en geen tekens, dus dit moet overeenkomen met de computer, anders komen letters en interpunctie verwisseld door. Computers met Chinees, Koreaans, Hindi, Arabisch, Thai en Vietnamees gebruiken US QWERTY en stellen hun schrift zelf samen.</string>
+
+    <string name="setting_language_title">Taal van de app</string>
+    <string name="setting_language_summary">De taal van deze app. Dit heeft geen invloed op wat er naar de computer wordt getypt.</string>
+
+    <string name="setting_click_bar_title">Klikknoppen</string>
+    <string name="setting_click_bar_summary">Toont knoppen voor linker- en rechterklik onder het touchpad, zoals op een laptop. Houd een knop ingedrukt en veeg over het touchpad om te slepen. Het touchpad wordt kleiner om ruimte te maken.</string>
+
+    <string name="setting_media_keys_title">Mediatoetsen</string>
+    <string name="setting_media_keys_summary">Toont een rij toetsen voor volume, weergave en Home, waarmee de app een tv-afstandsbediening wordt. Standaard uit.</string>
+
+    <string name="setting_clipboard_title">Klembord verzenden</string>
+    <string name="setting_clipboard_summary">Voegt een menu-item toe dat het klembord van de telefoon op de computer typt — handig voor wachtwoorden, URL\'s en lange teksten.</string>
+
+    <string name="setting_auto_pair_title">Automatisch verbinden</string>
+    <string name="setting_auto_pair_summary">Laat de telefoon zelf verbinding maken met een bekende computer zodra de app start. Betrouwbaarder dan verbinden vanaf de pc, die meestal audioprofielen kiest.</string>
+
+    <string name="setting_stay_connected_title">Verbonden blijven op de achtergrond</string>
+    <string name="setting_stay_connected_summary">Blijft als toetsenbord en muis werken wanneer je de app verlaat of het scherm uitgaat. Er wordt dan een blijvende melding weergegeven.</string>
+
+    <string name="setting_keep_screen_on_title">Scherm aan houden</string>
+    <string name="setting_keep_screen_on_summary">Voorkomt dat het scherm uitgaat zolang de app open is.</string>
+
+    <string name="setting_theme_title">Thema</string>
+    <string name="setting_theme_system">Systeeminstelling volgen</string>
+    <string name="setting_theme_light">Licht</string>
+    <string name="setting_theme_black">Zwart</string>
+
+    <string name="setting_orientation_title">Schermstand</string>
+    <string name="setting_orientation_portrait">Portret</string>
+    <string name="setting_orientation_landscape">Liggend</string>
+    <string name="setting_orientation_auto">Automatisch draaien</string>
+    <string name="setting_orientation_gyro_note">Automatisch draaien is niet beschikbaar met de gyromuis aan, omdat het kantelen van de telefoon om de aanwijzer te bewegen het scherm zou draaien.</string>
+
+    <string name="setting_open_help">Handleiding openen</string>
+
+    <string name="help_title">Aan de slag</string>
+    <string name="help_continue">Beginnen</string>
+
+    <string name="help_intro">MaxKontroller maakt van deze telefoon een bluetooth-toetsenbord en -muis. De computer ziet een gewoon bluetooth-toetsenbord, dus daar hoeft niets op te worden geïnstalleerd.</string>
+
+    <string name="help_pairing_title">Koppelen</string>
+    <string name="help_pairing_body">1. Laat deze app open staan en sta het verzoek «zichtbaar maken» toe.\n2. Zoek op de computer naar bluetooth-apparaten en koppel met deze telefoon.\n3. Bevestig de code aan beide kanten.\n\nLaat daarna «Automatisch verbinden» aan in de instellingen; de telefoon maakt dan bij elke start zelf verbinding.</string>
+
+    <string name="help_gestures_title">Gebaren</string>
+    <string name="help_gestures_body">• Aanwijzer bewegen — veeg met één vinger\n• Linkerklik — tik, of de knop Linkerklik\n• Rechterklik — de knop Rechterklik\n• Dubbelklik — tik twee keer\n• Slepen — houd een klikknop ingedrukt en veeg over het touchpad\n• Scrollen — veeg met twee vingers\n\nEen tik met twee vingers is ook een rechterklik, maar beide vingers moeten binnen 100 ms neerkomen en loskomen, dus de knop is eenvoudiger.</string>
+
+    <string name="help_keyboard_title">Toetsenbord</string>
+    <string name="help_keyboard_body">Tik op het toetsenbordpictogram om het schermtoetsenbord te openen; alles wat je typt gaat naar de computer.\n\nDe knop (N)/(P) regelt de modificatietoetsen. (N) laat Ctrl/Alt/Shift na elke aanslag los; (P) houdt ze ingedrukt zodat je combinaties kunt maken, zoals Ctrl tijdens het klikken. Vergeet niet terug te schakelen naar (N), anders blijven de modificatietoetsen hangen.\n\nGboard heeft geen Ctrl, Esc, pijltjes of functietoetsen. Een toetsenbord dat die wel heeft — Unexpected Keyboard of Hacker\'s Keyboard — maakt sneltoetsen als Shift+F10 (contextmenu) mogelijk.</string>
+
+    <string name="help_trouble_title">Als de computer geen toetsenbord ziet</string>
+    <string name="help_trouble_body">Op Linux schakelt een eenvoudige «connect» vaak de audioprofielen in in plaats van het toetsenbord. Gebruik «Automatisch verbinden» zodat de telefoon het initiatief neemt, of verbind het HID-profiel expliciet:\n\nbluetoothctl connect &lt;MAC&gt; 00001124-0000-1000-8000-00805f9b34fb\n\nZiet de computer nog steeds geen toetsenbord, dan heeft BlueZ mogelijk een servicelijst van vóór de registratie van de app in de cache. Verwijder het cachebestand van deze telefoon in /var/lib/bluetooth en verbind opnieuw; de koppeling zelf blijft bewaard.</string>
+</resources>

@@ -40,6 +40,27 @@ open class KeyboardSender(
         if(event.isMetaPressed) keyboardReport.leftGui=true
     }
 
+    /**
+     * Sends one explicit key position with the modifiers a layout needs for it.
+     *
+     * Used by the host-layout tables, where a character maps to a position rather than to an
+     * Android keycode. Modifiers the user is holding via the (P) toggle are snapshotted and
+     * restored, so Shift/AltGr added for a single character cannot get stuck on.
+     */
+    fun sendStroke(usage: Int, shift: Boolean, altGr: Boolean): Boolean {
+        val heldModifiers = keyboardReport.bytes[0]
+
+        if (shift) keyboardReport.leftShift = true
+        if (altGr) keyboardReport.rightAlt = true
+        keyboardReport.key1 = usage.toByte()
+        sendKeys()
+
+        keyboardReport.bytes[0] = heldModifiers
+        keyboardReport.key1 = 0
+        sendKeys()
+        return true
+    }
+
     fun sendNullKeys() {
         keyboardReport.bytes.fill(0)
         if (!hidDevice.sendReport(host, KeyboardReport.ID, keyboardReport.bytes)) {

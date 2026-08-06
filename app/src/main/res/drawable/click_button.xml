@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Flat press feedback only: no border, no corner radius. The separators in the layout
+     provide all the visual structure. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true" android:drawable="@color/click_pressed" />
+    <item android:drawable="@android:color/transparent" />
+</selector>

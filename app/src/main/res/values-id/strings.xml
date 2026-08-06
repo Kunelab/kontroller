@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="trackpad_label">Trackpad</string>
+
+    <string name="click_left">Klik kiri</string>
+    <string name="click_right">Klik kanan</string>
+
+    <string name="action_settings">Setelan</string>
+    <string name="action_help">Bantuan</string>
+    <string name="action_keyboard_title">Tampilkan keyboard</string>
+    <string name="action_tool_tip">Tombol pengubah: (N) melepas Ctrl/Alt/Shift setelah setiap ketikan, (P) menahannya sampai Anda beralih kembali</string>
+    <string name="action_disconnect">Putuskan sambungan</string>
+    <string name="action_devices">Perangkat</string>
+    <string name="action_send_clipboard">Kirim papan klip</string>
+
+    <string name="status_connected">Aplikasi tersambung via Bluetooth</string>
+    <string name="status_not_connected">Aplikasi tidak tersambung via Bluetooth</string>
+    <string name="action_ble_status_tool_tip">Aplikasi tidak tersambung via Bluetooth</string>
+
+    <string name="error_bluetooth_permission">MaxKontroller memerlukan izin Bluetooth agar dapat berfungsi sebagai keyboard dan mouse.</string>
+    <string name="error_no_hid_profile">Perangkat ini tidak menyediakan profil Bluetooth HID Device, sehingga tidak dapat digunakan sebagai keyboard atau mouse.</string>
+    <string name="error_no_gyro">Ponsel ini tidak memiliki sensor rotasi, jadi mouse giro tidak tersedia.</string>
+    <string name="error_not_connected">Belum tersambung ke komputer.</string>
+
+    <string name="service_channel">Sambungan</string>
+    <string name="service_title">MaxKontroller aktif</string>
+    <string name="service_text">Berfungsi sebagai keyboard dan mouse Bluetooth.</string>
+    <string name="service_stop">Hentikan</string>
+
+    <string name="media_vol_down">Vol −</string>
+    <string name="media_vol_up">Vol +</string>
+    <string name="media_mute">Bisukan</string>
+    <string name="media_home">Beranda</string>
+
+    <string name="devices_title">Perangkat</string>
+    <string name="devices_hint">Perangkat yang dipasangkan. Ketuk untuk menyambungkan atau memutuskan.</string>
+    <string name="devices_none">Belum ada perangkat yang dipasangkan. Pasangkan ponsel ini dari komputer terlebih dahulu — lihat panduan.</string>
+    <string name="devices_not_registered">Belum terdaftar sebagai keyboard. Kembali ke trackpad, tunggu sebentar, lalu coba lagi.</string>
+    <string name="devices_no_bluetooth">Tidak ada adaptor Bluetooth yang tersedia.</string>
+    <string name="device_state_connected">Tersambung · %1$s</string>
+    <string name="device_state_connecting">Menyambungkan… · %1$s</string>
+    <string name="device_state_disconnected">Tidak tersambung · %1$s</string>
+
+    <string name="clipboard_empty">Papan klip kosong.</string>
+    <string name="clipboard_sending">Mengetik %1$d karakter…</string>
+    <string name="clipboard_truncated">Papan klip panjang — mengirim %1$d karakter pertama.</string>
+
+    <string name="settings_title">Setelan</string>
+    <string name="settings_header_pointer">Penunjuk</string>
+    <string name="settings_header_keyboard">Keyboard</string>
+    <string name="settings_header_trackpad">Trackpad</string>
+    <string name="settings_header_remote">Remote</string>
+    <string name="settings_header_connection">Sambungan</string>
+    <string name="settings_header_appearance">Tampilan</string>
+    <string name="settings_header_help">Bantuan</string>
+
+    <string name="setting_sensitivity_title">Kecepatan penunjuk</string>
+    <string name="setting_sensitivity_value">Kecepatan penunjuk: %1$d%%</string>
+    <string name="setting_sensitivity_summary">Sejauh mana penunjuk bergerak untuk gerakan jari tertentu. Nilai 100 berarti satu banding satu.</string>
+
+    <string name="setting_gyro_title">Mouse giro</string>
+    <string name="setting_gyro_summary">Gerakkan penunjuk dengan memiringkan ponsel, bukan menggeser di trackpad. Ketukan, gulir, dan tombol klik tetap berfungsi.</string>
+    <string name="setting_gyro_invert_x">Balik kiri / kanan</string>
+    <string name="setting_gyro_invert_y">Balik atas / bawah</string>
+    <string name="setting_gyro_invert_summary">Balik salah satu sumbu giro jika arahnya terasa salah sesuai cara Anda memegang ponsel.</string>
+
+    <string name="setting_host_layout_title">Tata letak keyboard komputer</string>
+    <string name="setting_host_layout_summary">Tata letak pada komputer yang Anda kendalikan, bukan pada ponsel ini. Bluetooth mengirim posisi tombol, bukan karakter, jadi setelan ini harus cocok dengan komputer atau huruf dan tanda baca akan tertukar. Komputer berbahasa Mandarin, Korea, Hindi, Arab, Thai, dan Vietnam menggunakan US QWERTY dan menyusun tulisannya sendiri.</string>
+
+    <string name="setting_language_title">Bahasa aplikasi</string>
+    <string name="setting_language_summary">Bahasa aplikasi ini. Tidak memengaruhi apa yang diketik ke komputer.</string>
+
+    <string name="setting_click_bar_title">Tombol klik</string>
+    <string name="setting_click_bar_summary">Menampilkan tombol klik kiri dan kanan di bawah trackpad, seperti pada laptop. Tahan sebuah tombol dan geser di trackpad untuk seret dan lepas. Trackpad menyusut untuk memberi ruang.</string>
+
+    <string name="setting_media_keys_title">Tombol media</string>
+    <string name="setting_media_keys_summary">Menampilkan sederet tombol volume, pemutaran, dan Beranda, sehingga aplikasi menjadi remote TV. Nonaktif secara bawaan.</string>
+
+    <string name="setting_clipboard_title">Kirim papan klip</string>
+    <string name="setting_clipboard_summary">Menambahkan item menu yang mengetikkan papan klip ponsel ke komputer — praktis untuk sandi, URL, dan teks panjang.</string>
+
+    <string name="setting_auto_pair_title">Sambungkan otomatis</string>
+    <string name="setting_auto_pair_summary">Biarkan ponsel membuka sambungan ke komputer yang dikenal begitu aplikasi dimulai. Lebih andal daripada menyambung dari PC, yang cenderung memilih profil audio.</string>
+
+    <string name="setting_stay_connected_title">Tetap tersambung di latar belakang</string>
+    <string name="setting_stay_connected_summary">Tetap berfungsi sebagai keyboard dan mouse saat Anda keluar dari aplikasi atau layar mati. Menampilkan notifikasi tetap selama aktif.</string>
+
+    <string name="setting_keep_screen_on_title">Biarkan layar menyala</string>
+    <string name="setting_keep_screen_on_summary">Mencegah layar mati selama aplikasi terbuka.</string>
+
+    <string name="setting_theme_title">Tema</string>
+    <string name="setting_theme_system">Ikuti setelan ponsel</string>
+    <string name="setting_theme_light">Terang</string>
+    <string name="setting_theme_black">Hitam</string>
+
+    <string name="setting_orientation_title">Orientasi</string>
+    <string name="setting_orientation_portrait">Portrait</string>
+    <string name="setting_orientation_landscape">Lanskap</string>
+    <string name="setting_orientation_auto">Putar otomatis</string>
+    <string name="setting_orientation_gyro_note">Putar otomatis tidak tersedia saat mouse giro aktif, karena memiringkan ponsel untuk menggerakkan penunjuk akan memutar layar.</string>
+
+    <string name="setting_open_help">Buka panduan</string>
+
+    <string name="help_title">Memulai</string>
+    <string name="help_continue">Mulai</string>
+
+    <string name="help_intro">MaxKontroller mengubah ponsel ini menjadi keyboard dan mouse Bluetooth. Komputer melihatnya sebagai keyboard Bluetooth biasa, jadi tidak ada yang perlu diinstal di sana.</string>
+
+    <string name="help_pairing_title">Pemasangan</string>
+    <string name="help_pairing_body">1. Biarkan aplikasi ini terbuka dan izinkan permintaan «jadikan dapat ditemukan».\n2. Di komputer, cari perangkat Bluetooth dan pasangkan dengan ponsel ini.\n3. Konfirmasi kode sandi di kedua sisi.\n\nSetelah itu, biarkan «Sambungkan otomatis» aktif di setelan, dan ponsel akan membuka sambungan sendiri setiap kali aplikasi dibuka.</string>
+
+    <string name="help_gestures_title">Gerakan</string>
+    <string name="help_gestures_body">• Menggerakkan penunjuk — geser satu jari\n• Klik kiri — ketuk, atau tombol Klik kiri\n• Klik kanan — tombol Klik kanan\n• Klik ganda — ketuk dua kali\n• Seret dan lepas — tahan tombol klik lalu geser di trackpad\n• Gulir — geser dua jari\n\nKetukan dua jari juga merupakan klik kanan, tetapi kedua jari harus menyentuh dan terangkat dalam 100 ms, jadi tombol lebih mudah.</string>
+
+    <string name="help_keyboard_title">Keyboard</string>
+    <string name="help_keyboard_body">Ketuk ikon keyboard untuk memunculkan keyboard di layar; semua yang Anda ketik dikirim ke komputer.\n\nTombol (N)/(P) mengatur tombol pengubah. (N) melepas Ctrl/Alt/Shift setelah setiap ketikan; (P) menahannya sehingga Anda dapat membuat kombinasi, misalnya Ctrl ditahan saat mengklik. Ingat untuk kembali ke (N), jika tidak tombol pengubah akan tetap tertahan.\n\nGboard tidak memiliki Ctrl, Esc, tombol panah, atau tombol fungsi. Keyboard yang memilikinya — Unexpected Keyboard atau Hacker\'s Keyboard — memungkinkan pintasan seperti Shift+F10 (menu konteks).</string>
+
+    <string name="help_trouble_title">Jika komputer tidak melihat keyboard</string>
+    <string name="help_trouble_body">Di Linux, «connect» biasa sering mengaktifkan profil audio dan bukan keyboard. Gunakan «Sambungkan otomatis» agar ponsel yang mengambil inisiatif, atau sambungkan profil HID secara eksplisit:\n\nbluetoothctl connect &lt;MAC&gt; 00001124-0000-1000-8000-00805f9b34fb\n\nJika komputer masih tidak melihat keyboard, BlueZ mungkin menyimpan daftar layanan dari sebelum aplikasi terdaftar. Hapus berkas cache ponsel ini di /var/lib/bluetooth lalu sambungkan kembali; pemasangannya sendiri tetap tersimpan.</string>
+</resources>

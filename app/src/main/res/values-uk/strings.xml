@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="trackpad_label">Тачпад</string>
+
+    <string name="click_left">Лівий клік</string>
+    <string name="click_right">Правий клік</string>
+
+    <string name="action_settings">Налаштування</string>
+    <string name="action_help">Довідка</string>
+    <string name="action_keyboard_title">Показати клавіатуру</string>
+    <string name="action_tool_tip">Клавіші-модифікатори: (N) відпускає Ctrl/Alt/Shift після кожного натискання, (P) утримує їх до перемикання назад</string>
+    <string name="action_disconnect">Відключити</string>
+    <string name="action_devices">Пристрої</string>
+    <string name="action_send_clipboard">Надіслати буфер обміну</string>
+
+    <string name="status_connected">Застосунок підключено через Bluetooth</string>
+    <string name="status_not_connected">Застосунок не підключено через Bluetooth</string>
+    <string name="action_ble_status_tool_tip">Застосунок не підключено через Bluetooth</string>
+
+    <string name="error_bluetooth_permission">MaxKontroller потребує дозволів Bluetooth, щоб працювати як клавіатура та мишка.</string>
+    <string name="error_no_hid_profile">Цей пристрій не надає профіль Bluetooth HID Device, тому його не можна використовувати як клавіатуру чи мишку.</string>
+    <string name="error_no_gyro">У цьому телефоні немає датчика обертання, тому гіромишка недоступна.</string>
+    <string name="error_not_connected">Підключення до комп\'ютера ще не встановлено.</string>
+
+    <string name="service_channel">Підключення</string>
+    <string name="service_title">MaxKontroller активний</string>
+    <string name="service_text">Працює як Bluetooth-клавіатура та мишка.</string>
+    <string name="service_stop">Зупинити</string>
+
+    <string name="media_vol_down">Гучн. −</string>
+    <string name="media_vol_up">Гучн. +</string>
+    <string name="media_mute">Без звуку</string>
+    <string name="media_home">Додому</string>
+
+    <string name="devices_title">Пристрої</string>
+    <string name="devices_hint">Спарені пристрої. Торкніться, щоб підключити або відключити.</string>
+    <string name="devices_none">Спарених пристроїв поки немає. Спершу виконайте спарення з цим телефоном з боку комп\'ютера — див. посібник.</string>
+    <string name="devices_not_registered">Ще не зареєстровано як клавіатуру. Повернітеся до тачпада, зачекайте трохи та спробуйте знову.</string>
+    <string name="devices_no_bluetooth">Адаптер Bluetooth недоступний.</string>
+    <string name="device_state_connected">Підключено · %1$s</string>
+    <string name="device_state_connecting">Підключення… · %1$s</string>
+    <string name="device_state_disconnected">Не підключено · %1$s</string>
+
+    <string name="clipboard_empty">Буфер обміну порожній.</string>
+    <string name="clipboard_sending">Введення %1$d символів…</string>
+    <string name="clipboard_truncated">Буфер обміну довгий — надсилаються перші %1$d символів.</string>
+
+    <string name="settings_title">Налаштування</string>
+    <string name="settings_header_pointer">Вказівник</string>
+    <string name="settings_header_keyboard">Клавіатура</string>
+    <string name="settings_header_trackpad">Тачпад</string>
+    <string name="settings_header_remote">Пульт</string>
+    <string name="settings_header_connection">Підключення</string>
+    <string name="settings_header_appearance">Оформлення</string>
+    <string name="settings_header_help">Довідка</string>
+
+    <string name="setting_sensitivity_title">Швидкість вказівника</string>
+    <string name="setting_sensitivity_value">Швидкість вказівника: %1$d%%</string>
+    <string name="setting_sensitivity_summary">Наскільки далеко переміщується вказівник за певний рух пальця. Значення 100 відповідає один до одного.</string>
+
+    <string name="setting_gyro_title">Гіромишка</string>
+    <string name="setting_gyro_summary">Переміщуйте вказівник нахилом телефона замість руху по тачпаду. Дотики, прокручування та кнопки кліку продовжують працювати.</string>
+    <string name="setting_gyro_invert_x">Інвертувати ліво / право</string>
+    <string name="setting_gyro_invert_y">Інвертувати вгору / вниз</string>
+    <string name="setting_gyro_invert_summary">Інвертуйте будь-яку вісь гіроскопа, якщо напрямок не збігається з тим, як ви тримаєте телефон.</string>
+
+    <string name="setting_host_layout_title">Розкладка клавіатури комп\'ютера</string>
+    <string name="setting_host_layout_summary">Розкладка на комп\'ютері, яким ви керуєте, а не на цьому телефоні. Bluetooth передає позиції клавіш, а не символи, тому це налаштування має відповідати комп\'ютеру, інакше літери та знаки пунктуації міняються місцями. Комп\'ютери з китайською, корейською, гінді, арабською, тайською та в\'єтнамською використовують US QWERTY і формують письмо самостійно.</string>
+
+    <string name="setting_language_title">Мова застосунку</string>
+    <string name="setting_language_summary">Мова цього застосунку. Не впливає на те, що вводиться на комп\'ютері.</string>
+
+    <string name="setting_click_bar_title">Кнопки кліку</string>
+    <string name="setting_click_bar_summary">Показує кнопки лівого та правого кліку під тачпадом, як на ноутбуці. Утримуйте кнопку й ведіть пальцем по тачпаду, щоб перетягнути об\'єкт. Тачпад зменшується, звільняючи місце.</string>
+
+    <string name="setting_media_keys_title">Мультимедійні клавіші</string>
+    <string name="setting_media_keys_summary">Показує ряд клавіш гучності, відтворення та «Додому», перетворюючи застосунок на пульт для телевізора. Типово вимкнено.</string>
+
+    <string name="setting_clipboard_title">Надіслати буфер обміну</string>
+    <string name="setting_clipboard_summary">Додає пункт меню, який вводить вміст буфера обміну телефона на комп\'ютері — зручно для паролів, посилань і довгих текстів.</string>
+
+    <string name="setting_auto_pair_title">Підключатися автоматично</string>
+    <string name="setting_auto_pair_summary">Телефон сам відкриває підключення до відомого комп\'ютера під час запуску застосунку. Надійніше, ніж підключення з боку ПК, який зазвичай вибирає аудіопрофілі.</string>
+
+    <string name="setting_stay_connected_title">Залишатися підключеним у фоні</string>
+    <string name="setting_stay_connected_summary">Продовжує працювати як клавіатура та мишка, коли ви виходите із застосунку або екран гасне. При цьому показується постійне повідомлення.</string>
+
+    <string name="setting_keep_screen_on_title">Не вимикати екран</string>
+    <string name="setting_keep_screen_on_summary">Не дає екрану згаснути, поки застосунок відкритий.</string>
+
+    <string name="setting_theme_title">Тема</string>
+    <string name="setting_theme_system">Як у системі</string>
+    <string name="setting_theme_light">Світла</string>
+    <string name="setting_theme_black">Чорна</string>
+
+    <string name="setting_orientation_title">Орієнтація</string>
+    <string name="setting_orientation_portrait">Портретна</string>
+    <string name="setting_orientation_landscape">Ландшафтна</string>
+    <string name="setting_orientation_auto">Автообертання</string>
+    <string name="setting_orientation_gyro_note">Автообертання недоступне з увімкненою гіромишкою, бо нахил телефона для переміщення вказівника обертав би екран.</string>
+
+    <string name="setting_open_help">Відкрити посібник</string>
+
+    <string name="help_title">Початок роботи</string>
+    <string name="help_continue">Почати</string>
+
+    <string name="help_intro">MaxKontroller перетворює цей телефон на Bluetooth-клавіатуру та мишку. Комп\'ютер бачить звичайну Bluetooth-клавіатуру, тому на ньому нічого встановлювати не потрібно.</string>
+
+    <string name="help_pairing_title">Спарення</string>
+    <string name="help_pairing_body">1. Залиште застосунок відкритим і дозвольте запит «зробити видимим».\n2. На комп\'ютері знайдіть пристрої Bluetooth і виконайте спарення з цим телефоном.\n3. Підтвердьте код з обох сторін.\n\nПотім залиште «Підключатися автоматично» увімкненим у налаштуваннях, і телефон сам відкриватиме підключення під час кожного запуску.</string>
+
+    <string name="help_gestures_title">Жести</string>
+    <string name="help_gestures_body">• Переміщення вказівника — рух одним пальцем\n• Лівий клік — дотик або кнопка «Лівий клік»\n• Правий клік — кнопка «Правий клік»\n• Подвійний клік — подвійний дотик\n• Перетягування — утримуючи кнопку кліку, ведіть пальцем по тачпаду\n• Прокручування — рух двома пальцями\n\nДотик двома пальцями теж дає правий клік, але обидва пальці мають торкнутися й піднятися протягом 100 мс, тому кнопкою простіше.</string>
+
+    <string name="help_keyboard_title">Клавіатура</string>
+    <string name="help_keyboard_body">Торкніться значка клавіатури, щоб викликати екранну клавіатуру; усе, що ви набираєте, надсилається на комп\'ютер.\n\nКнопка (N)/(P) керує клавішами-модифікаторами. (N) відпускає Ctrl/Alt/Shift після кожного натискання; (P) утримує їх, дозволяючи складати сполучення, наприклад Ctrl із клацанням. Не забудьте повернутися в (N), інакше модифікатори залишаться натиснутими.\n\nУ Gboard немає Ctrl, Esc, стрілок і функціональних клавіш. Клавіатура, де вони є — Unexpected Keyboard або Hacker\'s Keyboard — дозволяє використовувати сполучення на кшталт Shift+F10 (контекстне меню).</string>
+
+    <string name="help_trouble_title">Якщо комп\'ютер не бачить клавіатури</string>
+    <string name="help_trouble_body">У Linux проста команда «connect» часто вмикає аудіопрофілі замість клавіатури. Використовуйте «Підключатися автоматично», щоб ініціативу взяв телефон, або підключіть профіль HID явно:\n\nbluetoothctl connect &lt;MAC&gt; 00001124-0000-1000-8000-00805f9b34fb\n\nЯкщо комп\'ютер усе ще не бачить клавіатури, BlueZ міг кешувати список сервісів, отриманий до реєстрації застосунку. Видаліть файл кешу цього телефона в /var/lib/bluetooth і підключіться знову; саме спарення збережеться.</string>
+</resources>

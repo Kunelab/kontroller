@@ -13,7 +13,7 @@ import android.util.Log
 import com.github.roarappstudio.btkontroller.reports.FeatureReport
 
 @Suppress("MemberVisibilityCanBePrivate")
-@SuppressLint("MissingPermission") // callers gate on BluetoothPermissions.allGranted()
+@SuppressLint("MissingPermission") // callers gate on AppPermissions in SplashScreen
 object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.ServiceListener {
 
     const val TAG = "BluetoothController"
@@ -200,9 +200,9 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
 
     private val sdpRecord by lazy {
         BluetoothHidDeviceAppSdpSettings(
-            "Kontroller",
+            "MaxKontroller",
             "Android Bluetooth keyboard and mouse",
-            "Kontroller",
+            "MaxKontroller",
             BluetoothHidDevice.SUBCLASS1_COMBO,
             DescriptorCollection.MOUSE_KEYBOARD_COMBO
         )

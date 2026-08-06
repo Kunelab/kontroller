@@ -3,10 +3,14 @@ package com.github.roarappstudio.btkontroller
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter
-import android.content.Context
+import android.content.ClipboardManager
 import android.content.Intent
+import android.content.pm.ActivityInfo
+import android.hardware.Sensor
+import android.hardware.SensorManager
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyCharacterMap
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
@@ -15,49 +19,121 @@ import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import com.github.roarappstudio.btkontroller.Prefs.autoPair
+import com.github.roarappstudio.btkontroller.Prefs.clickBar
+import com.github.roarappstudio.btkontroller.Prefs.clipboardAction
+import com.github.roarappstudio.btkontroller.Prefs.effectiveOrientation
+import com.github.roarappstudio.btkontroller.Prefs.mediaKeys
+import com.github.roarappstudio.btkontroller.Prefs.gyroInvertX
+import com.github.roarappstudio.btkontroller.Prefs.gyroInvertY
+import com.github.roarappstudio.btkontroller.Prefs.gyroPointer
+import com.github.roarappstudio.btkontroller.Prefs.hostLayout
+import com.github.roarappstudio.btkontroller.Prefs.keepScreenOn
+import com.github.roarappstudio.btkontroller.Prefs.sensitivityFactor
+import com.github.roarappstudio.btkontroller.Prefs.stayConnected
 import com.github.roarappstudio.btkontroller.extraLibraries.CustomGestureDetector
 import com.github.roarappstudio.btkontroller.listeners.CompositeListener
 import com.github.roarappstudio.btkontroller.listeners.GestureDetectListener
 import com.github.roarappstudio.btkontroller.listeners.ViewListener
+import com.github.roarappstudio.btkontroller.reports.KeyboardReport
 import com.github.roarappstudio.btkontroller.senders.KeyboardSender
+import com.github.roarappstudio.btkontroller.senders.MediaSender
 import com.github.roarappstudio.btkontroller.senders.RelativeMouseSender
 
-@SuppressLint("MissingPermission") // gated by BluetoothPermissions in SplashScreen
+@SuppressLint("MissingPermission") // gated by AppPermissions in SplashScreen
 class SelectDeviceActivity : Activity(), KeyEvent.Callback {
 
     private lateinit var trackpad: TrackpadView
+    private lateinit var clickBarView: View
+    private lateinit var leftClickButton: View
+    private lateinit var rightClickButton: View
+    private lateinit var mediaBarView: View
 
-    private var autoPairMenuItem: MenuItem? = null
-    private var screenOnMenuItem: MenuItem? = null
+    private val charMap: KeyCharacterMap =
+        KeyCharacterMap.load(KeyCharacterMap.VIRTUAL_KEYBOARD)
+
     private var bluetoothStatus: MenuItem? = null
 
     /** 0 = each modifier is released after every keystroke, 1 = modifiers are held. */
     private var modifierHoldState: Int = 0
 
     private var keyboardSender: KeyboardSender? = null
+    private var mouseSender: RelativeMouseSender? = null
+    private var mediaSender: MediaSender? = null
+    private var viewListener: ViewListener? = null
+
+    /**
+     * One instance for the whole activity lifetime, with its sender swapped on (re)connect.
+     * Creating a new one per connection left the previous instance registered with
+     * SensorManager, so the pointer kept moving after the gyro setting was switched off.
+     */
+    private val gyro = GyroPointer()
+    private var gyroRegistered = false
+
+    private var appliedTheme = 0
     private var discoverableRequested = false
     private var keyboardShown = false
 
+    private val sensorManager by lazy { getSystemService(SensorManager::class.java) }
+
+    /** Re-read in onStart so a change in Settings takes effect without a restart. */
+    private var hostLayout: HostLayout = HostLayout.US
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        appliedTheme = ThemeSupport.appStyle(this)
+        setTheme(appliedTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_select_device)
 
         trackpad = findViewById(R.id.mouseView)
+        clickBarView = findViewById(R.id.clickBar)
+        leftClickButton = findViewById(R.id.leftClickButton)
+        rightClickButton = findViewById(R.id.rightClickButton)
+        mediaBarView = findViewById(R.id.mediaBar)
+
         trackpad.onHidKey = ::forwardKey
+        trackpad.onHidChar = ::forwardChar
+        leftClickButton.setOnTouchListener { v, e -> onClickButtonTouch(v, e, left = true) }
+        rightClickButton.setOnTouchListener { v, e -> onClickButtonTouch(v, e, left = false) }
+
+        wireMediaKeys()
+    }
+
+    private fun wireMediaKeys() {
+        val keys = listOf<Pair<Int, (MediaSender) -> Unit>>(
+            R.id.mediaVolDown to { it.volumeDown() },
+            R.id.mediaVolUp to { it.volumeUp() },
+            R.id.mediaMute to { it.mute() },
+            R.id.mediaPrev to { it.previous() },
+            R.id.mediaPlay to { it.playPause() },
+            R.id.mediaNext to { it.next() },
+            R.id.mediaHome to { it.home() }
+        )
+        for ((id, action) in keys) {
+            findViewById<View>(id).setOnClickListener {
+                val sender = mediaSender
+                if (sender == null) {
+                    Toast.makeText(this, R.string.error_not_connected, Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    action(sender)
+                }
+            }
+        }
     }
 
     override fun onStart() {
         super.onStart()
 
-        setConnected(false)
+        // A theme only takes effect at creation time, so a change made in Settings needs
+        // this activity rebuilt.
+        if (ThemeSupport.appStyle(this) != appliedTheme) {
+            recreate()
+            return
+        }
 
-        val prefs = getPreferences(Context.MODE_PRIVATE)
-        BluetoothController.autoPairFlag = prefs.getBoolean(getString(R.string.auto_pair_flag), false)
-        autoPairMenuItem?.isChecked = BluetoothController.autoPairFlag
-
-        val keepScreenOn = prefs.getBoolean(getString(R.string.screen_on_flag), false)
-        screenOnMenuItem?.isChecked = keepScreenOn
-        setKeepScreenOn(keepScreenOn)
+        setConnected(BluetoothController.hostDevice != null)
+        applyPreferences()
 
         if (!BluetoothController.init(this)) {
             Toast.makeText(this, R.string.error_no_hid_profile, Toast.LENGTH_LONG).show()
@@ -78,17 +154,26 @@ class SelectDeviceActivity : Activity(), KeyEvent.Callback {
             runOnUiThread {
                 keyboardSender = KeyboardSender(hidDevice, host)
 
-                val mouseSender = RelativeMouseSender(hidDevice, host)
+                val sender = RelativeMouseSender(hidDevice, host)
+                mouseSender = sender
+
                 val gestureDetector =
-                    CustomGestureDetector(this, GestureDetectListener(mouseSender))
+                    CustomGestureDetector(this, GestureDetectListener(sender))
+
+                val listener = ViewListener(sender)
+                viewListener = listener
 
                 val composite = CompositeListener()
                 composite.registerListener(
                     View.OnTouchListener { _, event -> gestureDetector.onTouchEvent(event) }
                 )
-                composite.registerListener(ViewListener(hidDevice, host, mouseSender))
+                composite.registerListener(listener)
                 trackpad.setOnTouchListener(composite)
 
+                gyro.sender = sender
+                mediaSender = MediaSender(hidDevice, host)
+
+                applyPointerPreferences()
                 setConnected(true)
             }
         }
@@ -98,6 +183,11 @@ class SelectDeviceActivity : Activity(), KeyEvent.Callback {
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        stopGyro()
+    }
+
     /**
      * The HID registration deliberately outlives [onStop].
      *
@@ -105,12 +195,108 @@ class SelectDeviceActivity : Activity(), KeyEvent.Callback {
      * discoverability prompt and the Bluetooth pairing dialog both -- stops this activity,
      * so the HID service was torn down at exactly the moment the host PC was resolving
      * it. The host then saw the phone as an audio/AVRCP device with no keyboard or mouse.
+     *
+     * When "stay connected" is on, [HidService] owns the registration and it must survive
+     * this activity entirely, so nothing is released here.
      */
     override fun onDestroy() {
         super.onDestroy()
-        BluetoothController.release()
+        if (!Prefs.of(this).stayConnected) {
+            BluetoothController.release()
+        }
+        stopGyro()
+        gyro.sender = null
         keyboardSender = null
+        mouseSender = null
+        mediaSender = null
+        viewListener = null
         discoverableRequested = false
+    }
+
+    /** Re-read settings on every start so returning from [SettingsActivity] applies them. */
+    private fun applyPreferences() {
+        val prefs = Prefs.of(this)
+
+        clickBarView.visibility = if (prefs.clickBar) View.VISIBLE else View.GONE
+        mediaBarView.visibility = if (prefs.mediaKeys) View.VISIBLE else View.GONE
+        BluetoothController.autoPairFlag = prefs.autoPair
+        hostLayout = prefs.hostLayout
+        invalidateOptionsMenu()
+
+        if (prefs.keepScreenOn) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        } else {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        }
+
+        requestedOrientation = when (prefs.effectiveOrientation) {
+            OrientationMode.PORTRAIT -> ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+            OrientationMode.LANDSCAPE -> ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+            OrientationMode.AUTO -> ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
+        }
+
+        if (prefs.stayConnected) HidService.start(this) else HidService.stop(this)
+
+        applyPointerPreferences()
+    }
+
+    /** Sensitivity and gyro depend on the senders, which arrive asynchronously. */
+    private fun applyPointerPreferences() {
+        val prefs = Prefs.of(this)
+        val factor = prefs.sensitivityFactor
+
+        viewListener?.sensitivity = factor
+        gyro.sensitivity = factor
+        gyro.invertX = prefs.gyroInvertX
+        gyro.invertY = prefs.gyroInvertY
+
+        // While the gyro drives the pointer, dragging on the pad must not also move it.
+        viewListener?.movementEnabled = !prefs.gyroPointer
+
+        if (prefs.gyroPointer) startGyro() else stopGyro()
+    }
+
+    private fun startGyro() {
+        if (gyroRegistered) return
+
+        val manager = sensorManager ?: return
+        val sensor = manager.getDefaultSensor(Sensor.TYPE_GAME_ROTATION_VECTOR)
+            ?: manager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
+
+        if (sensor == null) {
+            Toast.makeText(this, R.string.error_no_gyro, Toast.LENGTH_LONG).show()
+            return
+        }
+        gyro.reset()
+        manager.registerListener(gyro, sensor, SensorManager.SENSOR_DELAY_GAME)
+        gyroRegistered = true
+    }
+
+    private fun stopGyro() {
+        if (!gyroRegistered) return
+        sensorManager?.unregisterListener(gyro)
+        gyroRegistered = false
+    }
+
+    /**
+     * Physical-trackpad-style buttons: press holds the mouse button down and release lets
+     * it go, rather than sending a click pulse. That makes press-and-drag work -- hold a
+     * button here and move on the pad above to drag and drop or rubber-band select.
+     */
+    private fun onClickButtonTouch(view: View, event: MotionEvent, left: Boolean): Boolean {
+        val sender = mouseSender ?: return false
+        when (event.actionMasked) {
+            MotionEvent.ACTION_DOWN -> {
+                view.isPressed = true
+                if (left) sender.sendLeftClickOn() else sender.sendRightClickOn()
+            }
+
+            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                view.isPressed = false
+                if (left) sender.sendLeftClickOff() else sender.sendRightClickOff()
+            }
+        }
+        return true
     }
 
     /**
@@ -119,6 +305,86 @@ class SelectDeviceActivity : Activity(), KeyEvent.Callback {
      */
     private fun forwardKey(event: KeyEvent): Boolean =
         keyboardSender?.sendKeyboard(event.keyCode, event, modifierHoldState) ?: false
+
+    /**
+     * Sends a typed character.
+     *
+     * Prefers the host-layout table, which knows which key *position* produces this
+     * character on the host. Falls back to translating the character into Android key
+     * events, which assumes the host uses US QWERTY positions.
+     *
+     * Shared by the IME (through [HidInputConnection]) and by clipboard sending.
+     */
+    private fun forwardChar(ch: Char): Boolean {
+        val sender = keyboardSender ?: return false
+
+        val strokes = hostLayout.strokes?.get(ch)
+        if (strokes != null) {
+            strokes.forEach { sender.sendStroke(it.usage, it.shift, it.altGr) }
+            return true
+        }
+
+        val events = charMap.getEvents(charArrayOf(ch)) ?: return false
+        for (event in events) {
+            if (event.action == KeyEvent.ACTION_DOWN) forwardKey(event)
+        }
+        return true
+    }
+
+    /**
+     * Types the clipboard to the host, one character at a time.
+     *
+     * Keystrokes are paced on the main thread rather than blasted from a background thread:
+     * the HID report object is shared with normal typing, so serialising through the looper
+     * avoids interleaving two writers.
+     */
+    private fun sendClipboard() {
+        if (keyboardSender == null) {
+            Toast.makeText(this, R.string.error_not_connected, Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val clipboard = getSystemService(ClipboardManager::class.java)
+        val text = clipboard?.primaryClip
+            ?.takeIf { it.itemCount > 0 }
+            ?.getItemAt(0)
+            ?.coerceToText(this)
+            ?.toString()
+
+        if (text.isNullOrEmpty()) {
+            Toast.makeText(this, R.string.clipboard_empty, Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val toSend = text.take(CLIPBOARD_MAX_CHARS)
+        if (text.length > CLIPBOARD_MAX_CHARS) {
+            Toast.makeText(
+                this,
+                getString(R.string.clipboard_truncated, CLIPBOARD_MAX_CHARS),
+                Toast.LENGTH_LONG
+            ).show()
+        } else {
+            Toast.makeText(
+                this,
+                getString(R.string.clipboard_sending, toSend.length),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
+        val handler = window.decorView.handler ?: return
+        toSend.forEachIndexed { index, ch ->
+            handler.postDelayed({
+                when (ch) {
+                    '\n', '\r' -> forwardKey(
+                        KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER)
+                    )
+
+                    '\t' -> forwardKey(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_TAB))
+                    else -> forwardChar(ch)
+                }
+            }, index * CLIPBOARD_DELAY_MS)
+        }
+    }
 
     /**
      * The host PC has to be able to find the phone in order to start pairing. Upstream
@@ -151,14 +417,6 @@ class SelectDeviceActivity : Activity(), KeyEvent.Callback {
         )
         bluetoothStatus?.setIcon(icon)
         bluetoothStatus?.tooltipText = tooltip
-    }
-
-    private fun setKeepScreenOn(on: Boolean) {
-        if (on) {
-            window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-        } else {
-            window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-        }
     }
 
     /**
@@ -194,7 +452,7 @@ class SelectDeviceActivity : Activity(), KeyEvent.Callback {
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyboardSender != null &&
             event != null &&
-            KeyboardReportKeys.isMapped(event.keyCode)
+            KeyboardReport.KeyEventMap[event.keyCode] != null
         ) {
             return true
         }
@@ -203,21 +461,37 @@ class SelectDeviceActivity : Activity(), KeyEvent.Callback {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.select_device_activity_menu, menu)
-
         bluetoothStatus = menu?.findItem(R.id.ble_app_connection_status)
-        autoPairMenuItem = menu?.findItem(R.id.action_autopair)
-        screenOnMenuItem = menu?.findItem(R.id.action_screen_on)
-
-        val prefs = getPreferences(Context.MODE_PRIVATE)
-        screenOnMenuItem?.isChecked = prefs.getBoolean(getString(R.string.screen_on_flag), false)
-        autoPairMenuItem?.isChecked = prefs.getBoolean(getString(R.string.auto_pair_flag), false)
         setConnected(BluetoothController.hostDevice != null)
-
         return super.onCreateOptionsMenu(menu)
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        menu?.findItem(R.id.action_send_clipboard)?.isVisible =
+            Prefs.of(this).clipboardAction
+        return super.onPrepareOptionsMenu(menu)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-        R.id.action_settings -> true
+        R.id.action_devices -> {
+            startActivity(Intent(this, DevicesActivity::class.java))
+            true
+        }
+
+        R.id.action_send_clipboard -> {
+            sendClipboard()
+            true
+        }
+
+        R.id.action_settings -> {
+            startActivity(Intent(this, SettingsActivity::class.java))
+            true
+        }
+
+        R.id.action_help -> {
+            startActivity(HelpActivity.intent(this))
+            true
+        }
 
         R.id.action_keyboard -> {
             toggleKeyboard()
@@ -241,36 +515,6 @@ class SelectDeviceActivity : Activity(), KeyEvent.Callback {
             true
         }
 
-        R.id.action_screen_on -> {
-            val enabled = !item.isChecked
-            item.isChecked = enabled
-            setKeepScreenOn(enabled)
-            getPreferences(Context.MODE_PRIVATE).edit()
-                .putBoolean(getString(R.string.screen_on_flag), enabled)
-                .apply()
-            true
-        }
-
-        R.id.action_autopair -> {
-            val enabled = !item.isChecked
-            item.isChecked = enabled
-            BluetoothController.autoPairFlag = enabled
-
-            if (enabled) {
-                val plugged = BluetoothController.mpluggedDevice
-                if (plugged != null &&
-                    BluetoothController.btHid?.getConnectionState(plugged) ==
-                    android.bluetooth.BluetoothProfile.STATE_DISCONNECTED
-                ) {
-                    BluetoothController.btHid?.connect(plugged)
-                }
-            }
-            getPreferences(Context.MODE_PRIVATE).edit()
-                .putBoolean(getString(R.string.auto_pair_flag), enabled)
-                .apply()
-            true
-        }
-
         else -> super.onOptionsItemSelected(item)
     }
 
@@ -279,11 +523,11 @@ class SelectDeviceActivity : Activity(), KeyEvent.Callback {
 
         /** ACTION_REQUEST_DISCOVERABLE takes seconds and caps at 3600. */
         const val DISCOVERABLE_SECONDS = 300
-    }
-}
 
-/** Small helper so the activity can ask whether a key has a HID mapping. */
-private object KeyboardReportKeys {
-    fun isMapped(keyCode: Int): Boolean =
-        com.github.roarappstudio.btkontroller.reports.KeyboardReport.KeyEventMap[keyCode] != null
+        /** Pacing between clipboard keystrokes; fast enough to feel instant. */
+        const val CLIPBOARD_DELAY_MS = 12L
+
+        /** Guard against pasting something enormous one keystroke at a time. */
+        const val CLIPBOARD_MAX_CHARS = 5000
+    }
 }

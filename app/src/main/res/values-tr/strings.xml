@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="trackpad_label">Dokunmatik yüzey</string>
+
+    <string name="click_left">Sol tık</string>
+    <string name="click_right">Sağ tık</string>
+
+    <string name="action_settings">Ayarlar</string>
+    <string name="action_help">Yardım</string>
+    <string name="action_keyboard_title">Klavyeyi göster</string>
+    <string name="action_tool_tip">Değiştirici tuşlar: (N) her tuş vuruşundan sonra Ctrl/Alt/Shift\'i bırakır, (P) geri değiştirene kadar basılı tutar</string>
+    <string name="action_disconnect">Bağlantıyı kes</string>
+    <string name="action_devices">Cihazlar</string>
+    <string name="action_send_clipboard">Panoyu gönder</string>
+
+    <string name="status_connected">Uygulama Bluetooth ile bağlı</string>
+    <string name="status_not_connected">Uygulama Bluetooth ile bağlı değil</string>
+    <string name="action_ble_status_tool_tip">Uygulama Bluetooth ile bağlı değil</string>
+
+    <string name="error_bluetooth_permission">MaxKontroller\'ın klavye ve fare olarak çalışması için Bluetooth izinleri gerekiyor.</string>
+    <string name="error_no_hid_profile">Bu cihaz Bluetooth HID Device profilini sunmuyor, bu yüzden klavye veya fare olarak kullanılamaz.</string>
+    <string name="error_no_gyro">Bu telefonda dönüş sensörü yok, bu yüzden jiroskop fare kullanılamıyor.</string>
+    <string name="error_not_connected">Henüz bir bilgisayara bağlanılmadı.</string>
+
+    <string name="service_channel">Bağlantı</string>
+    <string name="service_title">MaxKontroller etkin</string>
+    <string name="service_text">Bluetooth klavye ve fare olarak çalışıyor.</string>
+    <string name="service_stop">Durdur</string>
+
+    <string name="media_vol_down">Ses −</string>
+    <string name="media_vol_up">Ses +</string>
+    <string name="media_mute">Sessiz</string>
+    <string name="media_home">Ana ekran</string>
+
+    <string name="devices_title">Cihazlar</string>
+    <string name="devices_hint">Eşleştirilmiş cihazlar. Bağlamak veya bağlantıyı kesmek için dokunun.</string>
+    <string name="devices_none">Henüz eşleştirilmiş cihaz yok. Önce bilgisayardan bu telefonla eşleştirme yapın — kılavuza bakın.</string>
+    <string name="devices_not_registered">Henüz klavye olarak kaydedilmedi. Dokunmatik yüzeye dönün, biraz bekleyin ve yeniden deneyin.</string>
+    <string name="devices_no_bluetooth">Kullanılabilir Bluetooth bağdaştırıcısı yok.</string>
+    <string name="device_state_connected">Bağlı · %1$s</string>
+    <string name="device_state_connecting">Bağlanıyor… · %1$s</string>
+    <string name="device_state_disconnected">Bağlı değil · %1$s</string>
+
+    <string name="clipboard_empty">Pano boş.</string>
+    <string name="clipboard_sending">%1$d karakter yazılıyor…</string>
+    <string name="clipboard_truncated">Pano uzun — ilk %1$d karakter gönderiliyor.</string>
+
+    <string name="settings_title">Ayarlar</string>
+    <string name="settings_header_pointer">İmleç</string>
+    <string name="settings_header_keyboard">Klavye</string>
+    <string name="settings_header_trackpad">Dokunmatik yüzey</string>
+    <string name="settings_header_remote">Kumanda</string>
+    <string name="settings_header_connection">Bağlantı</string>
+    <string name="settings_header_appearance">Görünüm</string>
+    <string name="settings_header_help">Yardım</string>
+
+    <string name="setting_sensitivity_title">İmleç hızı</string>
+    <string name="setting_sensitivity_value">İmleç hızı: %1$d%%</string>
+    <string name="setting_sensitivity_summary">Belirli bir parmak hareketinde imlecin ne kadar yol aldığı. 100 değeri bire bir demektir.</string>
+
+    <string name="setting_gyro_title">Jiroskop fare</string>
+    <string name="setting_gyro_summary">İmleci dokunmatik yüzeyde kaydırmak yerine telefonu eğerek hareket ettirin. Dokunmalar, kaydırma ve tık düğmeleri çalışmaya devam eder.</string>
+    <string name="setting_gyro_invert_x">Sol / sağ ters çevir</string>
+    <string name="setting_gyro_invert_y">Yukarı / aşağı ters çevir</string>
+    <string name="setting_gyro_invert_summary">Telefonu tutuş şeklinize göre yön ters geliyorsa eksenlerden birini ters çevirin.</string>
+
+    <string name="setting_host_layout_title">Bilgisayarın klavye düzeni</string>
+    <string name="setting_host_layout_summary">Kontrol ettiğiniz bilgisayardaki düzen, bu telefondaki değil. Bluetooth karakter değil tuş konumu gönderir, bu yüzden bunun bilgisayarla eşleşmesi gerekir; yoksa harfler ve noktalama işaretleri yer değiştirir. Çince, Korece, Hintçe, Arapça, Tayca ve Vietnamca kullanan bilgisayarlar US QWERTY kullanır ve yazıyı kendileri oluşturur.</string>
+
+    <string name="setting_language_title">Uygulama dili</string>
+    <string name="setting_language_summary">Bu uygulamanın dili. Bilgisayara yazılanları etkilemez.</string>
+
+    <string name="setting_click_bar_title">Tık düğmeleri</string>
+    <string name="setting_click_bar_summary">Dizüstü bilgisayarlardaki gibi dokunmatik yüzeyin altında sol ve sağ tık düğmeleri gösterir. Bir düğmeyi basılı tutup yüzeyde kaydırarak sürükleyip bırakabilirsiniz. Yer açmak için dokunmatik yüzey küçülür.</string>
+
+    <string name="setting_media_keys_title">Medya tuşları</string>
+    <string name="setting_media_keys_summary">Ses, oynatma ve Ana ekran tuşlarından bir sıra göstererek uygulamayı TV kumandasına dönüştürür. Varsayılan olarak kapalı.</string>
+
+    <string name="setting_clipboard_title">Panoyu gönder</string>
+    <string name="setting_clipboard_summary">Telefonun panosunu bilgisayara yazan bir menü öğesi ekler — şifreler, bağlantılar ve uzun metinler için kullanışlı.</string>
+
+    <string name="setting_auto_pair_title">Otomatik bağlan</string>
+    <string name="setting_auto_pair_summary">Uygulama açıldığında telefonun bilinen bir bilgisayara kendisinin bağlanmasını sağlar. Genellikle ses profillerini seçen bilgisayar tarafından bağlanmaya kıyasla daha güvenilirdir.</string>
+
+    <string name="setting_stay_connected_title">Arka planda bağlı kal</string>
+    <string name="setting_stay_connected_summary">Uygulamadan çıktığınızda veya ekran kapandığında klavye ve fare olarak çalışmaya devam eder. Bu süre boyunca kalıcı bir bildirim gösterir.</string>
+
+    <string name="setting_keep_screen_on_title">Ekranı açık tut</string>
+    <string name="setting_keep_screen_on_summary">Uygulama açıkken ekranın kapanmasını engeller.</string>
+
+    <string name="setting_theme_title">Tema</string>
+    <string name="setting_theme_system">Telefon ayarını izle</string>
+    <string name="setting_theme_light">Açık</string>
+    <string name="setting_theme_black">Siyah</string>
+
+    <string name="setting_orientation_title">Yönlendirme</string>
+    <string name="setting_orientation_portrait">Dikey</string>
+    <string name="setting_orientation_landscape">Yatay</string>
+    <string name="setting_orientation_auto">Otomatik döndür</string>
+    <string name="setting_orientation_gyro_note">Jiroskop fare açıkken otomatik döndürme kullanılamaz, çünkü imleci hareket ettirmek için telefonu eğmek ekranı döndürürdü.</string>
+
+    <string name="setting_open_help">Kılavuzu aç</string>
+
+    <string name="help_title">Başlarken</string>
+    <string name="help_continue">Başla</string>
+
+    <string name="help_intro">MaxKontroller bu telefonu bir Bluetooth klavye ve fareye dönüştürür. Bilgisayar sıradan bir Bluetooth klavye görür, bu yüzden bilgisayara bir şey kurmanız gerekmez.</string>
+
+    <string name="help_pairing_title">Eşleştirme</string>
+    <string name="help_pairing_body">1. Bu uygulamayı açık bırakın ve «keşfedilebilir yap» isteğine izin verin.\n2. Bilgisayarda Bluetooth cihazlarını arayın ve bu telefonla eşleştirin.\n3. Şifre anahtarını iki tarafta da onaylayın.\n\nSonrasında ayarlarda «Otomatik bağlan»ı açık bırakın; telefon her açılışta bağlantıyı kendisi kurar.</string>
+
+    <string name="help_gestures_title">Hareketler</string>
+    <string name="help_gestures_body">• İmleci hareket ettirme — tek parmakla kaydırma\n• Sol tık — dokunma veya Sol tık düğmesi\n• Sağ tık — Sağ tık düğmesi\n• Çift tık — iki kez dokunma\n• Sürükle bırak — bir tık düğmesini basılı tutup yüzeyde kaydırma\n• Kaydırma — iki parmakla kaydırma\n\nİki parmakla dokunma da sağ tıktır, ancak iki parmağın 100 ms içinde inip kalkması gerekir; bu yüzden düğme daha kolaydır.</string>
+
+    <string name="help_keyboard_title">Klavye</string>
+    <string name="help_keyboard_body">Ekran klavyesini açmak için klavye simgesine dokunun; yazdığınız her şey bilgisayara gönderilir.\n\n(N)/(P) düğmesi değiştirici tuşları yönetir. (N) her vuruştan sonra Ctrl/Alt/Shift\'i bırakır; (P) basılı tutarak Ctrl basılıyken tıklamak gibi kombinasyonlar kurmanızı sağlar. (N)\'e geri dönmeyi unutmayın, yoksa değiştirici tuşlar basılı kalır.\n\nGboard\'da Ctrl, Esc, yön tuşları ve işlev tuşları yok. Bunlara sahip bir klavye — Unexpected Keyboard veya Hacker\'s Keyboard — Shift+F10 (bağlam menüsü) gibi kısayolları mümkün kılar.</string>
+
+    <string name="help_trouble_title">Bilgisayar klavyeyi görmüyorsa</string>
+    <string name="help_trouble_body">Linux\'ta düz bir «connect» genellikle klavye yerine ses profillerini etkinleştirir. Telefonun inisiyatif almasını sağlamak için «Otomatik bağlan»ı kullanın veya HID profilini açıkça bağlayın:\n\nbluetoothctl connect &lt;MAC&gt; 00001124-0000-1000-8000-00805f9b34fb\n\nBilgisayar hâlâ klavye görmüyorsa, BlueZ uygulama kaydedilmeden önceki bir hizmet listesini önbelleğe almış olabilir. /var/lib/bluetooth altındaki bu telefona ait önbellek dosyasını silip yeniden bağlanın; eşleştirmenin kendisi korunur.</string>
+</resources>

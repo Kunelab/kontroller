@@ -1,24 +1,151 @@
 <resources>
-    <string name="app_name">Kontroller</string>
+    <string name="app_name">MaxKontroller</string>
     <string name="trackpad_label">Trackpad</string>
 
+    <string name="click_left">Left click</string>
+    <string name="click_right">Right click</string>
+
     <string name="action_settings">Settings</string>
+    <string name="action_help">Help</string>
     <string name="action_keyboard_title">Keyboard Toggle</string>
     <string name="action_check">(N)</string>
     <string name="action_check_held">(P)</string>
-    <string name="action_tool_tip">Toggle to switch(Ctrl/Alt/Wn Keys) from click_each_time(Normal) state to key_pressed(Hold) state</string>
+    <string name="action_tool_tip">Modifier keys: (N) releases Ctrl/Alt/Shift after every keystroke, (P) holds them down until you switch back</string>
     <string name="action_disconnect">Disconnect</string>
-    <string name="action_autopair">Enable AutoPair</string>
-    <string name="auto_pair_flag">autopairfl</string>
-    <string name="title_screen_on">Screen Always On</string>
+    <string name="action_devices">Devices</string>
+    <string name="action_send_clipboard">Send clipboard</string>
+
+    <!-- Media / remote keys -->
+    <string name="media_vol_down">Vol −</string>
+    <string name="media_vol_up">Vol +</string>
+    <string name="media_mute">Mute</string>
+    <string name="media_prev" translatable="false">⏮</string>
+    <string name="media_play" translatable="false">⏯</string>
+    <string name="media_next" translatable="false">⏭</string>
+    <string name="media_home">Home</string>
+
+    <!-- Devices -->
+    <string name="devices_title">Devices</string>
+    <string name="devices_hint">Paired devices. Tap one to connect or disconnect it.</string>
+    <string name="devices_none">No paired devices yet. Pair this phone from the computer first — see the guide.</string>
+    <string name="devices_not_registered">Not registered as a keyboard yet. Go back to the trackpad and wait a moment, then try again.</string>
+    <string name="devices_no_bluetooth">No Bluetooth adapter available.</string>
+    <string name="device_state_connected">Connected · %1$s</string>
+    <string name="device_state_connecting">Connecting… · %1$s</string>
+    <string name="device_state_disconnected">Not connected · %1$s</string>
+
+    <!-- Clipboard -->
+    <string name="clipboard_empty">The clipboard is empty.</string>
+    <string name="clipboard_sending">Typing %1$d characters…</string>
+    <string name="clipboard_truncated">Clipboard is long — sending the first %1$d characters.</string>
+    <string name="error_not_connected">Not connected to a host yet.</string>
 
     <string name="status_connected">App connected via bluetooth</string>
     <string name="status_not_connected">App not connected via bluetooth</string>
     <!-- Kept for the menu item's default title/tooltip in the XML. -->
     <string name="action_ble_status_tool_tip">App not connected via bluetooth</string>
 
-    <string name="error_bluetooth_permission">Kontroller needs the Bluetooth permissions to act as a keyboard and mouse.</string>
+    <string name="error_bluetooth_permission">MaxKontroller needs the Bluetooth permissions to act as a keyboard and mouse.</string>
     <string name="error_no_hid_profile">This device does not expose the Bluetooth HID Device profile, so it cannot be used as a keyboard or mouse.</string>
+    <string name="error_no_gyro">This phone has no rotation sensor, so the gyro pointer is unavailable.</string>
 
-    <string name="screen_on_flag">screenonfl</string>
+    <!-- Foreground service -->
+    <string name="service_channel">Connection</string>
+    <string name="service_title">MaxKontroller is active</string>
+    <string name="service_text">Acting as a Bluetooth keyboard and mouse.</string>
+    <string name="service_stop">Stop</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_header_pointer">Pointer</string>
+    <string name="settings_header_keyboard">Keyboard</string>
+    <string name="settings_header_trackpad">Trackpad</string>
+
+    <string name="setting_host_layout_title">Host keyboard layout</string>
+    <string name="setting_host_layout_summary">The layout set on the computer you are controlling — not the one on this phone. Bluetooth sends key positions rather than characters, so this has to match the host or letters and punctuation come out swapped. Chinese, Korean, Hindi, Arabic, Thai and Vietnamese hosts use US QWERTY and compose their script themselves.</string>
+
+    <string name="setting_language_title">App language</string>
+    <string name="setting_language_summary">The language of this app. It has no effect on what is typed to the host.</string>
+
+    <!-- Host layout names. Not translated: these are the layouts' own names. -->
+    <string name="layout_us" translatable="false">US QWERTY</string>
+    <string name="layout_uk" translatable="false">United Kingdom QWERTY</string>
+    <string name="layout_fr" translatable="false">France AZERTY</string>
+    <string name="layout_be" translatable="false">Belgium AZERTY</string>
+    <string name="layout_de" translatable="false">Deutschland / Österreich QWERTZ</string>
+    <string name="layout_ch" translatable="false">Schweiz / Suisse QWERTZ</string>
+    <string name="layout_es" translatable="false">España QWERTY</string>
+    <string name="layout_latam" translatable="false">América Latina QWERTY</string>
+    <string name="layout_it" translatable="false">Italia QWERTY</string>
+    <string name="layout_pt" translatable="false">Portugal QWERTY</string>
+    <string name="layout_br" translatable="false">Brasil ABNT2</string>
+    <string name="layout_se" translatable="false">Sverige / Suomi QWERTY</string>
+    <string name="layout_dk" translatable="false">Danmark QWERTY</string>
+    <string name="layout_no" translatable="false">Norge QWERTY</string>
+    <string name="layout_jp" translatable="false">日本 JIS</string>
+    <string name="layout_tr" translatable="false">Türkiye Q</string>
+    <string name="settings_header_remote">Remote</string>
+    <string name="settings_header_connection">Connection</string>
+    <string name="settings_header_appearance">Appearance</string>
+    <string name="settings_header_help">Help</string>
+
+    <string name="setting_sensitivity_title">Pointer speed</string>
+    <string name="setting_sensitivity_value">Pointer speed: %1$d%%</string>
+    <string name="setting_sensitivity_summary">How far the pointer travels for a given finger movement. A value of 100 is one-to-one.</string>
+
+    <string name="setting_gyro_title">Gyro pointer (air mouse)</string>
+    <string name="setting_gyro_summary">Move the pointer by tilting the phone instead of dragging on the pad. Taps, scroll and the click buttons keep working.</string>
+
+    <string name="setting_gyro_invert_x">Invert left / right</string>
+    <string name="setting_gyro_invert_y">Invert up / down</string>
+    <string name="setting_gyro_invert_summary">Flip either gyro axis if it moves the wrong way for how you hold the phone.</string>
+
+    <string name="setting_click_bar_title">Click buttons</string>
+    <string name="setting_click_bar_summary">Show left and right click buttons below the trackpad, like a laptop touchpad. Hold a button and drag on the pad to drag and drop. The trackpad shrinks to make room.</string>
+
+    <string name="setting_media_keys_title">Media keys</string>
+    <string name="setting_media_keys_summary">Show a row of volume, playback and Home keys, turning the app into a TV-style remote. Off by default.</string>
+
+    <string name="setting_clipboard_title">Send clipboard</string>
+    <string name="setting_clipboard_summary">Adds a menu item that types this phone\'s clipboard to the host — handy for passwords, URLs and anything long.</string>
+
+    <string name="setting_auto_pair_title">Connect automatically</string>
+    <string name="setting_auto_pair_summary">Let the phone open the connection to a known host as soon as the app starts. More reliable than connecting from the PC, which tends to pick audio profiles instead.</string>
+
+    <string name="setting_stay_connected_title">Stay connected in background</string>
+    <string name="setting_stay_connected_summary">Keep acting as a keyboard and mouse when you leave the app or the screen turns off. Shows an ongoing notification while active.</string>
+
+    <string name="setting_keep_screen_on_title">Keep screen on</string>
+    <string name="setting_keep_screen_on_summary">Stop the screen turning off while the app is open.</string>
+
+    <string name="setting_theme_title">Theme</string>
+    <string name="setting_theme_system">Follow phone setting</string>
+    <string name="setting_theme_light">Light</string>
+    <string name="setting_theme_black">Black</string>
+
+    <string name="setting_orientation_title">Orientation</string>
+    <string name="setting_orientation_portrait">Portrait</string>
+    <string name="setting_orientation_landscape">Landscape</string>
+    <string name="setting_orientation_auto">Auto-rotate</string>
+    <string name="setting_orientation_gyro_note">Auto-rotate is unavailable while the gyro pointer is on, because tilting the phone to move the pointer would rotate the screen.</string>
+
+    <string name="setting_open_help">Open the guide</string>
+
+    <!-- Help / first run -->
+    <string name="help_title">Getting started</string>
+    <string name="help_continue">Get started</string>
+
+    <string name="help_intro">MaxKontroller turns this phone into a Bluetooth keyboard and mouse. The host sees an ordinary Bluetooth keyboard, so nothing needs installing on it.</string>
+
+    <string name="help_pairing_title">Pairing</string>
+    <string name="help_pairing_body">1. Leave this app open and allow the “make discoverable” prompt.\n2. On the host, scan for Bluetooth devices and pair with this phone.\n3. Confirm the passkey on both sides.\n\nAfterwards, leave “Connect automatically” on in Settings and the phone will open the connection itself whenever you open the app.</string>
+
+    <string name="help_gestures_title">Gestures</string>
+    <string name="help_gestures_body">• Move pointer — drag one finger\n• Left click — tap, or the Left click button\n• Right click — the Right click button\n• Double click — double tap\n• Drag and drop — hold a click button and drag on the pad\n• Scroll — drag two fingers\n\nA two-finger tap is also a right click, but it needs both fingers down and up within 100 ms, so the button is easier.</string>
+
+    <string name="help_keyboard_title">Keyboard</string>
+    <string name="help_keyboard_body">Tap the keyboard icon to bring up the soft keyboard; whatever you type is sent to the host.\n\nThe (N)/(P) button controls modifier keys. (N) releases Ctrl/Alt/Shift after each keystroke; (P) holds them down so you can build combinations such as Ctrl held while clicking. Remember to switch back to (N), or modifiers stay stuck.\n\nGboard has no Ctrl, Esc, arrows or function keys. A keyboard app that does — Unexpected Keyboard or Hacker’s Keyboard — makes shortcuts such as Shift+F10 (context menu) possible.</string>
+
+    <string name="help_trouble_title">If the host sees no keyboard</string>
+    <string name="help_trouble_body">On Linux, a plain “connect” often brings up audio profiles instead of the keyboard. Either rely on “Connect automatically” so the phone initiates, or connect the HID profile explicitly:\n\nbluetoothctl connect &lt;MAC&gt; 00001124-0000-1000-8000-00805f9b34fb\n\nIf the host still shows no keyboard, BlueZ may have cached a service list from before this app registered. Remove the cache file for this phone under /var/lib/bluetooth and reconnect; the pairing itself survives.</string>
 </resources>

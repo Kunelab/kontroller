@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="trackpad_label">Panel táctil</string>
+
+    <string name="click_left">Clic izquierdo</string>
+    <string name="click_right">Clic derecho</string>
+
+    <string name="action_settings">Ajustes</string>
+    <string name="action_help">Ayuda</string>
+    <string name="action_keyboard_title">Mostrar teclado</string>
+    <string name="action_tool_tip">Teclas modificadoras: (N) suelta Ctrl/Alt/Mayús después de cada pulsación, (P) las mantiene pulsadas hasta que vuelvas atrás</string>
+    <string name="action_disconnect">Desconectar</string>
+
+    <string name="status_connected">Aplicación conectada por Bluetooth</string>
+    <string name="status_not_connected">Aplicación no conectada por Bluetooth</string>
+    <string name="action_ble_status_tool_tip">Aplicación no conectada por Bluetooth</string>
+
+    <string name="error_bluetooth_permission">MaxKontroller necesita los permisos de Bluetooth para funcionar como teclado y ratón.</string>
+    <string name="error_no_hid_profile">Este dispositivo no expone el perfil Bluetooth HID Device, por lo que no puede usarse como teclado ni ratón.</string>
+    <string name="error_no_gyro">Este teléfono no tiene sensor de rotación, así que el ratón giroscópico no está disponible.</string>
+
+    <string name="service_channel">Conexión</string>
+    <string name="service_title">MaxKontroller está activo</string>
+    <string name="service_text">Funcionando como teclado y ratón Bluetooth.</string>
+    <string name="service_stop">Detener</string>
+
+    <string name="settings_title">Ajustes</string>
+    <string name="settings_header_pointer">Puntero</string>
+    <string name="settings_header_keyboard">Teclado</string>
+    <string name="settings_header_trackpad">Panel táctil</string>
+    <string name="settings_header_connection">Conexión</string>
+    <string name="settings_header_appearance">Apariencia</string>
+    <string name="settings_header_help">Ayuda</string>
+
+    <string name="setting_sensitivity_title">Velocidad del puntero</string>
+    <string name="setting_sensitivity_value">Velocidad del puntero: %1$d%%</string>
+    <string name="setting_sensitivity_summary">Cuánto se desplaza el puntero para un movimiento del dedo dado. El valor 100 equivale a uno a uno.</string>
+
+    <string name="setting_gyro_title">Ratón giroscópico</string>
+    <string name="setting_gyro_summary">Mueve el puntero inclinando el teléfono en lugar de deslizar sobre el panel. Los toques, el desplazamiento y los botones de clic siguen funcionando.</string>
+    <string name="setting_gyro_invert_x">Invertir izquierda / derecha</string>
+    <string name="setting_gyro_invert_y">Invertir arriba / abajo</string>
+    <string name="setting_gyro_invert_summary">Invierte cualquiera de los ejes del giroscopio si va en la dirección equivocada según cómo sujetes el teléfono.</string>
+
+    <string name="setting_host_layout_title">Distribución del teclado del ordenador</string>
+    <string name="setting_host_layout_summary">La distribución configurada en el ordenador que controlas, no la de este teléfono. El Bluetooth envía posiciones de teclas y no caracteres, así que esto debe coincidir con el ordenador o las letras y la puntuación saldrán cambiadas. Los ordenadores en chino, coreano, hindi, árabe, tailandés y vietnamita usan QWERTY estadounidense y componen su escritura por su cuenta.</string>
+
+    <string name="setting_language_title">Idioma de la aplicación</string>
+    <string name="setting_language_summary">El idioma de esta aplicación. No afecta a lo que se escribe en el ordenador.</string>
+
+    <string name="setting_click_bar_title">Botones de clic</string>
+    <string name="setting_click_bar_summary">Muestra botones de clic izquierdo y derecho bajo el panel táctil, como en un portátil. Mantén pulsado un botón y arrastra sobre el panel para arrastrar y soltar. El panel se reduce para dejar espacio.</string>
+
+    <string name="setting_auto_pair_title">Conectar automáticamente</string>
+    <string name="setting_auto_pair_summary">Permite que el teléfono abra la conexión con un ordenador conocido en cuanto se inicia la aplicación. Más fiable que conectar desde el PC, que tiende a elegir los perfiles de audio.</string>
+
+    <string name="setting_stay_connected_title">Seguir conectado en segundo plano</string>
+    <string name="setting_stay_connected_summary">Sigue funcionando como teclado y ratón cuando sales de la aplicación o se apaga la pantalla. Muestra una notificación permanente mientras está activo.</string>
+
+    <string name="setting_keep_screen_on_title">Mantener la pantalla encendida</string>
+    <string name="setting_keep_screen_on_summary">Evita que la pantalla se apague mientras la aplicación está abierta.</string>
+
+    <string name="setting_theme_title">Tema</string>
+    <string name="setting_theme_system">Seguir el ajuste del teléfono</string>
+    <string name="setting_theme_light">Claro</string>
+    <string name="setting_theme_black">Negro</string>
+
+    <string name="setting_orientation_title">Orientación</string>
+    <string name="setting_orientation_portrait">Vertical</string>
+    <string name="setting_orientation_landscape">Horizontal</string>
+    <string name="setting_orientation_auto">Rotación automática</string>
+    <string name="setting_orientation_gyro_note">La rotación automática no está disponible con el ratón giroscópico activado, porque inclinar el teléfono para mover el puntero giraría la pantalla.</string>
+
+    <string name="setting_open_help">Abrir la guía</string>
+
+    <string name="help_title">Primeros pasos</string>
+    <string name="help_continue">Empezar</string>
+
+    <string name="help_intro">MaxKontroller convierte este teléfono en un teclado y ratón Bluetooth. El ordenador ve un teclado Bluetooth normal, así que no hay que instalar nada en él.</string>
+
+    <string name="help_pairing_title">Emparejamiento</string>
+    <string name="help_pairing_body">1. Deja esta aplicación abierta y acepta la petición de «hacer visible».\n2. En el ordenador, busca dispositivos Bluetooth y empareja con este teléfono.\n3. Confirma el código en ambos lados.\n\nDespués, deja «Conectar automáticamente» activado en los ajustes y el teléfono abrirá la conexión por sí solo cada vez que abras la aplicación.</string>
+
+    <string name="help_gestures_title">Gestos</string>
+    <string name="help_gestures_body">• Mover el puntero — arrastrar un dedo\n• Clic izquierdo — tocar, o el botón Clic izquierdo\n• Clic derecho — el botón Clic derecho\n• Doble clic — tocar dos veces\n• Arrastrar y soltar — mantener un botón de clic y arrastrar sobre el panel\n• Desplazamiento — arrastrar dos dedos\n\nUn toque con dos dedos también es un clic derecho, pero ambos dedos deben apoyarse y levantarse en menos de 100 ms, así que el botón es más fácil.</string>
+
+    <string name="help_keyboard_title">Teclado</string>
+    <string name="help_keyboard_body">Toca el icono del teclado para mostrar el teclado en pantalla; todo lo que escribas se envía al ordenador.\n\nEl botón (N)/(P) controla las teclas modificadoras. (N) suelta Ctrl/Alt/Mayús después de cada pulsación; (P) las mantiene pulsadas para crear combinaciones, como Ctrl mientras haces clic. Acuérdate de volver a (N) o los modificadores se quedan bloqueados.\n\nGboard no tiene Ctrl, Esc, flechas ni teclas de función. Un teclado que sí las tiene — Unexpected Keyboard o Hacker\'s Keyboard — permite atajos como Mayús+F10 (menú contextual).</string>
+
+    <string name="media_vol_down">Vol −</string>
+    <string name="media_vol_up">Vol +</string>
+    <string name="media_mute">Silencio</string>
+    <string name="media_home">Inicio</string>
+
+    <string name="action_devices">Dispositivos</string>
+    <string name="action_send_clipboard">Enviar portapapeles</string>
+
+    <string name="devices_title">Dispositivos</string>
+    <string name="devices_hint">Dispositivos emparejados. Toca uno para conectarlo o desconectarlo.</string>
+    <string name="devices_none">Aún no hay dispositivos emparejados. Empareja primero este teléfono desde el ordenador; consulta la guía.</string>
+    <string name="devices_not_registered">Todavía no está registrado como teclado. Vuelve al panel táctil, espera un momento e inténtalo de nuevo.</string>
+    <string name="devices_no_bluetooth">No hay ningún adaptador Bluetooth disponible.</string>
+    <string name="device_state_connected">Conectado · %1$s</string>
+    <string name="device_state_connecting">Conectando… · %1$s</string>
+    <string name="device_state_disconnected">No conectado · %1$s</string>
+
+    <string name="clipboard_empty">El portapapeles está vacío.</string>
+    <string name="clipboard_sending">Escribiendo %1$d caracteres…</string>
+    <string name="clipboard_truncated">El portapapeles es largo: se enviarán los primeros %1$d caracteres.</string>
+    <string name="error_not_connected">Aún no hay conexión con un ordenador.</string>
+
+    <string name="settings_header_remote">Mando</string>
+    <string name="setting_media_keys_title">Teclas multimedia</string>
+    <string name="setting_media_keys_summary">Muestra una fila de teclas de volumen, reproducción e Inicio, convirtiendo la aplicación en un mando de televisión. Desactivado por defecto.</string>
+    <string name="setting_clipboard_title">Enviar portapapeles</string>
+    <string name="setting_clipboard_summary">Añade una opción de menú que escribe el portapapeles del teléfono en el ordenador: útil para contraseñas, URL y textos largos.</string>
+
+    <string name="help_trouble_title">Si el ordenador no ve ningún teclado</string>
+    <string name="help_trouble_body">En Linux, un simple «connect» suele activar los perfiles de audio en lugar del teclado. Usa «Conectar automáticamente» para que el teléfono tome la iniciativa, o conecta el perfil HID de forma explícita:\n\nbluetoothctl connect &lt;MAC&gt; 00001124-0000-1000-8000-00805f9b34fb\n\nSi el ordenador sigue sin ver un teclado, puede que BlueZ haya guardado en caché una lista de servicios anterior al registro de la aplicación. Elimina el archivo de caché de este teléfono en /var/lib/bluetooth y vuelve a conectar; el emparejamiento se conserva.</string>
+</resources>

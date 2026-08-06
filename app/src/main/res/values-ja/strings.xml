@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="trackpad_label">トラックパッド</string>
+
+    <string name="click_left">左クリック</string>
+    <string name="click_right">右クリック</string>
+
+    <string name="action_settings">設定</string>
+    <string name="action_help">ヘルプ</string>
+    <string name="action_keyboard_title">キーボードを表示</string>
+    <string name="action_tool_tip">修飾キー：(N) は 1 打ごとに Ctrl / Alt / Shift を離し、(P) は切り替えるまで押したままにします</string>
+    <string name="action_disconnect">切断</string>
+
+    <string name="status_connected">Bluetooth で接続済み</string>
+    <string name="status_not_connected">Bluetooth で未接続</string>
+    <string name="action_ble_status_tool_tip">Bluetooth で未接続</string>
+
+    <string name="error_bluetooth_permission">キーボードとマウスとして動作するには、MaxKontroller に Bluetooth の権限が必要です。</string>
+    <string name="error_no_hid_profile">この端末は Bluetooth HID Device プロファイルに対応していないため、キーボードやマウスとして使用できません。</string>
+    <string name="error_no_gyro">この端末には回転センサーがないため、ジャイロマウスは利用できません。</string>
+
+    <string name="service_channel">接続</string>
+    <string name="service_title">MaxKontroller 動作中</string>
+    <string name="service_text">Bluetooth キーボード / マウスとして動作しています。</string>
+    <string name="service_stop">停止</string>
+
+    <string name="settings_title">設定</string>
+    <string name="settings_header_pointer">ポインター</string>
+    <string name="settings_header_keyboard">キーボード</string>
+    <string name="settings_header_trackpad">トラックパッド</string>
+    <string name="settings_header_connection">接続</string>
+    <string name="settings_header_appearance">外観</string>
+    <string name="settings_header_help">ヘルプ</string>
+
+    <string name="setting_sensitivity_title">ポインター速度</string>
+    <string name="setting_sensitivity_value">ポインター速度: %1$d%%</string>
+    <string name="setting_sensitivity_summary">指の動きに対してポインターが進む距離です。100 で 1 対 1 になります。</string>
+
+    <string name="setting_gyro_title">ジャイロマウス</string>
+    <string name="setting_gyro_summary">パッドをなぞる代わりに、端末を傾けてポインターを動かします。タップ、スクロール、クリックボタンはそのまま使えます。</string>
+    <string name="setting_gyro_invert_x">左右を反転</string>
+    <string name="setting_gyro_invert_y">上下を反転</string>
+    <string name="setting_gyro_invert_summary">端末の持ち方によって向きが逆に感じる場合は、いずれかの軸を反転してください。</string>
+
+    <string name="setting_host_layout_title">接続先のキーボードレイアウト</string>
+    <string name="setting_host_layout_summary">操作するパソコン側のレイアウトで、この端末のものではありません。Bluetooth は文字ではなくキーの位置を送るため、パソコンと一致していないと文字や記号が入れ替わります。中国語・韓国語・ヒンディー語・アラビア語・タイ語・ベトナム語のパソコンは US QWERTY を使い、文字の変換はパソコン側で行われます。</string>
+
+    <string name="setting_language_title">アプリの言語</string>
+    <string name="setting_language_summary">このアプリの表示言語です。パソコンに送られる文字には影響しません。</string>
+
+    <string name="setting_click_bar_title">クリックボタン</string>
+    <string name="setting_click_bar_summary">ノートパソコンのように、トラックパッドの下に左右のクリックボタンを表示します。ボタンを押したままパッドをなぞるとドラッグ＆ドロップができます。その分トラックパッドは小さくなります。</string>
+
+    <string name="setting_auto_pair_title">自動的に接続</string>
+    <string name="setting_auto_pair_summary">アプリの起動時に、既知のパソコンへ端末側から接続します。パソコン側から接続すると音声プロファイルが選ばれがちなので、こちらの方が確実です。</string>
+
+    <string name="setting_stay_connected_title">バックグラウンドで接続を維持</string>
+    <string name="setting_stay_connected_summary">アプリを離れたり画面が消えたりしても、キーボードとマウスとして動作し続けます。その間は常設の通知が表示されます。</string>
+
+    <string name="setting_keep_screen_on_title">画面を消灯しない</string>
+    <string name="setting_keep_screen_on_summary">アプリを開いている間、画面が消えないようにします。</string>
+
+    <string name="setting_theme_title">テーマ</string>
+    <string name="setting_theme_system">端末の設定に従う</string>
+    <string name="setting_theme_light">ライト</string>
+    <string name="setting_theme_black">ブラック</string>
+
+    <string name="setting_orientation_title">画面の向き</string>
+    <string name="setting_orientation_portrait">縦向き</string>
+    <string name="setting_orientation_landscape">横向き</string>
+    <string name="setting_orientation_auto">自動回転</string>
+    <string name="setting_orientation_gyro_note">ジャイロマウスが有効なときは自動回転を使用できません。ポインターを動かすために端末を傾けると画面が回転してしまうためです。</string>
+
+    <string name="setting_open_help">ガイドを開く</string>
+
+    <string name="help_title">はじめに</string>
+    <string name="help_continue">開始する</string>
+
+    <string name="help_intro">MaxKontroller はこの端末を Bluetooth のキーボードとマウスにします。パソコンからは通常の Bluetooth キーボードとして見えるため、パソコン側に何かを入れる必要はありません。</string>
+
+    <string name="help_pairing_title">ペア設定</string>
+    <string name="help_pairing_body">1. このアプリを開いたままにし、「検出可能にする」の確認を許可します。\n2. パソコン側で Bluetooth デバイスを検索し、この端末とペア設定します。\n3. 両方でパスキーを確認します。\n\n以後は設定の「自動的に接続」を有効にしておけば、アプリを開くたびに端末側から接続します。</string>
+
+    <string name="help_gestures_title">操作</string>
+    <string name="help_gestures_body">・ポインターを動かす — 1 本指でなぞる\n・左クリック — タップ、または左クリックボタン\n・右クリック — 右クリックボタン\n・ダブルクリック — 2 回タップ\n・ドラッグ＆ドロップ — クリックボタンを押したままパッドをなぞる\n・スクロール — 2 本指でなぞる\n\n2 本指タップも右クリックになりますが、両方の指を 100 ミリ秒以内に置いて離す必要があるため、ボタンの方が簡単です。</string>
+
+    <string name="help_keyboard_title">キーボード</string>
+    <string name="help_keyboard_body">キーボードのアイコンをタップすると画面キーボードが出ます。入力した内容はそのままパソコンへ送られます。\n\n(N)/(P) ボタンは修飾キーの動作を切り替えます。(N) は 1 打ごとに Ctrl / Alt / Shift を離し、(P) は押したままにするので、Ctrl を押しながらクリックなどの組み合わせができます。(P) のままだと修飾キーが押されたままになるので、戻すのを忘れないでください。\n\nGboard には Ctrl、Esc、矢印キー、ファンクションキーがありません。Unexpected Keyboard や Hacker\'s Keyboard などを使うと、Shift+F10（コンテキストメニュー）などのショートカットが使えます。</string>
+
+    <string name="media_vol_down">音量 −</string>
+    <string name="media_vol_up">音量 +</string>
+    <string name="media_mute">ミュート</string>
+    <string name="media_home">ホーム</string>
+
+    <string name="action_devices">デバイス</string>
+    <string name="action_send_clipboard">クリップボードを送信</string>
+
+    <string name="devices_title">デバイス</string>
+    <string name="devices_hint">ペア設定済みのデバイスです。タップすると接続または切断します。</string>
+    <string name="devices_none">ペア設定済みのデバイスはまだありません。先にパソコン側からこの端末とペア設定してください（ガイド参照）。</string>
+    <string name="devices_not_registered">まだキーボードとして登録されていません。トラックパッドに戻って少し待ってから、もう一度お試しください。</string>
+    <string name="devices_no_bluetooth">利用できる Bluetooth アダプターがありません。</string>
+    <string name="device_state_connected">接続中 · %1$s</string>
+    <string name="device_state_connecting">接続しています… · %1$s</string>
+    <string name="device_state_disconnected">未接続 · %1$s</string>
+
+    <string name="clipboard_empty">クリップボードが空です。</string>
+    <string name="clipboard_sending">%1$d 文字を入力しています…</string>
+    <string name="clipboard_truncated">クリップボードが長いため、先頭の %1$d 文字を送信します。</string>
+    <string name="error_not_connected">まだパソコンに接続されていません。</string>
+
+    <string name="settings_header_remote">リモコン</string>
+    <string name="setting_media_keys_title">メディアキー</string>
+    <string name="setting_media_keys_summary">音量・再生・ホームのキーを並べて表示し、テレビのリモコンのように使えます。既定ではオフです。</string>
+    <string name="setting_clipboard_title">クリップボードを送信</string>
+    <string name="setting_clipboard_summary">この端末のクリップボードをパソコンに入力するメニュー項目を追加します。パスワードや URL、長い文章に便利です。</string>
+
+    <string name="help_trouble_title">パソコンがキーボードを認識しないとき</string>
+    <string name="help_trouble_body">Linux では単純な「connect」だとキーボードではなく音声プロファイルが有効になることがあります。「自動的に接続」を使って端末側から接続するか、HID プロファイルを明示的に接続してください。\n\nbluetoothctl connect &lt;MAC&gt; 00001124-0000-1000-8000-00805f9b34fb\n\nそれでも認識されない場合、BlueZ がアプリ登録前のサービス一覧をキャッシュしている可能性があります。/var/lib/bluetooth 以下にあるこの端末のキャッシュファイルを削除して再接続してください。ペア設定自体は残ります。</string>
+</resources>

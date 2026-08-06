@@ -7,4 +7,11 @@
     <color name="start_gradient">#3378FF</color>
     <!--<color name="start_gradient">#3049BE</color>-->
     <color name="end_gradient">#000</color>
+
+    <color name="surface_light">#FAFAFA</color>
+
+    <!-- Translucent grey works against both the black and the light theme, so the
+         separators and the click-button press tint need no per-theme variants. -->
+    <color name="separator">#40808080</color>
+    <color name="click_pressed">#28808080</color>
 </resources>

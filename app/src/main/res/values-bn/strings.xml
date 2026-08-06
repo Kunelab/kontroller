@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="trackpad_label">ট্র্যাকপ্যাড</string>
+
+    <string name="click_left">বাম ক্লিক</string>
+    <string name="click_right">ডান ক্লিক</string>
+
+    <string name="action_settings">সেটিংস</string>
+    <string name="action_help">সহায়তা</string>
+    <string name="action_keyboard_title">কীবোর্ড দেখান</string>
+    <string name="action_tool_tip">মডিফায়ার কী: (N) প্রতিটি কীস্ট্রোকের পরে Ctrl/Alt/Shift ছেড়ে দেয়, (P) আপনি ফিরে না যাওয়া পর্যন্ত চেপে ধরে রাখে</string>
+    <string name="action_disconnect">সংযোগ বিচ্ছিন্ন করুন</string>
+    <string name="action_devices">ডিভাইস</string>
+    <string name="action_send_clipboard">ক্লিপবোর্ড পাঠান</string>
+
+    <string name="status_connected">অ্যাপ ব্লুটুথে সংযুক্ত</string>
+    <string name="status_not_connected">অ্যাপ ব্লুটুথে সংযুক্ত নয়</string>
+    <string name="action_ble_status_tool_tip">অ্যাপ ব্লুটুথে সংযুক্ত নয়</string>
+
+    <string name="error_bluetooth_permission">কীবোর্ড ও মাউস হিসেবে কাজ করতে MaxKontroller-এর ব্লুটুথ অনুমতি প্রয়োজন।</string>
+    <string name="error_no_hid_profile">এই ডিভাইসে ব্লুটুথ HID Device প্রোফাইল নেই, তাই এটি কীবোর্ড বা মাউস হিসেবে ব্যবহার করা যাবে না।</string>
+    <string name="error_no_gyro">এই ফোনে রোটেশন সেন্সর নেই, তাই জাইরো মাউস পাওয়া যাচ্ছে না।</string>
+    <string name="error_not_connected">এখনও কোনো কম্পিউটারে সংযুক্ত নয়।</string>
+
+    <string name="service_channel">সংযোগ</string>
+    <string name="service_title">MaxKontroller সক্রিয়</string>
+    <string name="service_text">ব্লুটুথ কীবোর্ড ও মাউস হিসেবে কাজ করছে।</string>
+    <string name="service_stop">বন্ধ করুন</string>
+
+    <string name="media_vol_down">ভলিউম −</string>
+    <string name="media_vol_up">ভলিউম +</string>
+    <string name="media_mute">নিঃশব্দ</string>
+    <string name="media_home">হোম</string>
+
+    <string name="devices_title">ডিভাইস</string>
+    <string name="devices_hint">জোড়া লাগানো ডিভাইস। সংযুক্ত বা বিচ্ছিন্ন করতে ট্যাপ করুন।</string>
+    <string name="devices_none">এখনও কোনো ডিভাইস জোড়া লাগানো নেই। প্রথমে কম্পিউটার থেকে এই ফোনটি জোড়া লাগান — নির্দেশিকা দেখুন।</string>
+    <string name="devices_not_registered">এখনও কীবোর্ড হিসেবে নিবন্ধিত হয়নি। ট্র্যাকপ্যাডে ফিরে যান, কিছুক্ষণ অপেক্ষা করুন, তারপর আবার চেষ্টা করুন।</string>
+    <string name="devices_no_bluetooth">কোনো ব্লুটুথ অ্যাডাপ্টার নেই।</string>
+    <string name="device_state_connected">সংযুক্ত · %1$s</string>
+    <string name="device_state_connecting">সংযুক্ত হচ্ছে… · %1$s</string>
+    <string name="device_state_disconnected">সংযুক্ত নয় · %1$s</string>
+
+    <string name="clipboard_empty">ক্লিপবোর্ড খালি।</string>
+    <string name="clipboard_sending">%1$d অক্ষর টাইপ করা হচ্ছে…</string>
+    <string name="clipboard_truncated">ক্লিপবোর্ড দীর্ঘ — প্রথম %1$d অক্ষর পাঠানো হচ্ছে।</string>
+
+    <string name="settings_title">সেটিংস</string>
+    <string name="settings_header_pointer">পয়েন্টার</string>
+    <string name="settings_header_keyboard">কীবোর্ড</string>
+    <string name="settings_header_trackpad">ট্র্যাকপ্যাড</string>
+    <string name="settings_header_remote">রিমোট</string>
+    <string name="settings_header_connection">সংযোগ</string>
+    <string name="settings_header_appearance">অবয়ব</string>
+    <string name="settings_header_help">সহায়তা</string>
+
+    <string name="setting_sensitivity_title">পয়েন্টারের গতি</string>
+    <string name="setting_sensitivity_value">পয়েন্টারের গতি: %1$d%%</string>
+    <string name="setting_sensitivity_summary">আঙুলের নির্দিষ্ট নড়াচড়ায় পয়েন্টার কতদূর যায়। ১০০ মান মানে এক-এর-বদলে-এক।</string>
+
+    <string name="setting_gyro_title">জাইরো মাউস</string>
+    <string name="setting_gyro_summary">ট্র্যাকপ্যাডে টানার বদলে ফোন কাত করে পয়েন্টার সরান। ট্যাপ, স্ক্রল এবং ক্লিক বোতাম কাজ করতেই থাকে।</string>
+    <string name="setting_gyro_invert_x">বাম / ডান উল্টান</string>
+    <string name="setting_gyro_invert_y">উপর / নিচ উল্টান</string>
+    <string name="setting_gyro_invert_summary">আপনি ফোন যেভাবে ধরেন তার তুলনায় দিক উল্টো মনে হলে যেকোনো অক্ষ উল্টে দিন।</string>
+
+    <string name="setting_host_layout_title">কম্পিউটারের কীবোর্ড লেআউট</string>
+    <string name="setting_host_layout_summary">আপনি যে কম্পিউটার নিয়ন্ত্রণ করছেন তার লেআউট, এই ফোনের নয়। ব্লুটুথ অক্ষর নয় বরং কী-এর অবস্থান পাঠায়, তাই এটি কম্পিউটারের সঙ্গে মিলতে হবে, নইলে অক্ষর ও যতিচিহ্ন এলোমেলো হয়ে যায়। চীনা, কোরীয়, হিন্দি, আরবি, থাই ও ভিয়েতনামি কম্পিউটার US QWERTY ব্যবহার করে এবং লিপি নিজেরাই তৈরি করে।</string>
+
+    <string name="setting_language_title">অ্যাপের ভাষা</string>
+    <string name="setting_language_summary">এই অ্যাপের ভাষা। কম্পিউটারে যা টাইপ হয় তার উপর কোনো প্রভাব নেই।</string>
+
+    <string name="setting_click_bar_title">ক্লিক বোতাম</string>
+    <string name="setting_click_bar_summary">ল্যাপটপের মতো ট্র্যাকপ্যাডের নিচে বাম ও ডান ক্লিক বোতাম দেখায়। একটি বোতাম চেপে ধরে ট্র্যাকপ্যাডে টানলে ড্র্যাগ-অ্যান্ড-ড্রপ হয়। জায়গা করে দিতে ট্র্যাকপ্যাড ছোট হয়ে যায়।</string>
+
+    <string name="setting_media_keys_title">মিডিয়া কী</string>
+    <string name="setting_media_keys_summary">ভলিউম, প্লেব্যাক ও হোম কী-এর একটি সারি দেখায়, যা অ্যাপটিকে টিভি রিমোটে পরিণত করে। ডিফল্টে বন্ধ।</string>
+
+    <string name="setting_clipboard_title">ক্লিপবোর্ড পাঠান</string>
+    <string name="setting_clipboard_summary">একটি মেনু আইটেম যোগ করে যা ফোনের ক্লিপবোর্ড কম্পিউটারে টাইপ করে — পাসওয়ার্ড, URL ও দীর্ঘ লেখার জন্য সুবিধাজনক।</string>
+
+    <string name="setting_auto_pair_title">স্বয়ংক্রিয়ভাবে সংযুক্ত হোন</string>
+    <string name="setting_auto_pair_summary">অ্যাপ চালু হওয়ার সঙ্গে সঙ্গে ফোনকেই পরিচিত কম্পিউটারে সংযোগ খুলতে দেয়। পিসি থেকে সংযোগ করার চেয়ে বেশি নির্ভরযোগ্য, কারণ পিসি সাধারণত অডিও প্রোফাইল বেছে নেয়।</string>
+
+    <string name="setting_stay_connected_title">পটভূমিতে সংযুক্ত থাকুন</string>
+    <string name="setting_stay_connected_summary">আপনি অ্যাপ ছেড়ে গেলে বা স্ক্রিন বন্ধ হলেও কীবোর্ড ও মাউস হিসেবে কাজ করতে থাকে। সক্রিয় থাকার সময় একটি স্থায়ী বিজ্ঞপ্তি দেখায়।</string>
+
+    <string name="setting_keep_screen_on_title">স্ক্রিন চালু রাখুন</string>
+    <string name="setting_keep_screen_on_summary">অ্যাপ খোলা থাকা অবস্থায় স্ক্রিন বন্ধ হতে দেয় না।</string>
+
+    <string name="setting_theme_title">থিম</string>
+    <string name="setting_theme_system">ফোনের সেটিং অনুসরণ করুন</string>
+    <string name="setting_theme_light">হালকা</string>
+    <string name="setting_theme_black">কালো</string>
+
+    <string name="setting_orientation_title">অভিমুখ</string>
+    <string name="setting_orientation_portrait">পোর্ট্রেট</string>
+    <string name="setting_orientation_landscape">ল্যান্ডস্কেপ</string>
+    <string name="setting_orientation_auto">স্বয়ংক্রিয় ঘোরানো</string>
+    <string name="setting_orientation_gyro_note">জাইরো মাউস চালু থাকলে স্বয়ংক্রিয় ঘোরানো পাওয়া যায় না, কারণ পয়েন্টার সরাতে ফোন কাত করলে স্ক্রিনও ঘুরে যাবে।</string>
+
+    <string name="setting_open_help">নির্দেশিকা খুলুন</string>
+
+    <string name="help_title">শুরু করা</string>
+    <string name="help_continue">শুরু করুন</string>
+
+    <string name="help_intro">MaxKontroller এই ফোনটিকে ব্লুটুথ কীবোর্ড ও মাউসে পরিণত করে। কম্পিউটার এটিকে সাধারণ ব্লুটুথ কীবোর্ড হিসেবে দেখে, তাই সেখানে কিছু ইনস্টল করার দরকার নেই।</string>
+
+    <string name="help_pairing_title">জোড়া লাগানো</string>
+    <string name="help_pairing_body">১. এই অ্যাপটি খোলা রাখুন এবং «খুঁজে পাওয়ার যোগ্য করুন» অনুরোধটি অনুমোদন করুন।\n২. কম্পিউটারে ব্লুটুথ ডিভাইস খুঁজুন এবং এই ফোনের সঙ্গে জোড়া লাগান।\n৩. দুই দিকেই পাসকি নিশ্চিত করুন।\n\nএরপর সেটিংসে «স্বয়ংক্রিয়ভাবে সংযুক্ত হোন» চালু রাখুন, ফোন প্রতিবার অ্যাপ খোলার সময় নিজেই সংযোগ খুলে নেবে।</string>
+
+    <string name="help_gestures_title">জেসচার</string>
+    <string name="help_gestures_body">• পয়েন্টার সরানো — এক আঙুলে টানুন\n• বাম ক্লিক — ট্যাপ করুন, বা বাম ক্লিক বোতাম\n• ডান ক্লিক — ডান ক্লিক বোতাম\n• ডাবল ক্লিক — দুবার ট্যাপ করুন\n• ড্র্যাগ ও ড্রপ — ক্লিক বোতাম চেপে ধরে ট্র্যাকপ্যাডে টানুন\n• স্ক্রল — দুই আঙুলে টানুন\n\nদুই আঙুলের ট্যাপও ডান ক্লিক, তবে দুটি আঙুলকেই ১০০ মিলিসেকেন্ডের মধ্যে ছুঁয়ে উঠে যেতে হবে, তাই বোতাম ব্যবহার করা সহজ।</string>
+
+    <string name="help_keyboard_title">কীবোর্ড</string>
+    <string name="help_keyboard_body">স্ক্রিন কীবোর্ড আনতে কীবোর্ড আইকনে ট্যাপ করুন; আপনি যা টাইপ করেন তা কম্পিউটারে পাঠানো হয়।\n\n(N)/(P) বোতাম মডিফায়ার কী নিয়ন্ত্রণ করে। (N) প্রতিটি কীস্ট্রোকের পরে Ctrl/Alt/Shift ছেড়ে দেয়; (P) সেগুলো চেপে ধরে রাখে, ফলে ক্লিক করার সময় Ctrl ধরে রাখার মতো সংযোগ তৈরি করা যায়। (N)-এ ফিরে যেতে ভুলবেন না, নইলে মডিফায়ার চাপা থেকে যাবে।\n\nGboard-এ Ctrl, Esc, তীর বা ফাংশন কী নেই। এসব আছে এমন কীবোর্ড — Unexpected Keyboard বা Hacker\'s Keyboard — দিয়ে Shift+F10 (কনটেক্সট মেনু) জাতীয় শর্টকাট সম্ভব হয়।</string>
+
+    <string name="help_trouble_title">কম্পিউটার কোনো কীবোর্ড না দেখলে</string>
+    <string name="help_trouble_body">Linux-এ সাধারণ «connect» প্রায়ই কীবোর্ডের বদলে অডিও প্রোফাইল চালু করে। ফোনকে উদ্যোগ নিতে দিতে «স্বয়ংক্রিয়ভাবে সংযুক্ত হোন» ব্যবহার করুন, বা HID প্রোফাইল স্পষ্টভাবে সংযুক্ত করুন:\n\nbluetoothctl connect &lt;MAC&gt; 00001124-0000-1000-8000-00805f9b34fb\n\nতাতেও কীবোর্ড না দেখলে, BlueZ হয়তো অ্যাপ নিবন্ধিত হওয়ার আগের একটি সার্ভিস তালিকা ক্যাশ করে রেখেছে। /var/lib/bluetooth-এ এই ফোনের ক্যাশ ফাইলটি মুছে আবার সংযুক্ত হোন; জোড়া লাগানো অবস্থা থেকে যায়।</string>
+</resources>

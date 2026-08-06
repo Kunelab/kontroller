@@ -152,8 +152,32 @@ object DescriptorCollection {
         0x19.toByte(), 0x00.toByte(),                         //     Usage Minimum (0)
         0x29.toByte(), 0x65.toByte(),                         //     Usage Maximum (101)
         0x81.toByte(), 0x00.toByte(),                         //     Input (Data, Array) Key array(6 bytes)
-        0xc0.toByte()                               // End Collection (Application)
+        0xc0.toByte(),                              // End Collection (Application)
 
+        // ── Consumer control: media keys ─────────────────────────────────────
+        // Added in this fork. Upstream had no consumer collection at all, so volume and
+        // playback keys had no report to travel in. (The Consumer Devices usage page does
+        // appear above, but only as AC Pan inside the mouse report -- horizontal scroll.)
+        //
+        // One byte, one bit per key, report ID 10. See MediaSender for the bit numbering.
+        0x05.toByte(), 0x0c.toByte(),                         // USAGE_PAGE (Consumer Devices)
+        0x09.toByte(), 0x01.toByte(),                         // USAGE (Consumer Control)
+        0xa1.toByte(), 0x01.toByte(),                         // COLLECTION (Application)
+        0x85.toByte(), 0x0a.toByte(),                         //   REPORT_ID (Media, 10)
+        0x15.toByte(), 0x00.toByte(),                         //   LOGICAL_MINIMUM (0)
+        0x25.toByte(), 0x01.toByte(),                         //   LOGICAL_MAXIMUM (1)
+        0x75.toByte(), 0x01.toByte(),                         //   REPORT_SIZE (1)
+        0x95.toByte(), 0x08.toByte(),                         //   REPORT_COUNT (8)
+        0x09.toByte(), 0xb5.toByte(),                         //   USAGE (Scan Next Track)     bit 0
+        0x09.toByte(), 0xb6.toByte(),                         //   USAGE (Scan Previous Track) bit 1
+        0x09.toByte(), 0xb7.toByte(),                         //   USAGE (Stop)                bit 2
+        0x09.toByte(), 0xcd.toByte(),                         //   USAGE (Play/Pause)          bit 3
+        0x09.toByte(), 0xe2.toByte(),                         //   USAGE (Mute)                bit 4
+        0x09.toByte(), 0xe9.toByte(),                         //   USAGE (Volume Up)           bit 5
+        0x09.toByte(), 0xea.toByte(),                         //   USAGE (Volume Down)         bit 6
+        0x0a.toByte(), 0x23.toByte(), 0x02.toByte(),          //   USAGE (AC Home)             bit 7
+        0x81.toByte(), 0x02.toByte(),                         //   INPUT (Data,Var,Abs)
+        0xc0.toByte()                                         // END_COLLECTION
     )
 
 

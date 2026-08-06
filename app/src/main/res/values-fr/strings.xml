@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="trackpad_label">Pavé tactile</string>
+
+    <string name="click_left">Clic gauche</string>
+    <string name="click_right">Clic droit</string>
+
+    <string name="action_settings">Paramètres</string>
+    <string name="action_help">Aide</string>
+    <string name="action_keyboard_title">Afficher le clavier</string>
+    <string name="action_tool_tip">Touches de modification : (N) relâche Ctrl/Alt/Maj après chaque frappe, (P) les maintient enfoncées jusqu\'à ce que vous reveniez en arrière</string>
+    <string name="action_disconnect">Déconnecter</string>
+
+    <string name="status_connected">Application connectée en Bluetooth</string>
+    <string name="status_not_connected">Application non connectée en Bluetooth</string>
+    <string name="action_ble_status_tool_tip">Application non connectée en Bluetooth</string>
+
+    <string name="error_bluetooth_permission">MaxKontroller a besoin des autorisations Bluetooth pour servir de clavier et de souris.</string>
+    <string name="error_no_hid_profile">Cet appareil n\'expose pas le profil Bluetooth HID Device : il ne peut donc pas servir de clavier ni de souris.</string>
+    <string name="error_no_gyro">Ce téléphone n\'a pas de capteur de rotation, la souris gyroscopique n\'est pas disponible.</string>
+
+    <string name="service_channel">Connexion</string>
+    <string name="service_title">MaxKontroller est actif</string>
+    <string name="service_text">Fonctionne comme clavier et souris Bluetooth.</string>
+    <string name="service_stop">Arrêter</string>
+
+    <string name="settings_title">Paramètres</string>
+    <string name="settings_header_pointer">Pointeur</string>
+    <string name="settings_header_keyboard">Clavier</string>
+    <string name="settings_header_trackpad">Pavé tactile</string>
+    <string name="settings_header_connection">Connexion</string>
+    <string name="settings_header_appearance">Apparence</string>
+    <string name="settings_header_help">Aide</string>
+
+    <string name="setting_sensitivity_title">Vitesse du pointeur</string>
+    <string name="setting_sensitivity_value">Vitesse du pointeur : %1$d%%</string>
+    <string name="setting_sensitivity_summary">Distance parcourue par le pointeur pour un mouvement de doigt donné. La valeur 100 correspond à un rapport de un pour un.</string>
+
+    <string name="setting_gyro_title">Souris gyroscopique</string>
+    <string name="setting_gyro_summary">Déplacez le pointeur en inclinant le téléphone au lieu de glisser sur le pavé. Les appuis, le défilement et les boutons de clic continuent de fonctionner.</string>
+    <string name="setting_gyro_invert_x">Inverser gauche / droite</string>
+    <string name="setting_gyro_invert_y">Inverser haut / bas</string>
+    <string name="setting_gyro_invert_summary">Inversez un axe du gyroscope s\'il va dans le mauvais sens selon la façon dont vous tenez le téléphone.</string>
+
+    <string name="setting_host_layout_title">Disposition du clavier de l\'ordinateur</string>
+    <string name="setting_host_layout_summary">La disposition configurée sur l\'ordinateur que vous contrôlez, et non celle de ce téléphone. Le Bluetooth transmet des positions de touches et non des caractères : ce réglage doit correspondre à l\'ordinateur, sinon les lettres et la ponctuation sont permutées. Les ordinateurs en chinois, coréen, hindi, arabe, thaï et vietnamien utilisent le QWERTY américain et composent leur écriture eux-mêmes.</string>
+
+    <string name="setting_language_title">Langue de l\'application</string>
+    <string name="setting_language_summary">La langue de cette application. Cela n\'a aucun effet sur ce qui est tapé sur l\'ordinateur.</string>
+
+    <string name="setting_click_bar_title">Boutons de clic</string>
+    <string name="setting_click_bar_summary">Affiche des boutons de clic gauche et droit sous le pavé tactile, comme sur un ordinateur portable. Maintenez un bouton et glissez sur le pavé pour faire un glisser-déposer. Le pavé tactile est réduit pour laisser la place.</string>
+
+    <string name="setting_auto_pair_title">Connexion automatique</string>
+    <string name="setting_auto_pair_summary">Laisse le téléphone ouvrir la connexion vers un ordinateur connu dès le lancement de l\'application. Plus fiable qu\'une connexion lancée depuis le PC, qui a tendance à choisir les profils audio.</string>
+
+    <string name="setting_stay_connected_title">Rester connecté en arrière-plan</string>
+    <string name="setting_stay_connected_summary">Continue de servir de clavier et de souris quand vous quittez l\'application ou que l\'écran s\'éteint. Affiche une notification permanente pendant ce temps.</string>
+
+    <string name="setting_keep_screen_on_title">Garder l\'écran allumé</string>
+    <string name="setting_keep_screen_on_summary">Empêche l\'écran de s\'éteindre pendant que l\'application est ouverte.</string>
+
+    <string name="setting_theme_title">Thème</string>
+    <string name="setting_theme_system">Suivre le réglage du téléphone</string>
+    <string name="setting_theme_light">Clair</string>
+    <string name="setting_theme_black">Noir</string>
+
+    <string name="setting_orientation_title">Orientation</string>
+    <string name="setting_orientation_portrait">Portrait</string>
+    <string name="setting_orientation_landscape">Paysage</string>
+    <string name="setting_orientation_auto">Rotation automatique</string>
+    <string name="setting_orientation_gyro_note">La rotation automatique n\'est pas disponible quand la souris gyroscopique est activée, car incliner le téléphone pour déplacer le pointeur ferait tourner l\'écran.</string>
+
+    <string name="setting_open_help">Ouvrir le guide</string>
+
+    <string name="help_title">Premiers pas</string>
+    <string name="help_continue">Commencer</string>
+
+    <string name="help_intro">MaxKontroller transforme ce téléphone en clavier et souris Bluetooth. L\'ordinateur voit un clavier Bluetooth ordinaire : rien à installer dessus.</string>
+
+    <string name="help_pairing_title">Association</string>
+    <string name="help_pairing_body">1. Laissez cette application ouverte et acceptez la demande « rendre visible ».\n2. Sur l\'ordinateur, recherchez les appareils Bluetooth et associez-le à ce téléphone.\n3. Confirmez le code des deux côtés.\n\nEnsuite, laissez « Connexion automatique » activée dans les paramètres et le téléphone ouvrira lui-même la connexion à chaque lancement.</string>
+
+    <string name="help_gestures_title">Gestes</string>
+    <string name="help_gestures_body">• Déplacer le pointeur — glisser un doigt\n• Clic gauche — appuyer, ou le bouton Clic gauche\n• Clic droit — le bouton Clic droit\n• Double-clic — appuyer deux fois\n• Glisser-déposer — maintenir un bouton de clic et glisser sur le pavé\n• Défilement — glisser deux doigts\n\nUn appui à deux doigts fait aussi un clic droit, mais les deux doigts doivent se poser et se lever en moins de 100 ms : le bouton est plus simple.</string>
+
+    <string name="help_keyboard_title">Clavier</string>
+    <string name="help_keyboard_body">Appuyez sur l\'icône du clavier pour afficher le clavier virtuel ; tout ce que vous tapez est envoyé à l\'ordinateur.\n\nLe bouton (N)/(P) gère les touches de modification. (N) relâche Ctrl/Alt/Maj après chaque frappe ; (P) les maintient enfoncées pour composer des combinaisons, par exemple Ctrl maintenu pendant un clic. Pensez à revenir en (N), sinon les modificateurs restent bloqués.\n\nGboard n\'a ni Ctrl, ni Échap, ni flèches, ni touches de fonction. Un clavier qui les propose — Unexpected Keyboard ou Hacker\'s Keyboard — permet des raccourcis comme Maj+F10 (menu contextuel).</string>
+
+    <string name="media_vol_down">Vol −</string>
+    <string name="media_vol_up">Vol +</string>
+    <string name="media_mute">Muet</string>
+    <string name="media_home">Accueil</string>
+
+    <string name="action_devices">Appareils</string>
+    <string name="action_send_clipboard">Envoyer le presse-papiers</string>
+
+    <string name="devices_title">Appareils</string>
+    <string name="devices_hint">Appareils associés. Touchez-en un pour le connecter ou le déconnecter.</string>
+    <string name="devices_none">Aucun appareil associé pour l\'instant. Associez d\'abord ce téléphone depuis l\'ordinateur — voir le guide.</string>
+    <string name="devices_not_registered">Pas encore enregistré comme clavier. Revenez au pavé tactile, attendez un instant puis réessayez.</string>
+    <string name="devices_no_bluetooth">Aucun adaptateur Bluetooth disponible.</string>
+    <string name="device_state_connected">Connecté · %1$s</string>
+    <string name="device_state_connecting">Connexion… · %1$s</string>
+    <string name="device_state_disconnected">Non connecté · %1$s</string>
+
+    <string name="clipboard_empty">Le presse-papiers est vide.</string>
+    <string name="clipboard_sending">Saisie de %1$d caractères…</string>
+    <string name="clipboard_truncated">Presse-papiers trop long — envoi des %1$d premiers caractères.</string>
+    <string name="error_not_connected">Pas encore connecté à un ordinateur.</string>
+
+    <string name="settings_header_remote">Télécommande</string>
+    <string name="setting_media_keys_title">Touches multimédias</string>
+    <string name="setting_media_keys_summary">Affiche une rangée de touches de volume, de lecture et Accueil, transformant l\'application en télécommande. Désactivé par défaut.</string>
+    <string name="setting_clipboard_title">Envoyer le presse-papiers</string>
+    <string name="setting_clipboard_summary">Ajoute une entrée de menu qui tape le presse-papiers du téléphone sur l\'ordinateur — pratique pour les mots de passe, les URL et les textes longs.</string>
+
+    <string name="help_trouble_title">Si l\'ordinateur ne voit pas de clavier</string>
+    <string name="help_trouble_body">Sous Linux, une simple commande « connect » active souvent les profils audio au lieu du clavier. Utilisez « Connexion automatique » pour que le téléphone prenne l\'initiative, ou connectez explicitement le profil HID :\n\nbluetoothctl connect &lt;MAC&gt; 00001124-0000-1000-8000-00805f9b34fb\n\nSi l\'ordinateur ne voit toujours pas de clavier, BlueZ a peut-être mis en cache une liste de services antérieure à l\'enregistrement de l\'application. Supprimez le fichier de cache de ce téléphone dans /var/lib/bluetooth puis reconnectez-vous ; l\'association elle-même est conservée.</string>
+</resources>

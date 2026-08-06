@@ -1,14 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="SplashStyle" parent="android:Theme.DeviceDefault.NoActionBar">
+    <!-- Two concrete themes, picked at runtime by ThemeSupport from the user's setting.
+         Text colours are taken from the platform theme (?android:attr/textColorPrimary
+         and friends) so each variant gets a correct palette without hard-coded values. -->
+
+    <style name="AppStyle.Black" parent="android:Theme.DeviceDefault">
+        <item name="android:windowBackground">@color/the_black</item>
+        <item name="android:statusBarColor">@color/the_black</item>
+        <item name="android:navigationBarColor">@color/the_black</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+    <style name="AppStyle.Light" parent="android:Theme.DeviceDefault.Light">
+        <item name="android:statusBarColor">@color/surface_light</item>
+        <item name="android:navigationBarColor">@color/surface_light</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+    <!-- Declared in the manifest; replaced programmatically before super.onCreate(). -->
+    <style name="AppStyle" parent="AppStyle.Black" />
+
+    <style name="SplashStyle.Black" parent="android:Theme.DeviceDefault.NoActionBar">
         <item name="android:windowBackground">@color/the_black</item>
     </style>
 
-    <style name="AppStyle" parent="android:Theme.DeviceDefault">
-        <item name="android:statusBarColor">@color/the_black</item>
-        <item name="android:windowBackground">@color/the_black</item>
-        <item name="android:navigationBarColor">@color/the_black</item>
+    <style name="SplashStyle.Light" parent="android:Theme.DeviceDefault.Light.NoActionBar">
+        <item name="android:windowBackground">@color/surface_light</item>
+    </style>
+
+    <style name="SplashStyle" parent="SplashStyle.Black" />
+
+    <!-- Settings screen building blocks -->
+    <style name="SettingsHeader">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">22dp</item>
+        <item name="android:layout_marginBottom">6dp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.08</item>
+        <item name="android:textColor">?android:attr/colorAccent</item>
+    </style>
+
+    <style name="SettingsSwitch">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="SettingsSummary">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+    </style>
+
+    <style name="SettingsLabel">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">6dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="SettingsRadio">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">44dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <!-- One key in the media/remote row. -->
+    <style name="RemoteKey">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/click_button</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="RemoteDivider">
+        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/separator</item>
+    </style>
+
+    <style name="HelpHeading">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">22dp</item>
+        <item name="android:layout_marginBottom">6dp</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?android:attr/colorAccent</item>
+    </style>
+
+    <style name="HelpBody">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingBottom">6dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingMultiplier">1.15</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 
 </resources>

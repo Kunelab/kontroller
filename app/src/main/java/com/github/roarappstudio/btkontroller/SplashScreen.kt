@@ -2,20 +2,21 @@ package com.github.roarappstudio.btkontroller
 
 import android.app.Activity
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
+import com.github.roarappstudio.btkontroller.Prefs.helpShown
 
 class SplashScreen : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(ThemeSupport.splashStyle(this))
         super.onCreate(savedInstanceState)
 
-        val missing = BluetoothPermissions.missing(this)
+        val missing = AppPermissions.missing(this)
         if (missing.isEmpty()) {
-            openController()
+            proceed()
         } else {
-            requestPermissions(missing, REQUEST_BLUETOOTH)
+            requestPermissions(missing, REQUEST_PERMISSIONS)
         }
     }
 
@@ -25,26 +26,32 @@ class SplashScreen : Activity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode != REQUEST_BLUETOOTH) return
+        if (requestCode != REQUEST_PERMISSIONS) return
 
-        val granted = grantResults.isNotEmpty() &&
-                grantResults.all { it == PackageManager.PERMISSION_GRANTED }
-        if (granted) {
-            openController()
+        // Only the Bluetooth permissions are load-bearing; a declined notification
+        // permission just hides the service notification.
+        if (AppPermissions.allEssentialGranted(this)) {
+            proceed()
         } else {
             // Upstream finished silently here, which looked like the app simply failing
             // to launch.
             Toast.makeText(this, R.string.error_bluetooth_permission, Toast.LENGTH_LONG).show()
+            finish()
         }
-        finish()
     }
 
-    private fun openController() {
-        startActivity(Intent(this, SelectDeviceActivity::class.java))
+    /** First launch goes through the guide; afterwards straight to the trackpad. */
+    private fun proceed() {
+        val next = if (Prefs.of(this).helpShown) {
+            Intent(this, SelectDeviceActivity::class.java)
+        } else {
+            HelpActivity.intent(this, firstRun = true)
+        }
+        startActivity(next)
         finish()
     }
 
     private companion object {
-        const val REQUEST_BLUETOOTH = 1
+        const val REQUEST_PERMISSIONS = 1
     }
 }

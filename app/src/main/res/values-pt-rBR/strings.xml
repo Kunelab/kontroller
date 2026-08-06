@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="trackpad_label">Touchpad</string>
+
+    <string name="click_left">Clique esquerdo</string>
+    <string name="click_right">Clique direito</string>
+
+    <string name="action_settings">Configurações</string>
+    <string name="action_help">Ajuda</string>
+    <string name="action_keyboard_title">Mostrar teclado</string>
+    <string name="action_tool_tip">Teclas modificadoras: (N) solta Ctrl/Alt/Shift após cada tecla, (P) mantém pressionadas até você voltar</string>
+    <string name="action_disconnect">Desconectar</string>
+
+    <string name="status_connected">App conectado por Bluetooth</string>
+    <string name="status_not_connected">App não conectado por Bluetooth</string>
+    <string name="action_ble_status_tool_tip">App não conectado por Bluetooth</string>
+
+    <string name="error_bluetooth_permission">O MaxKontroller precisa das permissões de Bluetooth para funcionar como teclado e mouse.</string>
+    <string name="error_no_hid_profile">Este dispositivo não expõe o perfil Bluetooth HID Device, portanto não pode ser usado como teclado ou mouse.</string>
+    <string name="error_no_gyro">Este celular não tem sensor de rotação, então o mouse giroscópico não está disponível.</string>
+
+    <string name="service_channel">Conexão</string>
+    <string name="service_title">MaxKontroller está ativo</string>
+    <string name="service_text">Funcionando como teclado e mouse Bluetooth.</string>
+    <string name="service_stop">Parar</string>
+
+    <string name="settings_title">Configurações</string>
+    <string name="settings_header_pointer">Ponteiro</string>
+    <string name="settings_header_keyboard">Teclado</string>
+    <string name="settings_header_trackpad">Touchpad</string>
+    <string name="settings_header_connection">Conexão</string>
+    <string name="settings_header_appearance">Aparência</string>
+    <string name="settings_header_help">Ajuda</string>
+
+    <string name="setting_sensitivity_title">Velocidade do ponteiro</string>
+    <string name="setting_sensitivity_value">Velocidade do ponteiro: %1$d%%</string>
+    <string name="setting_sensitivity_summary">O quanto o ponteiro percorre para um dado movimento do dedo. O valor 100 é um para um.</string>
+
+    <string name="setting_gyro_title">Mouse giroscópico</string>
+    <string name="setting_gyro_summary">Mova o ponteiro inclinando o celular em vez de arrastar no touchpad. Toques, rolagem e os botões de clique continuam funcionando.</string>
+    <string name="setting_gyro_invert_x">Inverter esquerda / direita</string>
+    <string name="setting_gyro_invert_y">Inverter cima / baixo</string>
+    <string name="setting_gyro_invert_summary">Inverta um dos eixos do giroscópio se ele for na direção errada para o jeito como você segura o celular.</string>
+
+    <string name="setting_host_layout_title">Layout do teclado do computador</string>
+    <string name="setting_host_layout_summary">O layout configurado no computador que você está controlando, não o deste celular. O Bluetooth envia posições de teclas e não caracteres, então isso precisa coincidir com o computador, ou letras e pontuação saem trocadas. Computadores em chinês, coreano, híndi, árabe, tailandês e vietnamita usam QWERTY dos EUA e compõem a própria escrita.</string>
+
+    <string name="setting_language_title">Idioma do app</string>
+    <string name="setting_language_summary">O idioma deste app. Não afeta o que é digitado no computador.</string>
+
+    <string name="setting_click_bar_title">Botões de clique</string>
+    <string name="setting_click_bar_summary">Mostra botões de clique esquerdo e direito abaixo do touchpad, como em um notebook. Mantenha um botão pressionado e arraste no touchpad para arrastar e soltar. O touchpad diminui para abrir espaço.</string>
+
+    <string name="setting_auto_pair_title">Conectar automaticamente</string>
+    <string name="setting_auto_pair_summary">Deixa o celular abrir a conexão com um computador conhecido assim que o app inicia. Mais confiável do que conectar pelo PC, que costuma escolher os perfis de áudio.</string>
+
+    <string name="setting_stay_connected_title">Manter conectado em segundo plano</string>
+    <string name="setting_stay_connected_summary">Continua funcionando como teclado e mouse quando você sai do app ou a tela apaga. Mostra uma notificação permanente enquanto está ativo.</string>
+
+    <string name="setting_keep_screen_on_title">Manter a tela ligada</string>
+    <string name="setting_keep_screen_on_summary">Impede que a tela apague enquanto o app está aberto.</string>
+
+    <string name="setting_theme_title">Tema</string>
+    <string name="setting_theme_system">Seguir a configuração do celular</string>
+    <string name="setting_theme_light">Claro</string>
+    <string name="setting_theme_black">Preto</string>
+
+    <string name="setting_orientation_title">Orientação</string>
+    <string name="setting_orientation_portrait">Retrato</string>
+    <string name="setting_orientation_landscape">Paisagem</string>
+    <string name="setting_orientation_auto">Rotação automática</string>
+    <string name="setting_orientation_gyro_note">A rotação automática não fica disponível com o mouse giroscópico ativo, porque inclinar o celular para mover o ponteiro giraria a tela.</string>
+
+    <string name="setting_open_help">Abrir o guia</string>
+
+    <string name="help_title">Primeiros passos</string>
+    <string name="help_continue">Começar</string>
+
+    <string name="help_intro">O MaxKontroller transforma este celular em um teclado e mouse Bluetooth. O computador vê um teclado Bluetooth comum, então não é preciso instalar nada nele.</string>
+
+    <string name="help_pairing_title">Pareamento</string>
+    <string name="help_pairing_body">1. Deixe este app aberto e permita o pedido de «tornar visível».\n2. No computador, procure dispositivos Bluetooth e pareie com este celular.\n3. Confirme a senha nos dois lados.\n\nDepois, deixe «Conectar automaticamente» ativado nas configurações e o celular abrirá a conexão por conta própria a cada abertura do app.</string>
+
+    <string name="help_gestures_title">Gestos</string>
+    <string name="help_gestures_body">• Mover o ponteiro — arrastar um dedo\n• Clique esquerdo — tocar, ou o botão Clique esquerdo\n• Clique direito — o botão Clique direito\n• Clique duplo — tocar duas vezes\n• Arrastar e soltar — manter um botão de clique e arrastar no touchpad\n• Rolagem — arrastar dois dedos\n\nUm toque com dois dedos também é clique direito, mas os dois dedos precisam encostar e sair em menos de 100 ms, então o botão é mais fácil.</string>
+
+    <string name="help_keyboard_title">Teclado</string>
+    <string name="help_keyboard_body">Toque no ícone do teclado para abrir o teclado na tela; tudo o que você digitar é enviado ao computador.\n\nO botão (N)/(P) controla as teclas modificadoras. (N) solta Ctrl/Alt/Shift após cada tecla; (P) mantém pressionadas para montar combinações, como Ctrl pressionado enquanto clica. Lembre-se de voltar para (N), senão os modificadores ficam presos.\n\nO Gboard não tem Ctrl, Esc, setas nem teclas de função. Um teclado que tenha — Unexpected Keyboard ou Hacker\'s Keyboard — permite atalhos como Shift+F10 (menu de contexto).</string>
+
+    <string name="media_vol_down">Vol −</string>
+    <string name="media_vol_up">Vol +</string>
+    <string name="media_mute">Mudo</string>
+    <string name="media_home">Início</string>
+
+    <string name="action_devices">Dispositivos</string>
+    <string name="action_send_clipboard">Enviar área de transferência</string>
+
+    <string name="devices_title">Dispositivos</string>
+    <string name="devices_hint">Dispositivos pareados. Toque em um para conectar ou desconectar.</string>
+    <string name="devices_none">Nenhum dispositivo pareado ainda. Pareie este celular pelo computador primeiro — veja o guia.</string>
+    <string name="devices_not_registered">Ainda não registrado como teclado. Volte ao touchpad, aguarde um momento e tente de novo.</string>
+    <string name="devices_no_bluetooth">Nenhum adaptador Bluetooth disponível.</string>
+    <string name="device_state_connected">Conectado · %1$s</string>
+    <string name="device_state_connecting">Conectando… · %1$s</string>
+    <string name="device_state_disconnected">Não conectado · %1$s</string>
+
+    <string name="clipboard_empty">A área de transferência está vazia.</string>
+    <string name="clipboard_sending">Digitando %1$d caracteres…</string>
+    <string name="clipboard_truncated">Área de transferência longa — enviando os primeiros %1$d caracteres.</string>
+    <string name="error_not_connected">Ainda não conectado a um computador.</string>
+
+    <string name="settings_header_remote">Controle remoto</string>
+    <string name="setting_media_keys_title">Teclas de mídia</string>
+    <string name="setting_media_keys_summary">Mostra uma linha de teclas de volume, reprodução e Início, transformando o app em um controle remoto de TV. Desativado por padrão.</string>
+    <string name="setting_clipboard_title">Enviar área de transferência</string>
+    <string name="setting_clipboard_summary">Adiciona um item de menu que digita a área de transferência do celular no computador — útil para senhas, URLs e textos longos.</string>
+
+    <string name="help_trouble_title">Se o computador não vê nenhum teclado</string>
+    <string name="help_trouble_body">No Linux, um simples «connect» costuma ativar os perfis de áudio em vez do teclado. Use «Conectar automaticamente» para que o celular tome a iniciativa, ou conecte o perfil HID explicitamente:\n\nbluetoothctl connect &lt;MAC&gt; 00001124-0000-1000-8000-00805f9b34fb\n\nSe o computador ainda não vê um teclado, o BlueZ pode ter armazenado em cache uma lista de serviços anterior ao registro do app. Apague o arquivo de cache deste celular em /var/lib/bluetooth e reconecte; o pareamento em si é preservado.</string>
+</resources>

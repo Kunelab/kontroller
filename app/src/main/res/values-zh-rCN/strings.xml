@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="trackpad_label">触控板</string>
+
+    <string name="click_left">左键</string>
+    <string name="click_right">右键</string>
+
+    <string name="action_settings">设置</string>
+    <string name="action_help">帮助</string>
+    <string name="action_keyboard_title">显示键盘</string>
+    <string name="action_tool_tip">修饰键：(N) 每次按键后释放 Ctrl/Alt/Shift，(P) 保持按下直到切换回来</string>
+    <string name="action_disconnect">断开连接</string>
+
+    <string name="status_connected">已通过蓝牙连接</string>
+    <string name="status_not_connected">未通过蓝牙连接</string>
+    <string name="action_ble_status_tool_tip">未通过蓝牙连接</string>
+
+    <string name="error_bluetooth_permission">MaxKontroller 需要蓝牙权限才能作为键盘和鼠标使用。</string>
+    <string name="error_no_hid_profile">此设备未提供蓝牙 HID Device 配置文件，因此无法作为键盘或鼠标使用。</string>
+    <string name="error_no_gyro">此手机没有旋转传感器，无法使用体感鼠标。</string>
+
+    <string name="service_channel">连接</string>
+    <string name="service_title">MaxKontroller 正在运行</string>
+    <string name="service_text">正作为蓝牙键盘和鼠标使用。</string>
+    <string name="service_stop">停止</string>
+
+    <string name="settings_title">设置</string>
+    <string name="settings_header_pointer">指针</string>
+    <string name="settings_header_keyboard">键盘</string>
+    <string name="settings_header_trackpad">触控板</string>
+    <string name="settings_header_connection">连接</string>
+    <string name="settings_header_appearance">外观</string>
+    <string name="settings_header_help">帮助</string>
+
+    <string name="setting_sensitivity_title">指针速度</string>
+    <string name="setting_sensitivity_value">指针速度：%1$d%%</string>
+    <string name="setting_sensitivity_summary">手指移动相同距离时指针移动的幅度。数值为 100 时为一比一。</string>
+
+    <string name="setting_gyro_title">体感鼠标</string>
+    <string name="setting_gyro_summary">通过倾斜手机移动指针，而不是在触控板上滑动。轻点、滚动和点击按钮仍可正常使用。</string>
+    <string name="setting_gyro_invert_x">反转左右</string>
+    <string name="setting_gyro_invert_y">反转上下</string>
+    <string name="setting_gyro_invert_summary">如果方向与你握持手机的方式不符，可反转任一轴。</string>
+
+    <string name="setting_host_layout_title">电脑的键盘布局</string>
+    <string name="setting_host_layout_summary">指你所控制电脑上的布局，而非本手机的布局。蓝牙传输的是按键位置而不是字符，因此该设置必须与电脑一致，否则字母和标点会错位。使用中文、韩文、印地文、阿拉伯文、泰文和越南文的电脑均使用美式 QWERTY，文字由电脑端的输入法生成。</string>
+
+    <string name="setting_language_title">应用语言</string>
+    <string name="setting_language_summary">本应用的显示语言，不影响发送到电脑的内容。</string>
+
+    <string name="setting_click_bar_title">点击按钮</string>
+    <string name="setting_click_bar_summary">在触控板下方显示左键和右键，与笔记本电脑类似。按住按钮并在触控板上滑动即可拖放。触控板会相应缩小。</string>
+
+    <string name="setting_auto_pair_title">自动连接</string>
+    <string name="setting_auto_pair_summary">应用启动后由手机主动连接已知的电脑。比从电脑端连接更可靠，因为电脑端往往会选择音频配置文件。</string>
+
+    <string name="setting_stay_connected_title">后台保持连接</string>
+    <string name="setting_stay_connected_summary">离开应用或息屏后仍继续作为键盘和鼠标使用，期间会显示常驻通知。</string>
+
+    <string name="setting_keep_screen_on_title">保持屏幕常亮</string>
+    <string name="setting_keep_screen_on_summary">打开应用时不让屏幕自动关闭。</string>
+
+    <string name="setting_theme_title">主题</string>
+    <string name="setting_theme_system">跟随系统设置</string>
+    <string name="setting_theme_light">浅色</string>
+    <string name="setting_theme_black">纯黑</string>
+
+    <string name="setting_orientation_title">屏幕方向</string>
+    <string name="setting_orientation_portrait">竖屏</string>
+    <string name="setting_orientation_landscape">横屏</string>
+    <string name="setting_orientation_auto">自动旋转</string>
+    <string name="setting_orientation_gyro_note">启用体感鼠标时无法使用自动旋转，因为倾斜手机移动指针会导致屏幕跟着旋转。</string>
+
+    <string name="setting_open_help">打开指南</string>
+
+    <string name="help_title">快速上手</string>
+    <string name="help_continue">开始使用</string>
+
+    <string name="help_intro">MaxKontroller 可把这台手机变成蓝牙键盘和鼠标。电脑会将它识别为普通的蓝牙键盘，无需在电脑上安装任何软件。</string>
+
+    <string name="help_pairing_title">配对</string>
+    <string name="help_pairing_body">1. 保持本应用打开，并允许“设为可被发现”的请求。\n2. 在电脑上搜索蓝牙设备，并与这台手机配对。\n3. 在两端确认配对码。\n\n之后请在设置中保持“自动连接”开启，手机会在每次打开应用时自动建立连接。</string>
+
+    <string name="help_gestures_title">手势</string>
+    <string name="help_gestures_body">• 移动指针 — 单指滑动\n• 左键 — 轻点，或使用左键按钮\n• 右键 — 使用右键按钮\n• 双击 — 连续轻点两次\n• 拖放 — 按住点击按钮并在触控板上滑动\n• 滚动 — 双指滑动\n\n双指轻点也是右键，但两指必须在 100 毫秒内同时按下并抬起，因此使用按钮更方便。</string>
+
+    <string name="help_keyboard_title">键盘</string>
+    <string name="help_keyboard_body">点击键盘图标可调出屏幕键盘，你输入的内容会发送到电脑。\n\n(N)/(P) 按钮用于控制修饰键。(N) 在每次按键后释放 Ctrl/Alt/Shift；(P) 会保持按下，便于组合操作，例如按住 Ctrl 再点击。记得切回 (N)，否则修饰键会一直处于按下状态。\n\nGboard 没有 Ctrl、Esc、方向键和功能键。使用带有这些按键的输入法（如 Unexpected Keyboard 或 Hacker\'s Keyboard）即可使用 Shift+F10（右键菜单）等快捷键。</string>
+
+    <string name="media_vol_down">音量 −</string>
+    <string name="media_vol_up">音量 +</string>
+    <string name="media_mute">静音</string>
+    <string name="media_home">主页</string>
+
+    <string name="action_devices">设备</string>
+    <string name="action_send_clipboard">发送剪贴板</string>
+
+    <string name="devices_title">设备</string>
+    <string name="devices_hint">已配对的设备。点按可连接或断开。</string>
+    <string name="devices_none">还没有已配对的设备。请先从电脑与这台手机配对，详见指南。</string>
+    <string name="devices_not_registered">尚未注册为键盘。请返回触控板界面稍等片刻，然后重试。</string>
+    <string name="devices_no_bluetooth">没有可用的蓝牙适配器。</string>
+    <string name="device_state_connected">已连接 · %1$s</string>
+    <string name="device_state_connecting">正在连接… · %1$s</string>
+    <string name="device_state_disconnected">未连接 · %1$s</string>
+
+    <string name="clipboard_empty">剪贴板为空。</string>
+    <string name="clipboard_sending">正在输入 %1$d 个字符…</string>
+    <string name="clipboard_truncated">剪贴板内容较长，仅发送前 %1$d 个字符。</string>
+    <string name="error_not_connected">尚未连接到电脑。</string>
+
+    <string name="settings_header_remote">遥控</string>
+    <string name="setting_media_keys_title">媒体按键</string>
+    <string name="setting_media_keys_summary">显示一行音量、播放和主页按键，把应用变成电视遥控器。默认关闭。</string>
+    <string name="setting_clipboard_title">发送剪贴板</string>
+    <string name="setting_clipboard_summary">添加一个菜单项，把手机剪贴板的内容输入到电脑，适合密码、网址和较长的文本。</string>
+
+    <string name="help_trouble_title">如果电脑识别不到键盘</string>
+    <string name="help_trouble_body">在 Linux 上，直接执行“connect”常常只启用音频配置文件而非键盘。可以使用“自动连接”让手机主动发起连接，或显式连接 HID 配置文件：\n\nbluetoothctl connect &lt;MAC&gt; 00001124-0000-1000-8000-00805f9b34fb\n\n若仍然识别不到键盘，可能是 BlueZ 缓存了本应用注册之前的服务列表。请删除 /var/lib/bluetooth 下该手机对应的缓存文件后重新连接，配对信息本身不会丢失。</string>
+</resources>

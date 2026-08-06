@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="trackpad_label">Trackpad</string>
+
+    <string name="click_left">Clic sinistro</string>
+    <string name="click_right">Clic destro</string>
+
+    <string name="action_settings">Impostazioni</string>
+    <string name="action_help">Guida</string>
+    <string name="action_keyboard_title">Mostra tastiera</string>
+    <string name="action_tool_tip">Tasti modificatori: (N) rilascia Ctrl/Alt/Maiusc dopo ogni battuta, (P) li tiene premuti finché non torni indietro</string>
+    <string name="action_disconnect">Disconnetti</string>
+
+    <string name="status_connected">App connessa via Bluetooth</string>
+    <string name="status_not_connected">App non connessa via Bluetooth</string>
+    <string name="action_ble_status_tool_tip">App non connessa via Bluetooth</string>
+
+    <string name="error_bluetooth_permission">MaxKontroller necessita delle autorizzazioni Bluetooth per funzionare come tastiera e mouse.</string>
+    <string name="error_no_hid_profile">Questo dispositivo non espone il profilo Bluetooth HID Device, quindi non può essere usato come tastiera o mouse.</string>
+    <string name="error_no_gyro">Questo telefono non ha un sensore di rotazione, il mouse giroscopico non è disponibile.</string>
+
+    <string name="service_channel">Connessione</string>
+    <string name="service_title">MaxKontroller è attivo</string>
+    <string name="service_text">Funziona come tastiera e mouse Bluetooth.</string>
+    <string name="service_stop">Interrompi</string>
+
+    <string name="settings_title">Impostazioni</string>
+    <string name="settings_header_pointer">Puntatore</string>
+    <string name="settings_header_keyboard">Tastiera</string>
+    <string name="settings_header_trackpad">Trackpad</string>
+    <string name="settings_header_connection">Connessione</string>
+    <string name="settings_header_appearance">Aspetto</string>
+    <string name="settings_header_help">Guida</string>
+
+    <string name="setting_sensitivity_title">Velocità del puntatore</string>
+    <string name="setting_sensitivity_value">Velocità del puntatore: %1$d%%</string>
+    <string name="setting_sensitivity_summary">Quanto si sposta il puntatore per un dato movimento del dito. Il valore 100 corrisponde a uno a uno.</string>
+
+    <string name="setting_gyro_title">Mouse giroscopico</string>
+    <string name="setting_gyro_summary">Muovi il puntatore inclinando il telefono invece di scorrere sul trackpad. Tocchi, scorrimento e pulsanti di clic continuano a funzionare.</string>
+    <string name="setting_gyro_invert_x">Inverti sinistra / destra</string>
+    <string name="setting_gyro_invert_y">Inverti su / giù</string>
+    <string name="setting_gyro_invert_summary">Inverti uno degli assi del giroscopio se va nella direzione sbagliata per come tieni il telefono.</string>
+
+    <string name="setting_host_layout_title">Layout di tastiera del computer</string>
+    <string name="setting_host_layout_summary">Il layout impostato sul computer che stai controllando, non quello di questo telefono. Il Bluetooth invia posizioni dei tasti e non caratteri, quindi questa impostazione deve corrispondere al computer, altrimenti lettere e punteggiatura risultano scambiate. I computer in cinese, coreano, hindi, arabo, thai e vietnamita usano il QWERTY statunitense e compongono la propria scrittura autonomamente.</string>
+
+    <string name="setting_language_title">Lingua dell\'app</string>
+    <string name="setting_language_summary">La lingua di questa app. Non influisce su ciò che viene digitato sul computer.</string>
+
+    <string name="setting_click_bar_title">Pulsanti di clic</string>
+    <string name="setting_click_bar_summary">Mostra i pulsanti di clic sinistro e destro sotto il trackpad, come su un portatile. Tieni premuto un pulsante e scorri sul trackpad per trascinare e rilasciare. Il trackpad si riduce per fare spazio.</string>
+
+    <string name="setting_auto_pair_title">Connetti automaticamente</string>
+    <string name="setting_auto_pair_summary">Lascia che il telefono apra la connessione verso un computer noto all\'avvio dell\'app. Più affidabile della connessione dal PC, che tende a scegliere i profili audio.</string>
+
+    <string name="setting_stay_connected_title">Resta connesso in background</string>
+    <string name="setting_stay_connected_summary">Continua a funzionare come tastiera e mouse quando esci dall\'app o lo schermo si spegne. Mostra una notifica permanente mentre è attivo.</string>
+
+    <string name="setting_keep_screen_on_title">Mantieni lo schermo acceso</string>
+    <string name="setting_keep_screen_on_summary">Impedisce allo schermo di spegnersi mentre l\'app è aperta.</string>
+
+    <string name="setting_theme_title">Tema</string>
+    <string name="setting_theme_system">Segui l\'impostazione del telefono</string>
+    <string name="setting_theme_light">Chiaro</string>
+    <string name="setting_theme_black">Nero</string>
+
+    <string name="setting_orientation_title">Orientamento</string>
+    <string name="setting_orientation_portrait">Verticale</string>
+    <string name="setting_orientation_landscape">Orizzontale</string>
+    <string name="setting_orientation_auto">Rotazione automatica</string>
+    <string name="setting_orientation_gyro_note">La rotazione automatica non è disponibile con il mouse giroscopico attivo, perché inclinare il telefono per muovere il puntatore farebbe ruotare lo schermo.</string>
+
+    <string name="setting_open_help">Apri la guida</string>
+
+    <string name="help_title">Per iniziare</string>
+    <string name="help_continue">Inizia</string>
+
+    <string name="help_intro">MaxKontroller trasforma questo telefono in una tastiera e un mouse Bluetooth. Il computer vede una normale tastiera Bluetooth, quindi non serve installare nulla su di esso.</string>
+
+    <string name="help_pairing_title">Associazione</string>
+    <string name="help_pairing_body">1. Lascia questa app aperta e accetta la richiesta di «rendere rilevabile».\n2. Sul computer cerca i dispositivi Bluetooth e associalo a questo telefono.\n3. Conferma il codice su entrambi i lati.\n\nPoi lascia attivo «Connetti automaticamente» nelle impostazioni: il telefono aprirà la connessione da solo a ogni avvio.</string>
+
+    <string name="help_gestures_title">Gesti</string>
+    <string name="help_gestures_body">• Muovere il puntatore — trascinare un dito\n• Clic sinistro — toccare, o il pulsante Clic sinistro\n• Clic destro — il pulsante Clic destro\n• Doppio clic — toccare due volte\n• Trascina e rilascia — tenere premuto un pulsante di clic e trascinare sul trackpad\n• Scorrimento — trascinare due dita\n\nAnche un tocco con due dita è un clic destro, ma entrambe le dita devono appoggiarsi e sollevarsi entro 100 ms: il pulsante è più semplice.</string>
+
+    <string name="help_keyboard_title">Tastiera</string>
+    <string name="help_keyboard_body">Tocca l\'icona della tastiera per mostrare la tastiera a schermo; tutto ciò che digiti viene inviato al computer.\n\nIl pulsante (N)/(P) controlla i tasti modificatori. (N) rilascia Ctrl/Alt/Maiusc dopo ogni battuta; (P) li tiene premuti per creare combinazioni, come Ctrl tenuto premuto mentre fai clic. Ricordati di tornare su (N), altrimenti i modificatori restano bloccati.\n\nGboard non ha Ctrl, Esc, frecce né tasti funzione. Una tastiera che li offre — Unexpected Keyboard o Hacker\'s Keyboard — rende possibili scorciatoie come Maiusc+F10 (menu contestuale).</string>
+
+    <string name="media_vol_down">Vol −</string>
+    <string name="media_vol_up">Vol +</string>
+    <string name="media_mute">Muto</string>
+    <string name="media_home">Home</string>
+
+    <string name="action_devices">Dispositivi</string>
+    <string name="action_send_clipboard">Invia appunti</string>
+
+    <string name="devices_title">Dispositivi</string>
+    <string name="devices_hint">Dispositivi associati. Toccane uno per connetterlo o disconnetterlo.</string>
+    <string name="devices_none">Nessun dispositivo associato. Associa prima questo telefono dal computer — vedi la guida.</string>
+    <string name="devices_not_registered">Non ancora registrato come tastiera. Torna al trackpad, attendi un momento e riprova.</string>
+    <string name="devices_no_bluetooth">Nessun adattatore Bluetooth disponibile.</string>
+    <string name="device_state_connected">Connesso · %1$s</string>
+    <string name="device_state_connecting">Connessione… · %1$s</string>
+    <string name="device_state_disconnected">Non connesso · %1$s</string>
+
+    <string name="clipboard_empty">Gli appunti sono vuoti.</string>
+    <string name="clipboard_sending">Digitazione di %1$d caratteri…</string>
+    <string name="clipboard_truncated">Gli appunti sono lunghi: verranno inviati i primi %1$d caratteri.</string>
+    <string name="error_not_connected">Non ancora connesso a un computer.</string>
+
+    <string name="settings_header_remote">Telecomando</string>
+    <string name="setting_media_keys_title">Tasti multimediali</string>
+    <string name="setting_media_keys_summary">Mostra una riga di tasti volume, riproduzione e Home, trasformando l\'app in un telecomando. Disattivato per impostazione predefinita.</string>
+    <string name="setting_clipboard_title">Invia appunti</string>
+    <string name="setting_clipboard_summary">Aggiunge una voce di menu che digita gli appunti del telefono sul computer — utile per password, URL e testi lunghi.</string>
+
+    <string name="help_trouble_title">Se il computer non vede nessuna tastiera</string>
+    <string name="help_trouble_body">Su Linux un semplice «connect» attiva spesso i profili audio anziché la tastiera. Usa «Connetti automaticamente» perché sia il telefono a prendere l\'iniziativa, oppure connetti esplicitamente il profilo HID:\n\nbluetoothctl connect &lt;MAC&gt; 00001124-0000-1000-8000-00805f9b34fb\n\nSe il computer continua a non vedere una tastiera, BlueZ potrebbe aver memorizzato un elenco di servizi precedente alla registrazione dell\'app. Elimina il file di cache di questo telefono in /var/lib/bluetooth e riconnettiti; l\'associazione viene conservata.</string>
+</resources>

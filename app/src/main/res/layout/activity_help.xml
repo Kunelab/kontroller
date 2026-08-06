@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="24dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="24dp"
+            android:paddingBottom="24dp">
+
+            <TextView style="@style/HelpBody" android:text="@string/help_intro" />
+
+            <TextView style="@style/HelpHeading" android:text="@string/help_pairing_title" />
+            <TextView style="@style/HelpBody" android:text="@string/help_pairing_body" />
+
+            <TextView style="@style/HelpHeading" android:text="@string/help_gestures_title" />
+            <TextView style="@style/HelpBody" android:text="@string/help_gestures_body" />
+
+            <TextView style="@style/HelpHeading" android:text="@string/help_keyboard_title" />
+            <TextView style="@style/HelpBody" android:text="@string/help_keyboard_body" />
+
+            <TextView style="@style/HelpHeading" android:text="@string/help_trouble_title" />
+            <TextView style="@style/HelpBody" android:text="@string/help_trouble_body" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/separator" />
+
+    <Button
+        android:id="@+id/continueButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="@string/help_continue" />
+
+</LinearLayout>

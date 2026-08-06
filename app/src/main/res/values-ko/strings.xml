@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="trackpad_label">트랙패드</string>
+
+    <string name="click_left">왼쪽 클릭</string>
+    <string name="click_right">오른쪽 클릭</string>
+
+    <string name="action_settings">설정</string>
+    <string name="action_help">도움말</string>
+    <string name="action_keyboard_title">키보드 표시</string>
+    <string name="action_tool_tip">조합 키: (N)은 키를 누를 때마다 Ctrl/Alt/Shift를 놓고, (P)는 다시 바꿀 때까지 계속 누른 상태로 둡니다</string>
+    <string name="action_disconnect">연결 해제</string>
+    <string name="action_devices">기기</string>
+    <string name="action_send_clipboard">클립보드 보내기</string>
+
+    <string name="status_connected">블루투스로 연결됨</string>
+    <string name="status_not_connected">블루투스로 연결되지 않음</string>
+    <string name="action_ble_status_tool_tip">블루투스로 연결되지 않음</string>
+
+    <string name="error_bluetooth_permission">키보드와 마우스로 작동하려면 MaxKontroller에 블루투스 권한이 필요합니다.</string>
+    <string name="error_no_hid_profile">이 기기는 블루투스 HID Device 프로필을 제공하지 않으므로 키보드나 마우스로 사용할 수 없습니다.</string>
+    <string name="error_no_gyro">이 휴대전화에는 회전 센서가 없어 자이로 마우스를 사용할 수 없습니다.</string>
+    <string name="error_not_connected">아직 컴퓨터에 연결되지 않았습니다.</string>
+
+    <string name="service_channel">연결</string>
+    <string name="service_title">MaxKontroller 실행 중</string>
+    <string name="service_text">블루투스 키보드와 마우스로 작동 중입니다.</string>
+    <string name="service_stop">중지</string>
+
+    <string name="media_vol_down">볼륨 −</string>
+    <string name="media_vol_up">볼륨 +</string>
+    <string name="media_mute">음소거</string>
+    <string name="media_home">홈</string>
+
+    <string name="devices_title">기기</string>
+    <string name="devices_hint">페어링된 기기입니다. 탭하면 연결하거나 연결을 해제합니다.</string>
+    <string name="devices_none">페어링된 기기가 없습니다. 먼저 컴퓨터에서 이 휴대전화를 페어링하세요. 안내를 참고하세요.</string>
+    <string name="devices_not_registered">아직 키보드로 등록되지 않았습니다. 트랙패드로 돌아가 잠시 기다린 뒤 다시 시도하세요.</string>
+    <string name="devices_no_bluetooth">사용할 수 있는 블루투스 어댑터가 없습니다.</string>
+    <string name="device_state_connected">연결됨 · %1$s</string>
+    <string name="device_state_connecting">연결 중… · %1$s</string>
+    <string name="device_state_disconnected">연결되지 않음 · %1$s</string>
+
+    <string name="clipboard_empty">클립보드가 비어 있습니다.</string>
+    <string name="clipboard_sending">%1$d자 입력 중…</string>
+    <string name="clipboard_truncated">클립보드가 길어 처음 %1$d자만 보냅니다.</string>
+
+    <string name="settings_title">설정</string>
+    <string name="settings_header_pointer">포인터</string>
+    <string name="settings_header_keyboard">키보드</string>
+    <string name="settings_header_trackpad">트랙패드</string>
+    <string name="settings_header_remote">리모컨</string>
+    <string name="settings_header_connection">연결</string>
+    <string name="settings_header_appearance">화면</string>
+    <string name="settings_header_help">도움말</string>
+
+    <string name="setting_sensitivity_title">포인터 속도</string>
+    <string name="setting_sensitivity_value">포인터 속도: %1$d%%</string>
+    <string name="setting_sensitivity_summary">손가락을 같은 거리만큼 움직였을 때 포인터가 이동하는 거리입니다. 100이면 1대 1입니다.</string>
+
+    <string name="setting_gyro_title">자이로 마우스</string>
+    <string name="setting_gyro_summary">트랙패드를 문지르는 대신 휴대전화를 기울여 포인터를 움직입니다. 탭, 스크롤, 클릭 버튼은 그대로 작동합니다.</string>
+    <string name="setting_gyro_invert_x">좌우 반전</string>
+    <string name="setting_gyro_invert_y">상하 반전</string>
+    <string name="setting_gyro_invert_summary">휴대전화를 잡는 방식에 따라 방향이 반대로 느껴지면 축을 반전하세요.</string>
+
+    <string name="setting_host_layout_title">컴퓨터의 키보드 레이아웃</string>
+    <string name="setting_host_layout_summary">제어하려는 컴퓨터의 레이아웃이며, 이 휴대전화의 레이아웃이 아닙니다. 블루투스는 문자가 아니라 키 위치를 전송하므로 컴퓨터와 일치해야 하며, 그렇지 않으면 문자와 문장 부호가 바뀝니다. 중국어, 한국어, 힌디어, 아라비아어, 타이어, 베트남어 컴퓨터는 US QWERTY를 사용하고 문자는 컴퓨터에서 조합합니다.</string>
+
+    <string name="setting_language_title">앱 언어</string>
+    <string name="setting_language_summary">이 앱의 표시 언어입니다. 컴퓨터에 입력되는 내용에는 영향을 주지 않습니다.</string>
+
+    <string name="setting_click_bar_title">클릭 버튼</string>
+    <string name="setting_click_bar_summary">노트북처럼 트랙패드 아래에 왼쪽·오른쪽 클릭 버튼을 표시합니다. 버튼을 누른 채 트랙패드를 문지르면 끌어서 놓기가 됩니다. 그만큼 트랙패드가 작아집니다.</string>
+
+    <string name="setting_media_keys_title">미디어 키</string>
+    <string name="setting_media_keys_summary">볼륨, 재생, 홈 키를 한 줄로 표시해 앱을 TV 리모컨처럼 사용합니다. 기본적으로 꺼져 있습니다.</string>
+
+    <string name="setting_clipboard_title">클립보드 보내기</string>
+    <string name="setting_clipboard_summary">휴대전화의 클립보드를 컴퓨터에 입력하는 메뉴 항목을 추가합니다. 비밀번호, URL, 긴 문장에 편리합니다.</string>
+
+    <string name="setting_auto_pair_title">자동으로 연결</string>
+    <string name="setting_auto_pair_summary">앱을 시작하면 휴대전화가 알려진 컴퓨터에 직접 연결합니다. 오디오 프로필이 먼저 선택되기 쉬운 PC 쪽 연결보다 안정적입니다.</string>
+
+    <string name="setting_stay_connected_title">백그라운드에서 연결 유지</string>
+    <string name="setting_stay_connected_summary">앱을 벗어나거나 화면이 꺼져도 키보드와 마우스로 계속 작동합니다. 그동안 지속 알림이 표시됩니다.</string>
+
+    <string name="setting_keep_screen_on_title">화면 켜 두기</string>
+    <string name="setting_keep_screen_on_summary">앱이 열려 있는 동안 화면이 꺼지지 않게 합니다.</string>
+
+    <string name="setting_theme_title">테마</string>
+    <string name="setting_theme_system">휴대전화 설정 따르기</string>
+    <string name="setting_theme_light">밝게</string>
+    <string name="setting_theme_black">검정</string>
+
+    <string name="setting_orientation_title">화면 방향</string>
+    <string name="setting_orientation_portrait">세로</string>
+    <string name="setting_orientation_landscape">가로</string>
+    <string name="setting_orientation_auto">자동 회전</string>
+    <string name="setting_orientation_gyro_note">자이로 마우스를 사용하는 동안에는 자동 회전을 쓸 수 없습니다. 포인터를 움직이려고 휴대전화를 기울이면 화면이 회전하기 때문입니다.</string>
+
+    <string name="setting_open_help">안내 열기</string>
+
+    <string name="help_title">시작하기</string>
+    <string name="help_continue">시작</string>
+
+    <string name="help_intro">MaxKontroller는 이 휴대전화를 블루투스 키보드와 마우스로 만듭니다. 컴퓨터는 일반 블루투스 키보드로 인식하므로 컴퓨터에 따로 설치할 것이 없습니다.</string>
+
+    <string name="help_pairing_title">페어링</string>
+    <string name="help_pairing_body">1. 이 앱을 열어 둔 상태에서 «검색 허용» 요청을 허용하세요.\n2. 컴퓨터에서 블루투스 기기를 검색해 이 휴대전화와 페어링하세요.\n3. 양쪽에서 인증 번호를 확인하세요.\n\n이후에는 설정에서 «자동으로 연결»을 켜 두면 앱을 열 때마다 휴대전화가 직접 연결합니다.</string>
+
+    <string name="help_gestures_title">동작</string>
+    <string name="help_gestures_body">• 포인터 이동 — 한 손가락으로 문지르기\n• 왼쪽 클릭 — 탭 또는 왼쪽 클릭 버튼\n• 오른쪽 클릭 — 오른쪽 클릭 버튼\n• 두 번 클릭 — 두 번 탭\n• 끌어서 놓기 — 클릭 버튼을 누른 채 트랙패드를 문지르기\n• 스크롤 — 두 손가락으로 문지르기\n\n두 손가락 탭도 오른쪽 클릭이지만, 두 손가락이 100밀리초 안에 닿고 떨어져야 하므로 버튼이 더 쉽습니다.</string>
+
+    <string name="help_keyboard_title">키보드</string>
+    <string name="help_keyboard_body">키보드 아이콘을 탭하면 화면 키보드가 나타나고, 입력한 내용이 컴퓨터로 전송됩니다.\n\n(N)/(P) 버튼은 조합 키를 제어합니다. (N)은 키를 누를 때마다 Ctrl/Alt/Shift를 놓고, (P)는 계속 누른 상태로 두어 Ctrl을 누른 채 클릭하는 등의 조합을 만들 수 있습니다. (N)으로 되돌리지 않으면 조합 키가 계속 눌린 상태가 됩니다.\n\nGboard에는 Ctrl, Esc, 화살표, 기능 키가 없습니다. 이런 키가 있는 키보드(Unexpected Keyboard 또는 Hacker\'s Keyboard)를 쓰면 Shift+F10(상황에 맞는 메뉴) 같은 단축키를 사용할 수 있습니다.</string>
+
+    <string name="help_trouble_title">컴퓨터가 키보드를 찾지 못할 때</string>
+    <string name="help_trouble_body">리눅스에서는 단순한 «connect»가 키보드 대신 오디오 프로필을 연결하는 경우가 많습니다. «자동으로 연결»을 사용해 휴대전화가 먼저 연결하게 하거나, HID 프로필을 직접 연결하세요.\n\nbluetoothctl connect &lt;MAC&gt; 00001124-0000-1000-8000-00805f9b34fb\n\n그래도 키보드가 보이지 않으면 BlueZ가 앱 등록 이전의 서비스 목록을 캐시했을 수 있습니다. /var/lib/bluetooth 아래에 있는 이 휴대전화의 캐시 파일을 삭제하고 다시 연결하세요. 페어링 자체는 유지됩니다.</string>
+</resources>

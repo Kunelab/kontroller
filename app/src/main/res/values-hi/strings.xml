@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="trackpad_label">ट्रैकपैड</string>
+
+    <string name="click_left">बायाँ क्लिक</string>
+    <string name="click_right">दायाँ क्लिक</string>
+
+    <string name="action_settings">सेटिंग</string>
+    <string name="action_help">मदद</string>
+    <string name="action_keyboard_title">कीबोर्ड दिखाएँ</string>
+    <string name="action_tool_tip">मॉडिफ़ायर कुंजियाँ: (N) हर कीस्ट्रोक के बाद Ctrl/Alt/Shift छोड़ देता है, (P) उन्हें दबाए रखता है जब तक आप वापस न बदलें</string>
+    <string name="action_disconnect">डिस्कनेक्ट करें</string>
+    <string name="action_devices">डिवाइस</string>
+    <string name="action_send_clipboard">क्लिपबोर्ड भेजें</string>
+
+    <string name="status_connected">ऐप ब्लूटूथ से कनेक्ट है</string>
+    <string name="status_not_connected">ऐप ब्लूटूथ से कनेक्ट नहीं है</string>
+    <string name="action_ble_status_tool_tip">ऐप ब्लूटूथ से कनेक्ट नहीं है</string>
+
+    <string name="error_bluetooth_permission">कीबोर्ड और माउस की तरह काम करने के लिए MaxKontroller को ब्लूटूथ अनुमतियाँ चाहिए।</string>
+    <string name="error_no_hid_profile">यह डिवाइस ब्लूटूथ HID Device प्रोफ़ाइल नहीं देता, इसलिए इसे कीबोर्ड या माउस के रूप में इस्तेमाल नहीं किया जा सकता।</string>
+    <string name="error_no_gyro">इस फ़ोन में रोटेशन सेंसर नहीं है, इसलिए जायरो माउस उपलब्ध नहीं है।</string>
+    <string name="error_not_connected">अभी किसी कंप्यूटर से कनेक्ट नहीं है।</string>
+
+    <string name="service_channel">कनेक्शन</string>
+    <string name="service_title">MaxKontroller चालू है</string>
+    <string name="service_text">ब्लूटूथ कीबोर्ड और माउस की तरह काम कर रहा है।</string>
+    <string name="service_stop">रोकें</string>
+
+    <string name="media_vol_down">आवाज़ −</string>
+    <string name="media_vol_up">आवाज़ +</string>
+    <string name="media_mute">म्यूट</string>
+    <string name="media_home">होम</string>
+
+    <string name="devices_title">डिवाइस</string>
+    <string name="devices_hint">युग्मित डिवाइस। कनेक्ट या डिस्कनेक्ट करने के लिए टैप करें।</string>
+    <string name="devices_none">अभी कोई युग्मित डिवाइस नहीं है। पहले कंप्यूटर से इस फ़ोन को युग्मित करें — गाइड देखें।</string>
+    <string name="devices_not_registered">अभी कीबोर्ड के रूप में रजिस्टर नहीं हुआ। ट्रैकपैड पर वापस जाएँ, थोड़ी देर रुकें और फिर कोशिश करें।</string>
+    <string name="devices_no_bluetooth">कोई ब्लूटूथ अडैप्टर उपलब्ध नहीं है।</string>
+    <string name="device_state_connected">कनेक्ट है · %1$s</string>
+    <string name="device_state_connecting">कनेक्ट हो रहा है… · %1$s</string>
+    <string name="device_state_disconnected">कनेक्ट नहीं है · %1$s</string>
+
+    <string name="clipboard_empty">क्लिपबोर्ड खाली है।</string>
+    <string name="clipboard_sending">%1$d अक्षर टाइप किए जा रहे हैं…</string>
+    <string name="clipboard_truncated">क्लिपबोर्ड लंबा है — पहले %1$d अक्षर भेजे जा रहे हैं।</string>
+
+    <string name="settings_title">सेटिंग</string>
+    <string name="settings_header_pointer">पॉइंटर</string>
+    <string name="settings_header_keyboard">कीबोर्ड</string>
+    <string name="settings_header_trackpad">ट्रैकपैड</string>
+    <string name="settings_header_remote">रिमोट</string>
+    <string name="settings_header_connection">कनेक्शन</string>
+    <string name="settings_header_appearance">दिखावट</string>
+    <string name="settings_header_help">मदद</string>
+
+    <string name="setting_sensitivity_title">पॉइंटर की गति</string>
+    <string name="setting_sensitivity_value">पॉइंटर की गति: %1$d%%</string>
+    <string name="setting_sensitivity_summary">उँगली के किसी दिए गए संचलन पर पॉइंटर कितनी दूर जाता है। मान 100 का अर्थ एक-के-बराबर-एक है।</string>
+
+    <string name="setting_gyro_title">जायरो माउस</string>
+    <string name="setting_gyro_summary">ट्रैकपैड पर खींचने की जगह फ़ोन झुकाकर पॉइंटर चलाएँ। टैप, स्क्रॉल और क्लिक बटन काम करते रहते हैं।</string>
+    <string name="setting_gyro_invert_x">बाएँ / दाएँ उलटें</string>
+    <string name="setting_gyro_invert_y">ऊपर / नीचे उलटें</string>
+    <string name="setting_gyro_invert_summary">यदि आप फ़ोन जिस तरह पकड़ते हैं उसके हिसाब से दिशा उलटी लगे तो किसी भी अक्ष को उलट दें।</string>
+
+    <string name="setting_host_layout_title">कंप्यूटर का कीबोर्ड लेआउट</string>
+    <string name="setting_host_layout_summary">जिस कंप्यूटर को आप नियंत्रित कर रहे हैं उसका लेआउट, इस फ़ोन का नहीं। ब्लूटूथ अक्षरों के बजाय कुंजियों की स्थिति भेजता है, इसलिए यह कंप्यूटर से मेल खाना चाहिए, वरना अक्षर और विराम-चिह्न बदल जाते हैं। चीनी, कोरियाई, हिंदी, अरबी, थाई और वियतनामी कंप्यूटर US QWERTY का उपयोग करते हैं और लिपि खुद बनाते हैं।</string>
+
+    <string name="setting_language_title">ऐप की भाषा</string>
+    <string name="setting_language_summary">इस ऐप की भाषा। कंप्यूटर पर जो टाइप होता है उस पर इसका कोई असर नहीं पड़ता।</string>
+
+    <string name="setting_click_bar_title">क्लिक बटन</string>
+    <string name="setting_click_bar_summary">लैपटॉप की तरह ट्रैकपैड के नीचे बायाँ और दायाँ क्लिक बटन दिखाता है। बटन दबाकर ट्रैकपैड पर खींचें और ड्रैग-एंड-ड्रॉप करें। जगह बनाने के लिए ट्रैकपैड छोटा हो जाता है।</string>
+
+    <string name="setting_media_keys_title">मीडिया कुंजियाँ</string>
+    <string name="setting_media_keys_summary">आवाज़, प्लेबैक और होम कुंजियों की एक पंक्ति दिखाता है, जिससे ऐप टीवी रिमोट बन जाता है। डिफ़ॉल्ट रूप से बंद।</string>
+
+    <string name="setting_clipboard_title">क्लिपबोर्ड भेजें</string>
+    <string name="setting_clipboard_summary">एक मेनू आइटम जोड़ता है जो फ़ोन का क्लिपबोर्ड कंप्यूटर पर टाइप करता है — पासवर्ड, URL और लंबे टेक्स्ट के लिए उपयोगी।</string>
+
+    <string name="setting_auto_pair_title">स्वचालित रूप से कनेक्ट करें</string>
+    <string name="setting_auto_pair_summary">ऐप शुरू होते ही फ़ोन को किसी जाने-पहचाने कंप्यूटर से खुद कनेक्ट करने देता है। पीसी से कनेक्ट करने की तुलना में अधिक भरोसेमंद, क्योंकि पीसी अक्सर ऑडियो प्रोफ़ाइल चुन लेता है।</string>
+
+    <string name="setting_stay_connected_title">बैकग्राउंड में कनेक्ट रहें</string>
+    <string name="setting_stay_connected_summary">ऐप से बाहर जाने या स्क्रीन बंद होने पर भी कीबोर्ड और माउस की तरह काम करता रहता है। इस दौरान एक स्थायी सूचना दिखती है।</string>
+
+    <string name="setting_keep_screen_on_title">स्क्रीन चालू रखें</string>
+    <string name="setting_keep_screen_on_summary">ऐप खुला रहने तक स्क्रीन को बंद होने से रोकता है।</string>
+
+    <string name="setting_theme_title">थीम</string>
+    <string name="setting_theme_system">फ़ोन की सेटिंग के अनुसार</string>
+    <string name="setting_theme_light">हल्का</string>
+    <string name="setting_theme_black">काला</string>
+
+    <string name="setting_orientation_title">दिशा</string>
+    <string name="setting_orientation_portrait">पोर्ट्रेट</string>
+    <string name="setting_orientation_landscape">लैंडस्केप</string>
+    <string name="setting_orientation_auto">स्वतः घुमाव</string>
+    <string name="setting_orientation_gyro_note">जायरो माउस चालू रहने पर स्वतः घुमाव उपलब्ध नहीं है, क्योंकि पॉइंटर चलाने के लिए फ़ोन झुकाने से स्क्रीन घूम जाएगी।</string>
+
+    <string name="setting_open_help">गाइड खोलें</string>
+
+    <string name="help_title">शुरू करें</string>
+    <string name="help_continue">शुरू करें</string>
+
+    <string name="help_intro">MaxKontroller इस फ़ोन को ब्लूटूथ कीबोर्ड और माउस बना देता है। कंप्यूटर इसे एक सामान्य ब्लूटूथ कीबोर्ड के रूप में देखता है, इसलिए उस पर कुछ इंस्टॉल करने की ज़रूरत नहीं।</string>
+
+    <string name="help_pairing_title">युग्मन</string>
+    <string name="help_pairing_body">1. इस ऐप को खुला रखें और «खोजे जाने योग्य बनाएँ» अनुरोध की अनुमति दें।\n2. कंप्यूटर पर ब्लूटूथ डिवाइस खोजें और इस फ़ोन से युग्मित करें।\n3. दोनों तरफ़ पासकी की पुष्टि करें।\n\nइसके बाद सेटिंग में «स्वचालित रूप से कनेक्ट करें» चालू रखें, फ़ोन हर बार ऐप खुलने पर खुद कनेक्शन बना लेगा।</string>
+
+    <string name="help_gestures_title">जेस्चर</string>
+    <string name="help_gestures_body">• पॉइंटर चलाना — एक उँगली खींचें\n• बायाँ क्लिक — टैप करें, या बायाँ क्लिक बटन\n• दायाँ क्लिक — दायाँ क्लिक बटन\n• डबल क्लिक — दो बार टैप करें\n• ड्रैग और ड्रॉप — क्लिक बटन दबाकर ट्रैकपैड पर खींचें\n• स्क्रॉल — दो उँगलियाँ खींचें\n\nदो उँगलियों का टैप भी दायाँ क्लिक है, लेकिन दोनों उँगलियाँ 100 मिलीसेकंड में लगनी और उठनी चाहिए, इसलिए बटन आसान है।</string>
+
+    <string name="help_keyboard_title">कीबोर्ड</string>
+    <string name="help_keyboard_body">स्क्रीन कीबोर्ड लाने के लिए कीबोर्ड आइकन पर टैप करें; आप जो कुछ टाइप करते हैं वह कंप्यूटर को भेजा जाता है।\n\n(N)/(P) बटन मॉडिफ़ायर कुंजियों को नियंत्रित करता है। (N) हर कीस्ट्रोक के बाद Ctrl/Alt/Shift छोड़ देता है; (P) उन्हें दबाए रखता है ताकि आप संयोजन बना सकें, जैसे क्लिक करते समय Ctrl दबाए रखना। (N) पर वापस जाना याद रखें, वरना मॉडिफ़ायर दबे रह जाएँगे।\n\nGboard में Ctrl, Esc, तीर या फ़ंक्शन कुंजियाँ नहीं हैं। जिस कीबोर्ड में ये हों — Unexpected Keyboard या Hacker\'s Keyboard — उससे Shift+F10 (संदर्भ मेनू) जैसे शॉर्टकट संभव हो जाते हैं।</string>
+
+    <string name="help_trouble_title">अगर कंप्यूटर को कोई कीबोर्ड न दिखे</string>
+    <string name="help_trouble_body">Linux पर सामान्य «connect» अक्सर कीबोर्ड के बजाय ऑडियो प्रोफ़ाइल चालू कर देता है। «स्वचालित रूप से कनेक्ट करें» का उपयोग करें ताकि फ़ोन पहल करे, या HID प्रोफ़ाइल स्पष्ट रूप से कनेक्ट करें:\n\nbluetoothctl connect &lt;MAC&gt; 00001124-0000-1000-8000-00805f9b34fb\n\nअगर कंप्यूटर को फिर भी कीबोर्ड न दिखे, तो BlueZ ने ऐप के रजिस्टर होने से पहले की सेवा सूची कैश कर ली हो सकती है। /var/lib/bluetooth में इस फ़ोन की कैश फ़ाइल हटाएँ और फिर कनेक्ट करें; युग्मन बना रहता है।</string>
+</resources>

@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="24dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="32dp">
+
+        <!-- ── Pointer ─────────────────────────────────────────────── -->
+        <TextView
+            style="@style/SettingsHeader"
+            android:text="@string/settings_header_pointer" />
+
+        <TextView
+            android:id="@+id/sensitivityLabel"
+            style="@style/SettingsLabel"
+            android:text="@string/setting_sensitivity_title" />
+
+        <SeekBar
+            android:id="@+id/sensitivitySeek"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            style="@style/SettingsSummary"
+            android:text="@string/setting_sensitivity_summary" />
+
+        <Switch
+            android:id="@+id/switchGyro"
+            style="@style/SettingsSwitch"
+            android:text="@string/setting_gyro_title" />
+
+        <TextView
+            style="@style/SettingsSummary"
+            android:text="@string/setting_gyro_summary" />
+
+        <Switch
+            android:id="@+id/switchGyroInvertX"
+            style="@style/SettingsSwitch"
+            android:text="@string/setting_gyro_invert_x" />
+
+        <Switch
+            android:id="@+id/switchGyroInvertY"
+            style="@style/SettingsSwitch"
+            android:text="@string/setting_gyro_invert_y" />
+
+        <TextView
+            style="@style/SettingsSummary"
+            android:text="@string/setting_gyro_invert_summary" />
+
+        <!-- ── Keyboard ────────────────────────────────────────────── -->
+        <TextView
+            style="@style/SettingsHeader"
+            android:text="@string/settings_header_keyboard" />
+
+        <TextView
+            style="@style/SettingsLabel"
+            android:text="@string/setting_host_layout_title" />
+
+        <Spinner
+            android:id="@+id/hostLayoutSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            style="@style/SettingsSummary"
+            android:text="@string/setting_host_layout_summary" />
+
+        <TextView
+            android:id="@+id/languageLabel"
+            style="@style/SettingsLabel"
+            android:text="@string/setting_language_title" />
+
+        <Spinner
+            android:id="@+id/languageSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:id="@+id/languageSummary"
+            style="@style/SettingsSummary"
+            android:text="@string/setting_language_summary" />
+
+        <!-- ── Trackpad ────────────────────────────────────────────── -->
+        <TextView
+            style="@style/SettingsHeader"
+            android:text="@string/settings_header_trackpad" />
+
+        <Switch
+            android:id="@+id/switchClickBar"
+            style="@style/SettingsSwitch"
+            android:text="@string/setting_click_bar_title" />
+
+        <TextView
+            style="@style/SettingsSummary"
+            android:text="@string/setting_click_bar_summary" />
+
+        <!-- ── Remote ──────────────────────────────────────────────── -->
+        <TextView
+            style="@style/SettingsHeader"
+            android:text="@string/settings_header_remote" />
+
+        <Switch
+            android:id="@+id/switchMediaKeys"
+            style="@style/SettingsSwitch"
+            android:text="@string/setting_media_keys_title" />
+
+        <TextView
+            style="@style/SettingsSummary"
+            android:text="@string/setting_media_keys_summary" />
+
+        <Switch
+            android:id="@+id/switchClipboard"
+            style="@style/SettingsSwitch"
+            android:text="@string/setting_clipboard_title" />
+
+        <TextView
+            style="@style/SettingsSummary"
+            android:text="@string/setting_clipboard_summary" />
+
+        <!-- ── Connection ──────────────────────────────────────────── -->
+        <TextView
+            style="@style/SettingsHeader"
+            android:text="@string/settings_header_connection" />
+
+        <Switch
+            android:id="@+id/switchAutoPair"
+            style="@style/SettingsSwitch"
+            android:text="@string/setting_auto_pair_title" />
+
+        <TextView
+            style="@style/SettingsSummary"
+            android:text="@string/setting_auto_pair_summary" />
+
+        <Switch
+            android:id="@+id/switchStayConnected"
+            style="@style/SettingsSwitch"
+            android:text="@string/setting_stay_connected_title" />
+
+        <TextView
+            style="@style/SettingsSummary"
+            android:text="@string/setting_stay_connected_summary" />
+
+        <!-- ── Appearance ──────────────────────────────────────────── -->
+        <TextView
+            style="@style/SettingsHeader"
+            android:text="@string/settings_header_appearance" />
+
+        <TextView
+            style="@style/SettingsLabel"
+            android:text="@string/setting_theme_title" />
+
+        <RadioGroup
+            android:id="@+id/themeGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/themeSystem"
+                style="@style/SettingsRadio"
+                android:text="@string/setting_theme_system" />
+
+            <RadioButton
+                android:id="@+id/themeLight"
+                style="@style/SettingsRadio"
+                android:text="@string/setting_theme_light" />
+
+            <RadioButton
+                android:id="@+id/themeBlack"
+                style="@style/SettingsRadio"
+                android:text="@string/setting_theme_black" />
+        </RadioGroup>
+
+        <TextView
+            style="@style/SettingsLabel"
+            android:text="@string/setting_orientation_title" />
+
+        <RadioGroup
+            android:id="@+id/orientationGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/orientationPortrait"
+                style="@style/SettingsRadio"
+                android:text="@string/setting_orientation_portrait" />
+
+            <RadioButton
+                android:id="@+id/orientationLandscape"
+                style="@style/SettingsRadio"
+                android:text="@string/setting_orientation_landscape" />
+
+            <RadioButton
+                android:id="@+id/orientationAuto"
+                style="@style/SettingsRadio"
+                android:text="@string/setting_orientation_auto" />
+        </RadioGroup>
+
+        <!-- Shown only while the gyro pointer makes auto-rotate unusable. -->
+        <TextView
+            android:id="@+id/orientationGyroNote"
+            style="@style/SettingsSummary"
+            android:text="@string/setting_orientation_gyro_note"
+            android:visibility="gone" />
+
+        <!-- ── Help ────────────────────────────────────────────────── -->
+        <TextView
+            style="@style/SettingsHeader"
+            android:text="@string/settings_header_help" />
+
+        <Button
+            android:id="@+id/openHelpButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/setting_open_help" />
+
+    </LinearLayout>
+
+</ScrollView>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="trackpad_label">Touchpad</string>
+
+    <string name="click_left">Linksklick</string>
+    <string name="click_right">Rechtsklick</string>
+
+    <string name="action_settings">Einstellungen</string>
+    <string name="action_help">Hilfe</string>
+    <string name="action_keyboard_title">Tastatur anzeigen</string>
+    <string name="action_tool_tip">Modifikatortasten: (N) lässt Strg/Alt/Umschalt nach jedem Tastendruck los, (P) hält sie gedrückt, bis du zurückschaltest</string>
+    <string name="action_disconnect">Trennen</string>
+
+    <string name="status_connected">App über Bluetooth verbunden</string>
+    <string name="status_not_connected">App nicht über Bluetooth verbunden</string>
+    <string name="action_ble_status_tool_tip">App nicht über Bluetooth verbunden</string>
+
+    <string name="error_bluetooth_permission">MaxKontroller benötigt die Bluetooth-Berechtigungen, um als Tastatur und Maus zu funktionieren.</string>
+    <string name="error_no_hid_profile">Dieses Gerät stellt das Bluetooth-HID-Device-Profil nicht bereit und kann daher nicht als Tastatur oder Maus dienen.</string>
+    <string name="error_no_gyro">Dieses Telefon hat keinen Rotationssensor, die Gyro-Maus ist daher nicht verfügbar.</string>
+
+    <string name="service_channel">Verbindung</string>
+    <string name="service_title">MaxKontroller ist aktiv</string>
+    <string name="service_text">Arbeitet als Bluetooth-Tastatur und -Maus.</string>
+    <string name="service_stop">Beenden</string>
+
+    <string name="settings_title">Einstellungen</string>
+    <string name="settings_header_pointer">Zeiger</string>
+    <string name="settings_header_keyboard">Tastatur</string>
+    <string name="settings_header_trackpad">Touchpad</string>
+    <string name="settings_header_connection">Verbindung</string>
+    <string name="settings_header_appearance">Darstellung</string>
+    <string name="settings_header_help">Hilfe</string>
+
+    <string name="setting_sensitivity_title">Zeigergeschwindigkeit</string>
+    <string name="setting_sensitivity_value">Zeigergeschwindigkeit: %1$d%%</string>
+    <string name="setting_sensitivity_summary">Wie weit sich der Zeiger bei einer bestimmten Fingerbewegung bewegt. Der Wert 100 entspricht eins zu eins.</string>
+
+    <string name="setting_gyro_title">Gyro-Maus</string>
+    <string name="setting_gyro_summary">Bewegt den Zeiger durch Neigen des Telefons statt durch Wischen auf dem Pad. Tippen, Scrollen und die Klicktasten funktionieren weiterhin.</string>
+    <string name="setting_gyro_invert_x">Links / rechts umkehren</string>
+    <string name="setting_gyro_invert_y">Oben / unten umkehren</string>
+    <string name="setting_gyro_invert_summary">Kehre eine der Gyro-Achsen um, wenn sie sich für deine Handhaltung falsch anfühlt.</string>
+
+    <string name="setting_host_layout_title">Tastaturlayout des Computers</string>
+    <string name="setting_host_layout_summary">Das Layout des Computers, den du steuerst — nicht das dieses Telefons. Bluetooth überträgt Tastenpositionen und keine Zeichen, deshalb muss dies zum Computer passen, sonst werden Buchstaben und Satzzeichen vertauscht. Computer mit Chinesisch, Koreanisch, Hindi, Arabisch, Thai und Vietnamesisch verwenden US-QWERTY und setzen ihre Schrift selbst zusammen.</string>
+
+    <string name="setting_language_title">App-Sprache</string>
+    <string name="setting_language_summary">Die Sprache dieser App. Sie hat keinen Einfluss darauf, was am Computer eingegeben wird.</string>
+
+    <string name="setting_click_bar_title">Klicktasten</string>
+    <string name="setting_click_bar_summary">Zeigt unter dem Touchpad Tasten für Links- und Rechtsklick, wie bei einem Notebook. Halte eine Taste gedrückt und wische auf dem Pad, um zu ziehen und ablegen. Das Touchpad wird dafür kleiner.</string>
+
+    <string name="setting_auto_pair_title">Automatisch verbinden</string>
+    <string name="setting_auto_pair_summary">Lässt das Telefon die Verbindung zu einem bekannten Computer aufbauen, sobald die App startet. Zuverlässiger als vom PC aus zu verbinden, wo meist Audioprofile gewählt werden.</string>
+
+    <string name="setting_stay_connected_title">Im Hintergrund verbunden bleiben</string>
+    <string name="setting_stay_connected_summary">Arbeitet weiter als Tastatur und Maus, wenn du die App verlässt oder der Bildschirm ausgeht. Zeigt währenddessen eine dauerhafte Benachrichtigung.</string>
+
+    <string name="setting_keep_screen_on_title">Bildschirm anlassen</string>
+    <string name="setting_keep_screen_on_summary">Verhindert, dass der Bildschirm ausgeht, während die App geöffnet ist.</string>
+
+    <string name="setting_theme_title">Design</string>
+    <string name="setting_theme_system">Systemeinstellung folgen</string>
+    <string name="setting_theme_light">Hell</string>
+    <string name="setting_theme_black">Schwarz</string>
+
+    <string name="setting_orientation_title">Ausrichtung</string>
+    <string name="setting_orientation_portrait">Hochformat</string>
+    <string name="setting_orientation_landscape">Querformat</string>
+    <string name="setting_orientation_auto">Automatisch drehen</string>
+    <string name="setting_orientation_gyro_note">Automatisches Drehen ist bei aktiver Gyro-Maus nicht verfügbar, weil das Neigen des Telefons zum Bewegen des Zeigers den Bildschirm drehen würde.</string>
+
+    <string name="setting_open_help">Anleitung öffnen</string>
+
+    <string name="help_title">Erste Schritte</string>
+    <string name="help_continue">Los geht\'s</string>
+
+    <string name="help_intro">MaxKontroller macht aus diesem Telefon eine Bluetooth-Tastatur und -Maus. Der Computer sieht eine gewöhnliche Bluetooth-Tastatur, es muss dort also nichts installiert werden.</string>
+
+    <string name="help_pairing_title">Kopplung</string>
+    <string name="help_pairing_body">1. Lass diese App offen und bestätige die Anfrage „sichtbar machen“.\n2. Suche am Computer nach Bluetooth-Geräten und koppele ihn mit diesem Telefon.\n3. Bestätige den Code auf beiden Seiten.\n\nLass danach „Automatisch verbinden“ in den Einstellungen aktiviert, dann baut das Telefon die Verbindung bei jedem Start selbst auf.</string>
+
+    <string name="help_gestures_title">Gesten</string>
+    <string name="help_gestures_body">• Zeiger bewegen — mit einem Finger wischen\n• Linksklick — tippen oder die Taste Linksklick\n• Rechtsklick — die Taste Rechtsklick\n• Doppelklick — zweimal tippen\n• Ziehen und ablegen — eine Klicktaste halten und auf dem Pad wischen\n• Scrollen — mit zwei Fingern wischen\n\nEin Tippen mit zwei Fingern ist ebenfalls ein Rechtsklick, aber beide Finger müssen innerhalb von 100 ms aufsetzen und abheben — die Taste ist einfacher.</string>
+
+    <string name="help_keyboard_title">Tastatur</string>
+    <string name="help_keyboard_body">Tippe auf das Tastatursymbol, um die Bildschirmtastatur einzublenden; alles, was du eingibst, geht an den Computer.\n\nDie Taste (N)/(P) steuert die Modifikatortasten. (N) lässt Strg/Alt/Umschalt nach jedem Anschlag los; (P) hält sie gedrückt, sodass du Kombinationen bilden kannst, etwa Strg beim Klicken. Denk daran, zurück auf (N) zu schalten, sonst bleiben die Modifikatoren hängen.\n\nGboard hat kein Strg, Esc, keine Pfeiltasten und keine Funktionstasten. Eine Tastatur, die das bietet — Unexpected Keyboard oder Hacker\'s Keyboard — ermöglicht Kürzel wie Umschalt+F10 (Kontextmenü).</string>
+
+    <string name="media_vol_down">Vol −</string>
+    <string name="media_vol_up">Vol +</string>
+    <string name="media_mute">Stumm</string>
+    <string name="media_home">Start</string>
+
+    <string name="action_devices">Geräte</string>
+    <string name="action_send_clipboard">Zwischenablage senden</string>
+
+    <string name="devices_title">Geräte</string>
+    <string name="devices_hint">Gekoppelte Geräte. Tippe auf eines, um es zu verbinden oder zu trennen.</string>
+    <string name="devices_none">Noch keine gekoppelten Geräte. Koppele dieses Telefon zuerst vom Computer aus — siehe Anleitung.</string>
+    <string name="devices_not_registered">Noch nicht als Tastatur registriert. Geh zurück zum Touchpad, warte einen Moment und versuche es erneut.</string>
+    <string name="devices_no_bluetooth">Kein Bluetooth-Adapter verfügbar.</string>
+    <string name="device_state_connected">Verbunden · %1$s</string>
+    <string name="device_state_connecting">Verbinde… · %1$s</string>
+    <string name="device_state_disconnected">Nicht verbunden · %1$s</string>
+
+    <string name="clipboard_empty">Die Zwischenablage ist leer.</string>
+    <string name="clipboard_sending">%1$d Zeichen werden getippt…</string>
+    <string name="clipboard_truncated">Zwischenablage ist lang — die ersten %1$d Zeichen werden gesendet.</string>
+    <string name="error_not_connected">Noch nicht mit einem Computer verbunden.</string>
+
+    <string name="settings_header_remote">Fernbedienung</string>
+    <string name="setting_media_keys_title">Medientasten</string>
+    <string name="setting_media_keys_summary">Zeigt eine Reihe mit Lautstärke-, Wiedergabe- und Start-Tasten und macht die App damit zur Fernbedienung. Standardmäßig aus.</string>
+    <string name="setting_clipboard_title">Zwischenablage senden</string>
+    <string name="setting_clipboard_summary">Fügt einen Menüpunkt hinzu, der die Zwischenablage des Telefons am Computer eintippt — praktisch für Passwörter, URLs und lange Texte.</string>
+
+    <string name="help_trouble_title">Wenn der Computer keine Tastatur sieht</string>
+    <string name="help_trouble_body">Unter Linux aktiviert ein einfaches „connect“ oft die Audioprofile statt der Tastatur. Nutze entweder „Automatisch verbinden“, damit das Telefon die Initiative übernimmt, oder verbinde das HID-Profil ausdrücklich:\n\nbluetoothctl connect &lt;MAC&gt; 00001124-0000-1000-8000-00805f9b34fb\n\nSieht der Computer weiterhin keine Tastatur, hat BlueZ möglicherweise eine Diensteliste von vor der Registrierung der App zwischengespeichert. Lösche die Cache-Datei dieses Telefons unter /var/lib/bluetooth und verbinde erneut; die Kopplung selbst bleibt erhalten.</string>
+</resources>

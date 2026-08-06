@@ -21,10 +21,16 @@
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
+    <!-- Keeps the HID registration alive while the app is backgrounded. -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" />
+    <!-- Android 13+: without this the service's ongoing notification is hidden. -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <uses-feature android:name="android.hardware.bluetooth" android:required="true" />
-    <!-- The gyroscope/accelerometer path (SensorSender) is not wired up, so neither
-         sensor is required. Upstream marked the gyroscope required="true", which
-         needlessly blocked installation on phones without one. -->
+    <!-- The gyro pointer is an opt-in setting, so neither sensor is required. Upstream
+         marked the gyroscope required="true", which needlessly blocked installation on
+         phones without one. -->
     <uses-feature android:name="android.hardware.sensor.gyroscope" android:required="false" />
     <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="false" />
 
@@ -33,7 +39,8 @@
         android:allowBackup="false"
         android:label="@string/app_name"
         android:icon="@mipmap/ic_launcher_ble_round"
-        android:supportsRtl="false"
+        android:supportsRtl="true"
+        android:localeConfig="@xml/locales_config"
         android:theme="@style/AppStyle"
         tools:ignore="GoogleAppIndexingWarning">
 
@@ -50,7 +57,30 @@
         <activity
             android:name=".SelectDeviceActivity"
             android:exported="false"
-            android:configChanges="orientation|screenSize" />
+            android:configChanges="orientation|screenSize|screenLayout" />
+
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false"
+            android:label="@string/settings_title"
+            android:parentActivityName=".SelectDeviceActivity" />
+
+        <activity
+            android:name=".DevicesActivity"
+            android:exported="false"
+            android:label="@string/devices_title"
+            android:parentActivityName=".SelectDeviceActivity" />
+
+        <activity
+            android:name=".HelpActivity"
+            android:exported="false"
+            android:label="@string/help_title"
+            android:parentActivityName=".SelectDeviceActivity" />
+
+        <service
+            android:name=".HidService"
+            android:exported="false"
+            android:foregroundServiceType="connectedDevice" />
 
     </application>
 </manifest>

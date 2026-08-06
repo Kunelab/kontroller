@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="trackpad_label">لوحة اللمس</string>
+
+    <string name="click_left">النقر الأيسر</string>
+    <string name="click_right">النقر الأيمن</string>
+
+    <string name="action_settings">الإعدادات</string>
+    <string name="action_help">المساعدة</string>
+    <string name="action_keyboard_title">إظهار لوحة المفاتيح</string>
+    <string name="action_tool_tip">مفاتيح التعديل: يحرر (N) مفاتيح Ctrl/Alt/Shift بعد كل ضغطة، ويبقيها (P) مضغوطة حتى تعود إلى الوضع الأول</string>
+    <string name="action_disconnect">قطع الاتصال</string>
+    <string name="action_devices">الأجهزة</string>
+    <string name="action_send_clipboard">إرسال الحافظة</string>
+
+    <string name="status_connected">التطبيق متصل عبر البلوتوث</string>
+    <string name="status_not_connected">التطبيق غير متصل عبر البلوتوث</string>
+    <string name="action_ble_status_tool_tip">التطبيق غير متصل عبر البلوتوث</string>
+
+    <string name="error_bluetooth_permission">يحتاج MaxKontroller إلى أذونات البلوتوث ليعمل كلوحة مفاتيح وفأرة.</string>
+    <string name="error_no_hid_profile">لا يوفّر هذا الجهاز ملف تعريف Bluetooth HID Device، لذا لا يمكن استخدامه كلوحة مفاتيح أو فأرة.</string>
+    <string name="error_no_gyro">لا يحتوي هذا الهاتف على مستشعر دوران، لذا فأرة الجيروسكوب غير متاحة.</string>
+    <string name="error_not_connected">لا يوجد اتصال بحاسوب بعد.</string>
+
+    <string name="service_channel">الاتصال</string>
+    <string name="service_title">MaxKontroller يعمل</string>
+    <string name="service_text">يعمل كلوحة مفاتيح وفأرة بلوتوث.</string>
+    <string name="service_stop">إيقاف</string>
+
+    <string name="media_vol_down">الصوت −</string>
+    <string name="media_vol_up">الصوت +</string>
+    <string name="media_mute">كتم</string>
+    <string name="media_home">الرئيسية</string>
+
+    <string name="devices_title">الأجهزة</string>
+    <string name="devices_hint">الأجهزة المقترنة. انقر على أحدها للاتصال أو لقطع الاتصال.</string>
+    <string name="devices_none">لا توجد أجهزة مقترنة بعد. اقترن بهذا الهاتف من الحاسوب أولًا — راجع الدليل.</string>
+    <string name="devices_not_registered">لم يُسجَّل كلوحة مفاتيح بعد. ارجع إلى لوحة اللمس، وانتظر لحظة، ثم أعد المحاولة.</string>
+    <string name="devices_no_bluetooth">لا يتوفر محوّل بلوتوث.</string>
+    <string name="device_state_connected">متصل · %1$s</string>
+    <string name="device_state_connecting">جارٍ الاتصال… · %1$s</string>
+    <string name="device_state_disconnected">غير متصل · %1$s</string>
+
+    <string name="clipboard_empty">الحافظة فارغة.</string>
+    <string name="clipboard_sending">جارٍ كتابة %1$d حرفًا…</string>
+    <string name="clipboard_truncated">الحافظة طويلة — سيتم إرسال أول %1$d حرف.</string>
+
+    <string name="settings_title">الإعدادات</string>
+    <string name="settings_header_pointer">المؤشر</string>
+    <string name="settings_header_keyboard">لوحة المفاتيح</string>
+    <string name="settings_header_trackpad">لوحة اللمس</string>
+    <string name="settings_header_remote">جهاز التحكم</string>
+    <string name="settings_header_connection">الاتصال</string>
+    <string name="settings_header_appearance">المظهر</string>
+    <string name="settings_header_help">المساعدة</string>
+
+    <string name="setting_sensitivity_title">سرعة المؤشر</string>
+    <string name="setting_sensitivity_value">سرعة المؤشر: %1$d%%</string>
+    <string name="setting_sensitivity_summary">المسافة التي يقطعها المؤشر مقابل حركة إصبع معيّنة. القيمة 100 تعني واحدًا إلى واحد.</string>
+
+    <string name="setting_gyro_title">فأرة الجيروسكوب</string>
+    <string name="setting_gyro_summary">حرّك المؤشر بإمالة الهاتف بدلًا من السحب على لوحة اللمس. يبقى النقر والتمرير وأزرار النقر تعمل كما هي.</string>
+    <string name="setting_gyro_invert_x">عكس اليسار / اليمين</string>
+    <string name="setting_gyro_invert_y">عكس الأعلى / الأسفل</string>
+    <string name="setting_gyro_invert_summary">اعكس أيًّا من محوري الجيروسكوب إذا كان الاتجاه لا يناسب طريقة حملك للهاتف.</string>
+
+    <string name="setting_host_layout_title">تخطيط لوحة مفاتيح الحاسوب</string>
+    <string name="setting_host_layout_summary">تخطيط الحاسوب الذي تتحكم به، وليس تخطيط هذا الهاتف. يرسل البلوتوث مواضع المفاتيح لا الأحرف، لذا يجب أن يطابق هذا الإعداد الحاسوب، وإلا ظهرت الأحرف وعلامات الترقيم مبدَّلة. تستخدم الحواسيب بالصينية والكورية والهندية والعربية والتايلاندية والفيتنامية تخطيط US QWERTY وتؤلّف كتابتها بنفسها.</string>
+
+    <string name="setting_language_title">لغة التطبيق</string>
+    <string name="setting_language_summary">لغة هذا التطبيق. لا تؤثر على ما يُكتب في الحاسوب.</string>
+
+    <string name="setting_click_bar_title">أزرار النقر</string>
+    <string name="setting_click_bar_summary">يُظهر زرَّي النقر الأيسر والأيمن أسفل لوحة اللمس، مثل الحاسوب المحمول. اضغط زرًّا مع السحب على اللوحة للسحب والإفلات. تصغر لوحة اللمس لإتاحة المساحة.</string>
+
+    <string name="setting_media_keys_title">مفاتيح الوسائط</string>
+    <string name="setting_media_keys_summary">يُظهر صفًّا من مفاتيح الصوت والتشغيل والرئيسية، فيتحول التطبيق إلى جهاز تحكم للتلفاز. معطّل تلقائيًا.</string>
+
+    <string name="setting_clipboard_title">إرسال الحافظة</string>
+    <string name="setting_clipboard_summary">يضيف عنصر قائمة يكتب حافظة الهاتف في الحاسوب — مفيد لكلمات المرور والروابط والنصوص الطويلة.</string>
+
+    <string name="setting_auto_pair_title">الاتصال تلقائيًا</string>
+    <string name="setting_auto_pair_summary">يترك الهاتف يفتح الاتصال بحاسوب معروف بمجرد تشغيل التطبيق. أكثر موثوقية من الاتصال من الحاسوب، الذي يختار عادةً ملفات تعريف الصوت.</string>
+
+    <string name="setting_stay_connected_title">البقاء متصلًا في الخلفية</string>
+    <string name="setting_stay_connected_summary">يستمر في العمل كلوحة مفاتيح وفأرة عند مغادرة التطبيق أو انطفاء الشاشة. يُظهر إشعارًا دائمًا أثناء ذلك.</string>
+
+    <string name="setting_keep_screen_on_title">إبقاء الشاشة مضاءة</string>
+    <string name="setting_keep_screen_on_summary">يمنع انطفاء الشاشة أثناء فتح التطبيق.</string>
+
+    <string name="setting_theme_title">المظهر</string>
+    <string name="setting_theme_system">اتباع إعداد الهاتف</string>
+    <string name="setting_theme_light">فاتح</string>
+    <string name="setting_theme_black">أسود</string>
+
+    <string name="setting_orientation_title">اتجاه الشاشة</string>
+    <string name="setting_orientation_portrait">طولي</string>
+    <string name="setting_orientation_landscape">عرضي</string>
+    <string name="setting_orientation_auto">التدوير التلقائي</string>
+    <string name="setting_orientation_gyro_note">التدوير التلقائي غير متاح عند تشغيل فأرة الجيروسكوب، لأن إمالة الهاتف لتحريك المؤشر ستؤدي إلى تدوير الشاشة.</string>
+
+    <string name="setting_open_help">فتح الدليل</string>
+
+    <string name="help_title">البداية</string>
+    <string name="help_continue">لنبدأ</string>
+
+    <string name="help_intro">يحوّل MaxKontroller هذا الهاتف إلى لوحة مفاتيح وفأرة بلوتوث. يرى الحاسوب لوحة مفاتيح بلوتوث عادية، لذا لا حاجة إلى تثبيت أي شيء عليه.</string>
+
+    <string name="help_pairing_title">الاقتران</string>
+    <string name="help_pairing_body">١. اترك هذا التطبيق مفتوحًا واسمح بطلب «السماح بالاكتشاف».\n٢. من الحاسوب، ابحث عن أجهزة البلوتوث واقترن بهذا الهاتف.\n٣. أكّد رمز المرور على الجهازين.\n\nبعد ذلك اترك «الاتصال تلقائيًا» مفعّلًا في الإعدادات، وسيفتح الهاتف الاتصال بنفسه في كل مرة تفتح التطبيق.</string>
+
+    <string name="help_gestures_title">الإيماءات</string>
+    <string name="help_gestures_body">• تحريك المؤشر — اسحب بإصبع واحد\n• النقر الأيسر — انقر، أو استخدم زر النقر الأيسر\n• النقر الأيمن — زر النقر الأيمن\n• النقر المزدوج — انقر مرتين\n• السحب والإفلات — اضغط زر نقر مع السحب على اللوحة\n• التمرير — اسحب بإصبعين\n\nالنقر بإصبعين يعمل كنقر أيمن أيضًا، لكن يجب أن يلمس الإصبعان ويرتفعا خلال ١٠٠ مللي ثانية، لذا الزر أسهل.</string>
+
+    <string name="help_keyboard_title">لوحة المفاتيح</string>
+    <string name="help_keyboard_body">انقر على رمز لوحة المفاتيح لإظهار لوحة المفاتيح على الشاشة؛ كل ما تكتبه يُرسل إلى الحاسوب.\n\nيتحكم الزر (N)/(P) في مفاتيح التعديل. يحرر (N) مفاتيح Ctrl/Alt/Shift بعد كل ضغطة؛ ويبقيها (P) مضغوطة لتكوين تركيبات مثل الضغط على Ctrl أثناء النقر. تذكّر العودة إلى (N)، وإلا بقيت مفاتيح التعديل مضغوطة.\n\nلا تتوفر في Gboard مفاتيح Ctrl أو Esc أو الأسهم أو مفاتيح الوظائف. لوحة مفاتيح تتيحها — مثل Unexpected Keyboard أو Hacker\'s Keyboard — تجعل اختصارات مثل Shift+F10 (قائمة السياق) ممكنة.</string>
+
+    <string name="help_trouble_title">إذا لم يرَ الحاسوب أي لوحة مفاتيح</string>
+    <string name="help_trouble_body">في لينكس، غالبًا ما يفعّل الأمر «connect» البسيط ملفات تعريف الصوت بدلًا من لوحة المفاتيح. استخدم «الاتصال تلقائيًا» ليأخذ الهاتف المبادرة، أو صِل ملف تعريف HID صراحةً:\n\nbluetoothctl connect &lt;MAC&gt; 00001124-0000-1000-8000-00805f9b34fb\n\nإذا ظل الحاسوب لا يرى لوحة مفاتيح، فقد يكون BlueZ خزّن قائمة خدمات من قبل تسجيل التطبيق. احذف ملف المخزّن المؤقت لهذا الهاتف في /var/lib/bluetooth ثم أعد الاتصال؛ يبقى الاقتران نفسه محفوظًا.</string>
+</resources>

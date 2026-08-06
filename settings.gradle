@@ -14,5 +14,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = 'Kontroller'
+rootProject.name = 'MaxKontroller'
 include ':app'

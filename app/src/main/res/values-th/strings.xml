@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="trackpad_label">แทร็กแพด</string>
+
+    <string name="click_left">คลิกซ้าย</string>
+    <string name="click_right">คลิกขวา</string>
+
+    <string name="action_settings">การตั้งค่า</string>
+    <string name="action_help">ความช่วยเหลือ</string>
+    <string name="action_keyboard_title">แสดงแป้นพิมพ์</string>
+    <string name="action_tool_tip">ปุ่มปรับแต่ง: (N) ปล่อย Ctrl/Alt/Shift หลังการกดแต่ละครั้ง, (P) กดค้างไว้จนกว่าคุณจะสลับกลับ</string>
+    <string name="action_disconnect">ตัดการเชื่อมต่อ</string>
+    <string name="action_devices">อุปกรณ์</string>
+    <string name="action_send_clipboard">ส่งคลิปบอร์ด</string>
+
+    <string name="status_connected">แอปเชื่อมต่อผ่านบลูทูธแล้ว</string>
+    <string name="status_not_connected">แอปยังไม่ได้เชื่อมต่อผ่านบลูทูธ</string>
+    <string name="action_ble_status_tool_tip">แอปยังไม่ได้เชื่อมต่อผ่านบลูทูธ</string>
+
+    <string name="error_bluetooth_permission">MaxKontroller ต้องได้รับสิทธิ์บลูทูธเพื่อทำงานเป็นแป้นพิมพ์และเมาส์</string>
+    <string name="error_no_hid_profile">อุปกรณ์นี้ไม่มีโปรไฟล์ Bluetooth HID Device จึงใช้เป็นแป้นพิมพ์หรือเมาส์ไม่ได้</string>
+    <string name="error_no_gyro">โทรศัพท์นี้ไม่มีเซ็นเซอร์การหมุน จึงใช้เมาส์ไจโรไม่ได้</string>
+    <string name="error_not_connected">ยังไม่ได้เชื่อมต่อกับคอมพิวเตอร์</string>
+
+    <string name="service_channel">การเชื่อมต่อ</string>
+    <string name="service_title">MaxKontroller กำลังทำงาน</string>
+    <string name="service_text">กำลังทำงานเป็นแป้นพิมพ์และเมาส์บลูทูธ</string>
+    <string name="service_stop">หยุด</string>
+
+    <string name="media_vol_down">เสียง −</string>
+    <string name="media_vol_up">เสียง +</string>
+    <string name="media_mute">ปิดเสียง</string>
+    <string name="media_home">หน้าแรก</string>
+
+    <string name="devices_title">อุปกรณ์</string>
+    <string name="devices_hint">อุปกรณ์ที่จับคู่แล้ว แตะเพื่อเชื่อมต่อหรือตัดการเชื่อมต่อ</string>
+    <string name="devices_none">ยังไม่มีอุปกรณ์ที่จับคู่ กรุณาจับคู่โทรศัพท์นี้จากคอมพิวเตอร์ก่อน — ดูคู่มือ</string>
+    <string name="devices_not_registered">ยังไม่ได้ลงทะเบียนเป็นแป้นพิมพ์ กลับไปที่แทร็กแพด รอสักครู่แล้วลองอีกครั้ง</string>
+    <string name="devices_no_bluetooth">ไม่มีอะแดปเตอร์บลูทูธที่ใช้ได้</string>
+    <string name="device_state_connected">เชื่อมต่อแล้ว · %1$s</string>
+    <string name="device_state_connecting">กำลังเชื่อมต่อ… · %1$s</string>
+    <string name="device_state_disconnected">ไม่ได้เชื่อมต่อ · %1$s</string>
+
+    <string name="clipboard_empty">คลิปบอร์ดว่างเปล่า</string>
+    <string name="clipboard_sending">กำลังพิมพ์ %1$d อักขระ…</string>
+    <string name="clipboard_truncated">คลิปบอร์ดยาวเกินไป — จะส่ง %1$d อักขระแรก</string>
+
+    <string name="settings_title">การตั้งค่า</string>
+    <string name="settings_header_pointer">ตัวชี้</string>
+    <string name="settings_header_keyboard">แป้นพิมพ์</string>
+    <string name="settings_header_trackpad">แทร็กแพด</string>
+    <string name="settings_header_remote">รีโมต</string>
+    <string name="settings_header_connection">การเชื่อมต่อ</string>
+    <string name="settings_header_appearance">ลักษณะที่ปรากฏ</string>
+    <string name="settings_header_help">ความช่วยเหลือ</string>
+
+    <string name="setting_sensitivity_title">ความเร็วตัวชี้</string>
+    <string name="setting_sensitivity_value">ความเร็วตัวชี้: %1$d%%</string>
+    <string name="setting_sensitivity_summary">ระยะที่ตัวชี้เคลื่อนที่ต่อการขยับนิ้วหนึ่งครั้ง ค่า 100 คือหนึ่งต่อหนึ่ง</string>
+
+    <string name="setting_gyro_title">เมาส์ไจโร</string>
+    <string name="setting_gyro_summary">เลื่อนตัวชี้โดยเอียงโทรศัพท์แทนการลากบนแทร็กแพด การแตะ การเลื่อน และปุ่มคลิกยังใช้งานได้</string>
+    <string name="setting_gyro_invert_x">กลับซ้าย / ขวา</string>
+    <string name="setting_gyro_invert_y">กลับขึ้น / ลง</string>
+    <string name="setting_gyro_invert_summary">กลับด้านแกนใดแกนหนึ่งหากทิศทางไม่ตรงกับวิธีที่คุณถือโทรศัพท์</string>
+
+    <string name="setting_host_layout_title">ผังแป้นพิมพ์ของคอมพิวเตอร์</string>
+    <string name="setting_host_layout_summary">ผังแป้นพิมพ์ของคอมพิวเตอร์ที่คุณควบคุม ไม่ใช่ของโทรศัพท์นี้ บลูทูธส่งตำแหน่งปุ่มไม่ใช่ตัวอักษร ดังนั้นค่านี้ต้องตรงกับคอมพิวเตอร์ ไม่เช่นนั้นตัวอักษรและเครื่องหมายวรรคตอนจะสลับกัน คอมพิวเตอร์ที่ใช้ภาษาจีน เกาหลี ฮินดี อาหรับ ไทย และเวียดนาม ใช้ US QWERTY และประกอบตัวอักษรด้วยตัวเอง</string>
+
+    <string name="setting_language_title">ภาษาของแอป</string>
+    <string name="setting_language_summary">ภาษาของแอปนี้ ไม่มีผลต่อสิ่งที่พิมพ์ไปยังคอมพิวเตอร์</string>
+
+    <string name="setting_click_bar_title">ปุ่มคลิก</string>
+    <string name="setting_click_bar_summary">แสดงปุ่มคลิกซ้ายและขวาใต้แทร็กแพด เหมือนบนแล็ปท็อป กดปุ่มค้างแล้วลากบนแทร็กแพดเพื่อลากและวาง แทร็กแพดจะเล็กลงเพื่อให้มีที่ว่าง</string>
+
+    <string name="setting_media_keys_title">ปุ่มสื่อ</string>
+    <string name="setting_media_keys_summary">แสดงแถวปุ่มระดับเสียง การเล่น และหน้าแรก ทำให้แอปกลายเป็นรีโมตทีวี ปิดไว้เป็นค่าเริ่มต้น</string>
+
+    <string name="setting_clipboard_title">ส่งคลิปบอร์ด</string>
+    <string name="setting_clipboard_summary">เพิ่มรายการเมนูที่พิมพ์คลิปบอร์ดของโทรศัพท์ไปยังคอมพิวเตอร์ — สะดวกสำหรับรหัสผ่าน URL และข้อความยาว</string>
+
+    <string name="setting_auto_pair_title">เชื่อมต่ออัตโนมัติ</string>
+    <string name="setting_auto_pair_summary">ให้โทรศัพท์เปิดการเชื่อมต่อไปยังคอมพิวเตอร์ที่รู้จักทันทีที่เปิดแอป เชื่อถือได้มากกว่าการเชื่อมต่อจากพีซี ซึ่งมักเลือกโปรไฟล์เสียง</string>
+
+    <string name="setting_stay_connected_title">เชื่อมต่อต่อไปในเบื้องหลัง</string>
+    <string name="setting_stay_connected_summary">ทำงานเป็นแป้นพิมพ์และเมาส์ต่อไปเมื่อคุณออกจากแอปหรือหน้าจอดับ จะแสดงการแจ้งเตือนค้างไว้ระหว่างนั้น</string>
+
+    <string name="setting_keep_screen_on_title">เปิดหน้าจอไว้</string>
+    <string name="setting_keep_screen_on_summary">ป้องกันหน้าจอดับขณะที่แอปเปิดอยู่</string>
+
+    <string name="setting_theme_title">ธีม</string>
+    <string name="setting_theme_system">ตามการตั้งค่าของโทรศัพท์</string>
+    <string name="setting_theme_light">สว่าง</string>
+    <string name="setting_theme_black">ดำ</string>
+
+    <string name="setting_orientation_title">การวางแนว</string>
+    <string name="setting_orientation_portrait">แนวตั้ง</string>
+    <string name="setting_orientation_landscape">แนวนอน</string>
+    <string name="setting_orientation_auto">หมุนอัตโนมัติ</string>
+    <string name="setting_orientation_gyro_note">ไม่สามารถใช้การหมุนอัตโนมัติขณะเปิดเมาส์ไจโร เพราะการเอียงโทรศัพท์เพื่อเลื่อนตัวชี้จะทำให้หน้าจอหมุน</string>
+
+    <string name="setting_open_help">เปิดคู่มือ</string>
+
+    <string name="help_title">เริ่มต้นใช้งาน</string>
+    <string name="help_continue">เริ่ม</string>
+
+    <string name="help_intro">MaxKontroller เปลี่ยนโทรศัพท์นี้ให้เป็นแป้นพิมพ์และเมาส์บลูทูธ คอมพิวเตอร์จะเห็นเป็นแป้นพิมพ์บลูทูธทั่วไป จึงไม่ต้องติดตั้งอะไรบนคอมพิวเตอร์</string>
+
+    <string name="help_pairing_title">การจับคู่</string>
+    <string name="help_pairing_body">1. เปิดแอปนี้ไว้และอนุญาตคำขอ «ทำให้ค้นพบได้»\n2. ที่คอมพิวเตอร์ ค้นหาอุปกรณ์บลูทูธและจับคู่กับโทรศัพท์นี้\n3. ยืนยันรหัสผ่านทั้งสองฝ่าย\n\nหลังจากนั้นให้เปิด «เชื่อมต่ออัตโนมัติ» ไว้ในการตั้งค่า โทรศัพท์จะเปิดการเชื่อมต่อเองทุกครั้งที่เปิดแอป</string>
+
+    <string name="help_gestures_title">ท่าทาง</string>
+    <string name="help_gestures_body">• เลื่อนตัวชี้ — ลากหนึ่งนิ้ว\n• คลิกซ้าย — แตะ หรือใช้ปุ่มคลิกซ้าย\n• คลิกขวา — ปุ่มคลิกขวา\n• ดับเบิลคลิก — แตะสองครั้ง\n• ลากและวาง — กดปุ่มคลิกค้างแล้วลากบนแทร็กแพด\n• เลื่อน — ลากสองนิ้ว\n\nการแตะสองนิ้วก็เป็นคลิกขวาได้ แต่ทั้งสองนิ้วต้องแตะและยกขึ้นภายใน 100 มิลลิวินาที จึงใช้ปุ่มง่ายกว่า</string>
+
+    <string name="help_keyboard_title">แป้นพิมพ์</string>
+    <string name="help_keyboard_body">แตะไอคอนแป้นพิมพ์เพื่อเรียกแป้นพิมพ์บนหน้าจอ ทุกอย่างที่คุณพิมพ์จะถูกส่งไปยังคอมพิวเตอร์\n\nปุ่ม (N)/(P) ควบคุมปุ่มปรับแต่ง (N) ปล่อย Ctrl/Alt/Shift หลังการกดแต่ละครั้ง (P) กดค้างไว้เพื่อให้คุณสร้างการกดร่วม เช่น กด Ctrl ค้างขณะคลิก อย่าลืมสลับกลับไปที่ (N) ไม่เช่นนั้นปุ่มปรับแต่งจะค้างอยู่\n\nGboard ไม่มี Ctrl, Esc, ปุ่มลูกศร หรือปุ่มฟังก์ชัน แป้นพิมพ์ที่มีปุ่มเหล่านี้ — Unexpected Keyboard หรือ Hacker\'s Keyboard — จะช่วยให้ใช้ทางลัดอย่าง Shift+F10 (เมนูบริบท) ได้</string>
+
+    <string name="help_trouble_title">หากคอมพิวเตอร์ไม่พบแป้นพิมพ์</string>
+    <string name="help_trouble_body">บน Linux คำสั่ง «connect» ธรรมดามักเปิดโปรไฟล์เสียงแทนแป้นพิมพ์ ให้ใช้ «เชื่อมต่ออัตโนมัติ» เพื่อให้โทรศัพท์เป็นฝ่ายเริ่ม หรือเชื่อมต่อโปรไฟล์ HID อย่างชัดเจน:\n\nbluetoothctl connect &lt;MAC&gt; 00001124-0000-1000-8000-00805f9b34fb\n\nหากคอมพิวเตอร์ยังไม่พบแป้นพิมพ์ BlueZ อาจแคชรายการบริการจากก่อนที่แอปจะลงทะเบียน ให้ลบไฟล์แคชของโทรศัพท์นี้ใน /var/lib/bluetooth แล้วเชื่อมต่อใหม่ การจับคู่จะยังคงอยู่</string>
+</resources>

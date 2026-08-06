@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="trackpad_label">Panel dotykowy</string>
+
+    <string name="click_left">Lewy przycisk</string>
+    <string name="click_right">Prawy przycisk</string>
+
+    <string name="action_settings">Ustawienia</string>
+    <string name="action_help">Pomoc</string>
+    <string name="action_keyboard_title">Pokaż klawiaturę</string>
+    <string name="action_tool_tip">Klawisze modyfikujące: (N) zwalnia Ctrl/Alt/Shift po każdym naciśnięciu, (P) trzyma je wciśnięte do przełączenia z powrotem</string>
+    <string name="action_disconnect">Rozłącz</string>
+    <string name="action_devices">Urządzenia</string>
+    <string name="action_send_clipboard">Wyślij schowek</string>
+
+    <string name="status_connected">Aplikacja połączona przez Bluetooth</string>
+    <string name="status_not_connected">Aplikacja nie jest połączona przez Bluetooth</string>
+    <string name="action_ble_status_tool_tip">Aplikacja nie jest połączona przez Bluetooth</string>
+
+    <string name="error_bluetooth_permission">MaxKontroller potrzebuje uprawnień Bluetooth, aby działać jako klawiatura i mysz.</string>
+    <string name="error_no_hid_profile">To urządzenie nie udostępnia profilu Bluetooth HID Device, więc nie może działać jako klawiatura ani mysz.</string>
+    <string name="error_no_gyro">Ten telefon nie ma czujnika obrotu, więc mysz żyroskopowa jest niedostępna.</string>
+    <string name="error_not_connected">Brak połączenia z komputerem.</string>
+
+    <string name="service_channel">Połączenie</string>
+    <string name="service_title">MaxKontroller jest aktywny</string>
+    <string name="service_text">Działa jako klawiatura i mysz Bluetooth.</string>
+    <string name="service_stop">Zatrzymaj</string>
+
+    <string name="media_vol_down">Głośn. −</string>
+    <string name="media_vol_up">Głośn. +</string>
+    <string name="media_mute">Wycisz</string>
+    <string name="media_home">Ekran główny</string>
+
+    <string name="devices_title">Urządzenia</string>
+    <string name="devices_hint">Sparowane urządzenia. Dotknij, aby połączyć lub rozłączyć.</string>
+    <string name="devices_none">Brak sparowanych urządzeń. Najpierw sparuj ten telefon z komputera — zobacz przewodnik.</string>
+    <string name="devices_not_registered">Jeszcze nie zarejestrowano jako klawiatura. Wróć do panelu dotykowego, chwilę odczekaj i spróbuj ponownie.</string>
+    <string name="devices_no_bluetooth">Brak dostępnego adaptera Bluetooth.</string>
+    <string name="device_state_connected">Połączono · %1$s</string>
+    <string name="device_state_connecting">Łączenie… · %1$s</string>
+    <string name="device_state_disconnected">Nie połączono · %1$s</string>
+
+    <string name="clipboard_empty">Schowek jest pusty.</string>
+    <string name="clipboard_sending">Wpisywanie %1$d znaków…</string>
+    <string name="clipboard_truncated">Schowek jest długi — wysyłane jest pierwszych %1$d znaków.</string>
+
+    <string name="settings_title">Ustawienia</string>
+    <string name="settings_header_pointer">Wskaźnik</string>
+    <string name="settings_header_keyboard">Klawiatura</string>
+    <string name="settings_header_trackpad">Panel dotykowy</string>
+    <string name="settings_header_remote">Pilot</string>
+    <string name="settings_header_connection">Połączenie</string>
+    <string name="settings_header_appearance">Wygląd</string>
+    <string name="settings_header_help">Pomoc</string>
+
+    <string name="setting_sensitivity_title">Szybkość wskaźnika</string>
+    <string name="setting_sensitivity_value">Szybkość wskaźnika: %1$d%%</string>
+    <string name="setting_sensitivity_summary">Jak daleko przemieszcza się wskaźnik przy danym ruchu palca. Wartość 100 oznacza jeden do jednego.</string>
+
+    <string name="setting_gyro_title">Mysz żyroskopowa</string>
+    <string name="setting_gyro_summary">Przesuwaj wskaźnik przez przechylanie telefonu, a nie przesuwanie po panelu. Dotknięcia, przewijanie i przyciski kliknięcia nadal działają.</string>
+    <string name="setting_gyro_invert_x">Odwróć lewo / prawo</string>
+    <string name="setting_gyro_invert_y">Odwróć góra / dół</string>
+    <string name="setting_gyro_invert_summary">Odwróć dowolną oś żyroskopu, jeśli kierunek nie odpowiada temu, jak trzymasz telefon.</string>
+
+    <string name="setting_host_layout_title">Układ klawiatury komputera</string>
+    <string name="setting_host_layout_summary">Układ ustawiony na komputerze, którym sterujesz, a nie na tym telefonie. Bluetooth przesyła pozycje klawiszy, a nie znaki, więc musi się to zgadzać z komputerem, inaczej litery i znaki interpunkcyjne będą pomieszane. Komputery z chińskim, koreańskim, hindi, arabskim, tajskim i wietnamskim używają układu US QWERTY i składają pismo samodzielnie.</string>
+
+    <string name="setting_language_title">Język aplikacji</string>
+    <string name="setting_language_summary">Język tej aplikacji. Nie wpływa na to, co jest wpisywane na komputerze.</string>
+
+    <string name="setting_click_bar_title">Przyciski kliknięcia</string>
+    <string name="setting_click_bar_summary">Pokazuje przyciski lewego i prawego kliknięcia pod panelem dotykowym, jak w laptopie. Przytrzymaj przycisk i przesuń palcem po panelu, aby przeciągnąć i upuścić. Panel zmniejsza się, żeby zrobić miejsce.</string>
+
+    <string name="setting_media_keys_title">Klawisze multimedialne</string>
+    <string name="setting_media_keys_summary">Pokazuje rząd klawiszy głośności, odtwarzania i ekranu głównego, zamieniając aplikację w pilota do telewizora. Domyślnie wyłączone.</string>
+
+    <string name="setting_clipboard_title">Wyślij schowek</string>
+    <string name="setting_clipboard_summary">Dodaje pozycję menu, która wpisuje schowek telefonu na komputerze — przydatne przy hasłach, adresach URL i długich tekstach.</string>
+
+    <string name="setting_auto_pair_title">Łącz automatycznie</string>
+    <string name="setting_auto_pair_summary">Telefon sam otwiera połączenie ze znanym komputerem po uruchomieniu aplikacji. Bardziej niezawodne niż łączenie z komputera, który zwykle wybiera profile audio.</string>
+
+    <string name="setting_stay_connected_title">Pozostań połączony w tle</string>
+    <string name="setting_stay_connected_summary">Działa dalej jako klawiatura i mysz, gdy opuścisz aplikację lub ekran się wyłączy. W tym czasie pokazywane jest stałe powiadomienie.</string>
+
+    <string name="setting_keep_screen_on_title">Nie wyłączaj ekranu</string>
+    <string name="setting_keep_screen_on_summary">Zapobiega wyłączeniu ekranu, gdy aplikacja jest otwarta.</string>
+
+    <string name="setting_theme_title">Motyw</string>
+    <string name="setting_theme_system">Zgodnie z ustawieniem telefonu</string>
+    <string name="setting_theme_light">Jasny</string>
+    <string name="setting_theme_black">Czarny</string>
+
+    <string name="setting_orientation_title">Orientacja</string>
+    <string name="setting_orientation_portrait">Pionowa</string>
+    <string name="setting_orientation_landscape">Pozioma</string>
+    <string name="setting_orientation_auto">Automatyczny obrót</string>
+    <string name="setting_orientation_gyro_note">Automatyczny obrót jest niedostępny przy włączonej myszy żyroskopowej, bo przechylanie telefonu w celu przesunięcia wskaźnika obracałoby ekran.</string>
+
+    <string name="setting_open_help">Otwórz przewodnik</string>
+
+    <string name="help_title">Pierwsze kroki</string>
+    <string name="help_continue">Rozpocznij</string>
+
+    <string name="help_intro">MaxKontroller zamienia ten telefon w klawiaturę i mysz Bluetooth. Komputer widzi zwykłą klawiaturę Bluetooth, więc nie trzeba na nim nic instalować.</string>
+
+    <string name="help_pairing_title">Parowanie</string>
+    <string name="help_pairing_body">1. Zostaw tę aplikację otwartą i zezwól na prośbę „uczyń widocznym”.\n2. Na komputerze wyszukaj urządzenia Bluetooth i sparuj go z tym telefonem.\n3. Potwierdź kod po obu stronach.\n\nPotem zostaw w ustawieniach włączone „Łącz automatycznie”, a telefon sam otworzy połączenie przy każdym uruchomieniu.</string>
+
+    <string name="help_gestures_title">Gesty</string>
+    <string name="help_gestures_body">• Przesuwanie wskaźnika — przesuń jednym palcem\n• Lewe kliknięcie — dotknij lub użyj przycisku Lewy przycisk\n• Prawe kliknięcie — przycisk Prawy przycisk\n• Podwójne kliknięcie — dotknij dwa razy\n• Przeciąganie — przytrzymaj przycisk kliknięcia i przesuwaj po panelu\n• Przewijanie — przesuń dwoma palcami\n\nDotknięcie dwoma palcami też daje prawe kliknięcie, ale oba palce muszą dotknąć i oderwać się w ciągu 100 ms, więc przyciskiem jest łatwiej.</string>
+
+    <string name="help_keyboard_title">Klawiatura</string>
+    <string name="help_keyboard_body">Dotknij ikony klawiatury, aby wyświetlić klawiaturę ekranową; wszystko, co wpiszesz, jest wysyłane do komputera.\n\nPrzycisk (N)/(P) steruje klawiszami modyfikującymi. (N) zwalnia Ctrl/Alt/Shift po każdym naciśnięciu; (P) trzyma je wciśnięte, dzięki czemu można tworzyć kombinacje, na przykład Ctrl przy kliknięciu. Pamiętaj o powrocie do (N), inaczej modyfikatory pozostaną wciśnięte.\n\nGboard nie ma Ctrl, Esc, strzałek ani klawiszy funkcyjnych. Klawiatura, która je ma — Unexpected Keyboard lub Hacker\'s Keyboard — umożliwia skróty takie jak Shift+F10 (menu kontekstowe).</string>
+
+    <string name="help_trouble_title">Jeśli komputer nie widzi klawiatury</string>
+    <string name="help_trouble_body">W Linuksie zwykłe „connect” często włącza profile audio zamiast klawiatury. Użyj „Łącz automatycznie”, aby inicjatywę przejął telefon, albo połącz profil HID wprost:\n\nbluetoothctl connect &lt;MAC&gt; 00001124-0000-1000-8000-00805f9b34fb\n\nJeśli komputer nadal nie widzi klawiatury, BlueZ mógł zapisać w pamięci listę usług z czasu przed rejestracją aplikacji. Usuń plik cache tego telefonu w /var/lib/bluetooth i połącz się ponownie; samo parowanie zostaje zachowane.</string>
+</resources>

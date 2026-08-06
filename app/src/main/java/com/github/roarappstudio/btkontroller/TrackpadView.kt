@@ -29,12 +29,21 @@ class TrackpadView @JvmOverloads constructor(
      */
     var onHidKey: ((KeyEvent) -> Boolean)? = null
 
+    /**
+     * Invoked for a typed character so the host-layout table can pick the key *position*
+     * that produces it. Returns false when the active layout has no mapping, in which case
+     * the caller falls back to the keycode path.
+     */
+    var onHidChar: ((Char) -> Boolean)? = null
+
     init {
         isFocusable = true
         isFocusableInTouchMode = true
     }
 
     fun dispatchHidKey(event: KeyEvent): Boolean = onHidKey?.invoke(event) ?: false
+
+    fun dispatchHidChar(ch: Char): Boolean = onHidChar?.invoke(ch) ?: false
 
     override fun onCheckIsTextEditor(): Boolean = true
 
