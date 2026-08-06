@@ -35,6 +35,28 @@ There are no third-party dependencies. The release APK is ~330 KB.
 To build a signed release, copy `keystore.properties.example` to `keystore.properties`
 (gitignored) and fill it in. Without one the build still works and produces an unsigned APK.
 
+```sh
+keytool -genkeypair -v -keystore maxkontroller.jks -storetype PKCS12 \
+        -alias maxkontroller -keyalg RSA -keysize 4096 -validity 10000
+./gradlew assembleRelease
+```
+
+The output is `app/build/outputs/apk/release/app-release.apk` — the absence of an
+`-unsigned` suffix is how you know signing was picked up. Verify it with:
+
+```sh
+"$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose --print-certs \
+    app/build/outputs/apk/release/app-release.apk
+```
+
+Signing uses APK Signature Scheme v3 only. v1 is for API < 24 and `minSdk` is 28; v3 was
+introduced in API 28, so every device this app supports can verify it, and v3 is what
+carries the proof-of-rotation record that allows the signing key to be replaced later.
+That record cannot be added retroactively, which is why it is on from the first release.
+
+**Keep the keystore and its password.** Losing either means no future build can upgrade an
+installed copy in place — users would have to uninstall and lose their settings.
+
 ## Using it
 
 | Action | Gesture |
