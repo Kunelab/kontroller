@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Replaces the Anko `verticalLayout { textView { ... } }` DSL that upstream built
+     in code. Anko is archived and cannot be used with modern Kotlin. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.github.roarappstudio.btkontroller.TrackpadView
+        android:id="@id/mouseView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/view_border"
+        android:gravity="center"
+        android:text="@string/trackpad_label" />
+
+</LinearLayout>

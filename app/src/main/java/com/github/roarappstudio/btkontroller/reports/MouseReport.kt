@@ -1,10 +1,9 @@
-package com.github.roarappstudio.btkontroller.reports
+﻿package com.github.roarappstudio.btkontroller.reports
 
 import kotlin.experimental.and
 import kotlin.experimental.or
 
-@Suppress("EXPERIMENTAL_FEATURE_WARNING")
-inline class MouseReport(
+class MouseReport(
     val bytes: ByteArray = ByteArray(4) {0}
 ) {
 

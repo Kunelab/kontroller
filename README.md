@@ -1,24 +1,167 @@
 # Kontroller
 
-This is an application to control your pc,mac,tv,ipad etc as a mouse or keyboard using the Bluetooth HID Device profile in Android 9(Pie) & above devices. App is currently in development. 
+Use an Android phone as a **Bluetooth keyboard and mouse** for a PC, Mac, TV or tablet.
 
-Me & Dima Rostopira(https://github.com/rostopira/) are the collaborators on this project.Even though all the commits on github show that they are done by me on the master branch, Half the code is written by Dima Rostopira and half by me. 
+The phone registers itself as a Bluetooth HID *device*, so the host sees a plain Bluetooth
+keyboard and mouse. Nothing has to be installed on the host, and because input arrives at
+the kernel/evdev level it works regardless of whether the host runs X11, Wayland or no
+desktop at all.
 
+This is a modernised fork of [raghavk92/Kontroller](https://github.com/raghavk92/Kontroller),
+whose last code change was in November 2020 and which no longer builds or runs on current
+Android.
 
-To connect other devices with your app you need to open the app on your phone and connect to your device via bluetooth
+## Requirements
 
-Please report any bugs you may have on your devices. If anyone is willing to contribute....they are welcome.
+- Android 9 (API 28) or newer, **and** a ROM that ships the Bluetooth HID Device profile.
+  Check with:
+  ```sh
+  adb shell getprop bluetooth.profile.hid.device.enabled   # must print: true
+  ```
+  This is optional for OEMs; if it prints nothing or `false`, this app cannot work on that
+  phone.
+- JDK 17 and the Android SDK (platform 36, build-tools 36) to build.
 
+## Building
 
-<a href='https://play.google.com/store/apps/details?id=com.github.roarappstudio.btkontroller&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
+```sh
+./gradlew assembleDebug
+adb install -r app/build/outputs/apk/debug/app-debug.apk
+```
 
-Procedure to use the app:
-1) Remove previous pairings with the host device in bluetooth settings(This has to be done once)
-2) Open the app
-3) Send a pairing request from the host device to the controlling device
-4) Accept the pairing on the device running Kontroller
-5) Use as Mouse/keyboard for your host device 
+There are no third-party dependencies.
 
-Many device manufacturers have disabled the Bluetooth HID device profile on their devices. You would have to ask your device manufacturers to enable it. You can check with this app {[Bluetooth HID Device Profile Compatibility Checker](https://play.google.com/store/apps/details?id=com.rkaneapplabs.bluetooth_hid.bluetoothproxy)} if the Bluetooth HID device profile is disabled for you or not.
+## Pairing with a Linux host (BlueZ)
 
-For OnePlus users- you can upvote this [Idea](https://forums.oneplus.com/threads/converting-one-plus-devices-into-a-bluetooth-controller-mouse-keyboard-etc.1192272/) in the community forums after login(This may help in bringing the issue into notice to One Plus). (If any One Plus 8/8Pro or 8T or One Plus Nord) user see's the repo, I need to do some testing on these one plus devices to check if the feature is enabled on them or not. If you have one of these devices and are cool and fine with letting me do some testing on your device.Feel free to create an issue.
+Tested against Debian 13 with BlueZ 5.82.
+
+1. Open the app on the phone and allow the discoverability prompt.
+2. On the host, pair and trust the phone:
+   ```sh
+   bluetoothctl
+   > agent on
+   > default-agent
+   > scan on          # wait for the phone to appear, then note its MAC
+   > pair  <PHONE_MAC>
+   > trust <PHONE_MAC>
+   ```
+   Confirm the passkey on both ends.
+3. Enable **AutoPair** from the app's overflow menu. The phone will then initiate the HID
+   connection itself whenever the app starts, which is the most reliable route (see below).
+
+Two `/dev/input` devices appear on the host once connected:
+
+```
+N: Name="<phone> Mouse"      H: Handlers=mouse0 event12
+N: Name="<phone> Keyboard"   H: Handlers=sysrq kbd event13
+```
+
+### Troubleshooting
+
+**The host sees an audio device but no keyboard or mouse.** A plain `connect` brings up
+whichever profiles win the race, usually A2DP/AVRCP. Connect the HID profile explicitly:
+
+```sh
+bluetoothctl connect <PHONE_MAC> 00001124-0000-1000-8000-00805f9b34fb
+```
+
+Better still, use **AutoPair** so the phone initiates.
+
+**The HID UUID (`0x1124`) never shows up in `bluetoothctl info`.** BlueZ caches each
+device's SDP records. If the host ever resolved services while the app was not registered,
+that HID-less list is cached and will not be re-queried. Drop the cache entry (the pairing
+itself survives):
+
+```sh
+sudo systemctl stop bluetooth
+sudo rm /var/lib/bluetooth/<ADAPTER_MAC>/cache/<PHONE_MAC>
+sudo systemctl start bluetooth
+```
+
+**`Connection reset by peer` when connecting the HID profile.** Android permits only one
+registered HID app at a time. If the app's process was killed without unregistering (a
+crash, or `adb shell am force-stop`), the stack can hold the dead registration and refuse
+new connections. Toggle Bluetooth off and on on the phone:
+
+```sh
+adb shell svc bluetooth disable && sleep 5 && adb shell svc bluetooth enable
+```
+
+## What changed from upstream
+
+Upstream did not build at all: `jcenter()` is shut down, and Gradle 5.1.1 / AGP 3.4.1
+cannot run on JDK 17.
+
+**Build and toolchain**
+- Gradle 5.1.1 → 8.13, AGP 3.4.1 → 8.9.1, Kotlin 1.3.21 → 2.1.20
+- `compileSdk`/`targetSdk` 28 → 36; `minSdk` stays 28
+- `jcenter()` → `mavenCentral()`, with modern `pluginManagement` / `dependencyResolutionManagement`
+- Manifest `package=` → Gradle `namespace`
+- Dropped Anko (archived), `kotlin-android-extensions` (removed in Kotlin 1.8), `kotpref`
+  (never referenced) and the support-library `LocalBroadcastManager` (only used in
+  commented-out code). The Anko-DSL UI is now `res/layout/activity_select_device.xml`.
+- `inline class` → `@JvmInline value class` → plain classes. The report types wrap a
+  *mutable* `ByteArray`, so value-class semantics were wrong for them, and R8 also crashed
+  on the generated bytecode (`Invalid stack map table … iload 5`).
+- Fixed `GestureDetector` overrides whose `MotionEvent?` parameters stopped compiling once
+  SDK 36 tightened the nullability annotations.
+
+**Correctness / runtime fixes**
+- **Removed hidden-API reflection.** `Unhide.kt` called `BluetoothAdapter.setScanMode(int, int)`
+  by reflection. That method does not exist on Android 12+, so the lookup threw
+  `NoSuchMethodException` from `onServiceConnected` and killed the connection path. The app
+  now uses the public `ACTION_REQUEST_DISCOVERABLE` intent. (`removeBond` and
+  `cancelBondProcess` were never called and were deleted.)
+- **Android 12+ permissions.** Upstream requested only `ACCESS_COARSE_LOCATION`, which was
+  the pre-Android-12 requirement for *scanning* — something this app never does. It now
+  requests `BLUETOOTH_CONNECT`, `BLUETOOTH_ADVERTISE` and `BLUETOOTH_SCAN` at runtime, and
+  the legacy permissions are capped with `maxSdkVersion="30"`.
+- **Keyboard input actually works.** Input was read solely from `Activity.onKeyUp`, which
+  only ever sees the few keys an IME dispatches as raw key events; ordinary characters
+  arrive via `InputConnection.commitText` and were silently dropped. `HidInputConnection`
+  now handles `commitText`, `sendKeyEvent`, `deleteSurroundingText` and
+  `performEditorAction`, converting text back into key events with `KeyCharacterMap` so the
+  existing keycode → HID-usage table still does the mapping.
+- **Keyboard toggle works.** `toggleSoftInput(SHOW_FORCED, 0)` is deprecated and a no-op on
+  recent Android, so the button did nothing.
+- **Keys send on press.** `onKeyDown` had its send call commented out and only `onKeyUp`
+  sent a report.
+- **HID registration survives dialogs.** `unregisterApp()` was called from `onStop`, so the
+  discoverability prompt and the pairing dialog each tore down the HID service at exactly
+  the moment the host was resolving it — the host then saw only an audio device. Teardown
+  moved to `onDestroy`.
+- **SET_REPORT handshake.** `onSetReport` only logged, never replying, so the host logged
+  `HIDP SET_REPORT request timed out` (typically when setting keyboard LEDs). It now replies
+  with `ERROR_RSP_SUCCESS`.
+- **Fixed a first-run crash.** `onAppStatusChanged` indexed `[0]` into the result of
+  `getDevicesMatchingConnectionStates()`, which is empty when nothing has been paired yet →
+  `IndexOutOfBoundsException`.
+- **Fixed six modifier-bit getters** in `KeyboardReport` (`leftAlt`, `leftGui`,
+  `rightControl`, `rightShift`, `rightAlt`, `rightGui`) that all read the shift bit. The
+  setters were correct, so the bug was latent.
+- `android:exported` added to the launcher activity (required from targetSdk 31, a hard
+  build error).
+- The gyroscope is no longer `required="true"` in the manifest; it needlessly blocked
+  installation, and the sensor-based pointer path is not wired up.
+
+## Verified
+
+Phone: realme 8 Pro (RMX3085), Android 13 / API 33.
+Host: Debian 13, kernel 6.12, BlueZ 5.82, Realtek RTL8852BU adapter.
+
+Mouse movement, left click and keyboard typing were confirmed by reading raw
+`/dev/input/event*` on the host — e.g. typing `hello` produced
+`Hdown Hup Edown Eup Ldown Lup Ldown Lup Odown Oup`, and drags produced the expected
+`REL_X`/`REL_Y` deltas.
+
+## Known limitations
+
+- **Two-finger scroll and right-click are untested.** They need real multi-touch, which
+  cannot be injected with `adb shell input`.
+- **No foreground service.** The HID registration lives with the activity, so leaving the
+  app can eventually drop the connection when Android reclaims the process. Moving
+  registration into a foreground service is the proper fix and is the main outstanding
+  improvement.
+- The sensor/gyroscope pointer mode (`SensorSender`) is dead code inherited from upstream.
+- `KeyboardReport` sends a single key at a time (`key1`); simultaneous key rollover is not
+  implemented.

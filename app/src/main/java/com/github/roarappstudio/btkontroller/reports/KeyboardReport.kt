@@ -1,11 +1,10 @@
-package com.github.roarappstudio.btkontroller.reports
+﻿package com.github.roarappstudio.btkontroller.reports
 
 import android.view.KeyEvent
 import kotlin.experimental.and
 import kotlin.experimental.or
 
-@Suppress("EXPERIMENTAL_FEATURE_WARNING")
-inline class KeyboardReport (
+class KeyboardReport (
     val bytes: ByteArray = ByteArray(3) {0}
 ) {
 
@@ -29,7 +28,7 @@ inline class KeyboardReport (
         }
 
     var leftAlt: Boolean
-        get() = bytes[0] and 0b10 != 0.toByte()
+        get() = bytes[0] and 0b100 != 0.toByte()
         set(value) {
             bytes[0] = if (value)
                 bytes[0] or 0b100
@@ -37,7 +36,7 @@ inline class KeyboardReport (
                 bytes[0] and 0b11111011.toByte()
         }
     var leftGui: Boolean
-        get() = bytes[0] and 0b10 != 0.toByte()
+        get() = bytes[0] and 0b1000 != 0.toByte()
         set(value) {
             bytes[0] = if (value)
                 bytes[0] or 0b1000
@@ -46,7 +45,7 @@ inline class KeyboardReport (
         }
 
     var rightControl: Boolean
-        get() = bytes[0] and 0b1 != 0.toByte()
+        get() = bytes[0] and 0b10000 != 0.toByte()
         set(value) {
             bytes[0] = if (value)
                 bytes[0] or 0b10000
@@ -55,7 +54,7 @@ inline class KeyboardReport (
         }
 
     var rightShift: Boolean
-        get() = bytes[0] and 0b10 != 0.toByte()
+        get() = bytes[0] and 0b100000 != 0.toByte()
         set(value) {
             bytes[0] = if (value)
                 bytes[0] or 0b100000
@@ -64,7 +63,7 @@ inline class KeyboardReport (
         }
 
     var rightAlt: Boolean
-        get() = bytes[0] and 0b10 != 0.toByte()
+        get() = bytes[0] and 0b1000000 != 0.toByte()
         set(value) {
             bytes[0] = if (value)
                 bytes[0] or 0b1000000
@@ -72,7 +71,7 @@ inline class KeyboardReport (
                 bytes[0] and 0b10111111.toByte()
         }
     var rightGui: Boolean
-        get() = bytes[0] and 0b10 != 0.toByte()
+        get() = bytes[0] and 0b10000000.toByte() != 0.toByte()
         set(value) {
             bytes[0] = if (value)
                 bytes[0] or 0b10000000.toByte()

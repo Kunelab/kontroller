@@ -1,8 +1,7 @@
-package com.github.roarappstudio.btkontroller.reports
+﻿package com.github.roarappstudio.btkontroller.reports
 
 @ExperimentalUnsignedTypes
-@Suppress("EXPERIMENTAL_FEATURE_WARNING")
-inline class AbsMouseReport(
+class AbsMouseReport(
     val bytes: ByteArray = ByteArray(4)
 ) {
 

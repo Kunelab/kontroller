@@ -1,14 +1,24 @@
 <resources>
     <string name="app_name">Kontroller</string>
+    <string name="trackpad_label">Trackpad</string>
+
     <string name="action_settings">Settings</string>
     <string name="action_keyboard_title">Keyboard Toggle</string>
     <string name="action_check">(N)</string>
+    <string name="action_check_held">(P)</string>
     <string name="action_tool_tip">Toggle to switch(Ctrl/Alt/Wn Keys) from click_each_time(Normal) state to key_pressed(Hold) state</string>
     <string name="action_disconnect">Disconnect</string>
     <string name="action_autopair">Enable AutoPair</string>
     <string name="auto_pair_flag">autopairfl</string>
     <string name="title_screen_on">Screen Always On</string>
+
+    <string name="status_connected">App connected via bluetooth</string>
+    <string name="status_not_connected">App not connected via bluetooth</string>
+    <!-- Kept for the menu item's default title/tooltip in the XML. -->
     <string name="action_ble_status_tool_tip">App not connected via bluetooth</string>
+
+    <string name="error_bluetooth_permission">Kontroller needs the Bluetooth permissions to act as a keyboard and mouse.</string>
+    <string name="error_no_hid_profile">This device does not expose the Bluetooth HID Device profile, so it cannot be used as a keyboard or mouse.</string>
 
     <string name="screen_on_flag">screenonfl</string>
 </resources>

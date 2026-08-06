@@ -1,15 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools" package="com.github.roarappstudio.btkontroller">
+          xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <!-- Android 12 (API 31) and above: runtime permissions.
+         BLUETOOTH_CONNECT  - talk to the HID profile and the paired host.
+         BLUETOOTH_ADVERTISE - become discoverable so the host can initiate pairing. -->
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
+    <!-- Only used to read the adapter's scan mode so we do not pop the "become
+         discoverable" dialog when the phone already is. Never used to derive location. -->
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN"
+                     android:usesPermissionFlags="neverForLocation"
+                     tools:targetApi="s" />
+
+    <!-- Android 11 (API 30) and below: install-time permissions. -->
+    <uses-permission android:name="android.permission.BLUETOOTH"
+                     android:maxSdkVersion="30" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"
+                     android:maxSdkVersion="30" />
+
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
-    <uses-feature android:name="android.hardware.bluetooth" android:required="true"/>
-    <uses-feature android:name="android.hardware.sensor.gyroscope" android:required="true"/>
-    <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="false"/>
+    <uses-feature android:name="android.hardware.bluetooth" android:required="true" />
+    <!-- The gyroscope/accelerometer path (SensorSender) is not wired up, so neither
+         sensor is required. Upstream marked the gyroscope required="true", which
+         needlessly blocked installation on phones without one. -->
+    <uses-feature android:name="android.hardware.sensor.gyroscope" android:required="false" />
+    <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="false" />
 
     <application
         android:name=".Kontroller"
@@ -22,6 +39,7 @@
 
         <activity
             android:name=".SplashScreen"
+            android:exported="true"
             android:theme="@style/SplashStyle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,9 +47,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".SelectDeviceActivity"
-                  android:configChanges="orientation|screenSize"
-        />
+        <activity
+            android:name=".SelectDeviceActivity"
+            android:exported="false"
+            android:configChanges="orientation|screenSize" />
 
     </application>
 </manifest>

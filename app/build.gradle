@@ -1,27 +1,35 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
 
 android {
-    compileSdkVersion 28
+    namespace 'com.github.roarappstudio.btkontroller'
+    compileSdk 36
+
     defaultConfig {
         applicationId "com.github.roarappstudio.btkontroller"
-        minSdkVersion 28
-        targetSdkVersion 28
-        versionCode 2
-        versionName "0.0.2"
+        minSdk 28
+        targetSdk 36
+        versionCode 3
+        versionName "0.1.0"
     }
+
     compileOptions {
-        targetCompatibility 1.8
-        sourceCompatibility 1.8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+
     buildTypes {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
 
     bundle {
         language {
@@ -36,11 +44,9 @@ android {
     }
 }
 
+// No third-party dependencies: the app runs entirely on framework APIs.
+// Anko (archived), kotlin-android-extensions (removed in Kotlin 1.8),
+// kotpref (never referenced) and the support-library LocalBroadcastManager
+// (only ever used in commented-out code) were all dropped.
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation "org.jetbrains.anko:anko-commons:$anko_version"
-    implementation "org.jetbrains.anko:anko-sdk25:$anko_version"
-    implementation 'com.chibatching.kotpref:kotpref:2.6.0'
-    implementation 'com.android.support:localbroadcastmanager:28.0.0'
-
 }
