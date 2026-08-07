@@ -11,6 +11,7 @@ import android.content.pm.ActivityInfo
 import android.hardware.Sensor
 import android.hardware.SensorManager
 import android.os.Bundle
+import android.os.SystemClock
 import android.util.Log
 import android.view.KeyCharacterMap
 import android.view.KeyEvent
@@ -22,6 +23,7 @@ import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.github.roarappstudio.btkontroller.Prefs.autoPair
+import com.github.roarappstudio.btkontroller.Prefs.autoReconnect
 import com.github.roarappstudio.btkontroller.Prefs.clickBar
 import com.github.roarappstudio.btkontroller.Prefs.clipboardAction
 import com.github.roarappstudio.btkontroller.Prefs.effectiveOrientation
@@ -84,6 +86,32 @@ class SelectDeviceActivity : Activity() {
     /** The stuck-stack dialog is worth showing once, not on every retry. */
     private var stuckStackDialogShown = false
 
+    /** Throttles the nudge toast. See [nudgeReconnect]. */
+    private var lastNudgeAt = 0L
+
+    /**
+     * Latest link state, for the action bar.
+     *
+     * The status line has to distinguish "not connected" from "actively calling the host",
+     * because with a sleeping PC the second state can last a minute and is the only sign that
+     * anything is happening.
+     */
+    private var linkStatus = BluetoothController.currentStatus()
+
+    /** Held so the same instance can be unsubscribed in [onStop]. */
+    private val statusObserver: (BluetoothController.Status) -> Unit = { status ->
+        runOnUiThread { onStatus(status) }
+    }
+
+    /**
+     * The pad's live listener, or null while there is no host.
+     *
+     * Indirection rather than swapping the view's own listener: a null listener meant touching
+     * the pad while disconnected did nothing whatsoever, so the app's main surface was silently
+     * dead exactly when the user most needed a hint. See [nudgeReconnect].
+     */
+    private var padListener: View.OnTouchListener? = null
+
     private val sensorManager by lazy { getSystemService(SensorManager::class.java) }
 
     /** Re-read in onStart so a change in Settings takes effect without a restart. */
@@ -104,6 +132,17 @@ class SelectDeviceActivity : Activity() {
 
         trackpad.onHidKey = ::forwardKey
         trackpad.onHidChar = ::forwardChar
+
+        // Set once, for the life of the activity. The real listener is swapped in and out via
+        // padListener as hosts come and go; with no host, a touch asks for one instead of
+        // being swallowed.
+        trackpad.setOnTouchListener { view, event ->
+            padListener?.onTouch(view, event) ?: run {
+                if (event.actionMasked == MotionEvent.ACTION_DOWN) nudgeReconnect()
+                true
+            }
+        }
+
         leftClickButton.setOnTouchListener { v, e -> onClickButtonTouch(v, e, left = true) }
         rightClickButton.setOnTouchListener { v, e -> onClickButtonTouch(v, e, left = false) }
 
@@ -133,6 +172,7 @@ class SelectDeviceActivity : Activity() {
         }
     }
 
+    @SuppressLint("MissingPermission") // the permission gate below returns before any BT call
     override fun onStart() {
         super.onStart()
 
@@ -187,11 +227,9 @@ class SelectDeviceActivity : Activity() {
                 val listener = ViewListener(pump)
                 viewListener = listener
 
-                trackpad.setOnTouchListener(
-                    CompositeListener(
-                        { _, event -> gestureDetector.onTouchEvent(event) },
-                        listener
-                    )
+                padListener = CompositeListener(
+                    { _, event -> gestureDetector.onTouchEvent(event) },
+                    listener
                 )
 
                 gyro.pointer = pump
@@ -205,6 +243,35 @@ class SelectDeviceActivity : Activity() {
 
         BluetoothController.getDisconnector {
             runOnUiThread { onHostDisconnected() }
+        }
+
+        // Subscribed here and dropped in onStop rather than through clearListeners(), because
+        // these are a list the service also subscribes to -- see addStatusObserver. Adding it
+        // paints the current state immediately.
+        BluetoothController.addStatusObserver(statusObserver)
+
+        BluetoothController.onPinnedHostUnpaired { device ->
+            runOnUiThread {
+                Toast.makeText(
+                    this,
+                    getString(R.string.device_unpaired_toast, device.name ?: device.address),
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+
+        // Opening the app with the link already down used to do nothing at all. Auto-connect
+        // runs on registration, and with "stay connected" on the registration is already up by
+        // the time this activity starts, so no callback fires and the user is left looking at
+        // "Not connected" with no way forward but the menu. This is also the path that makes
+        // reopening the app wake a host that has gone to sleep since it was last used.
+        if (BluetoothController.hostDevice == null &&
+            !BluetoothController.reconnecting &&
+            Prefs.of(this).autoReconnect
+        ) {
+            // Not user-initiated: this runs on every return to the activity, so it respects
+            // the cooldown rather than restarting a full-length chase each time.
+            BluetoothController.reconnect(userInitiated = false)
         }
     }
 
@@ -227,6 +294,8 @@ class SelectDeviceActivity : Activity() {
         mediaSender = null
         gyro.pointer = null
         pointer = null
+        // Hands the pad back to the nudge path, so a touch now asks for a host.
+        padListener = null
 
         setConnected(null)
         invalidateOptionsMenu()
@@ -235,6 +304,58 @@ class SelectDeviceActivity : Activity() {
     override fun onStop() {
         super.onStop()
         stopGyro()
+        // Nothing to paint while stopped, and onStart re-subscribes with a fresh snapshot.
+        BluetoothController.removeStatusObserver(statusObserver)
+    }
+
+    /**
+     * Paints the link state and keeps the Disconnect item's three titles in step.
+     */
+    private fun onStatus(status: BluetoothController.Status) {
+        val wasCalling = linkStatus.state == BluetoothController.LinkState.CALLING
+        linkStatus = status
+        setConnected(status.host.takeIf { status.state == BluetoothController.LinkState.CONNECTED })
+
+        // Only on a start/stop edge: the menu item's title changes between Connect, Stop
+        // calling and Disconnect, but rebuilding the menu on every attempt would close it
+        // under the user while they were reading it.
+        if (wasCalling != (status.state == BluetoothController.LinkState.CALLING)) {
+            invalidateOptionsMenu()
+        }
+    }
+
+    /**
+     * Starts the wake loop because the user touched something while disconnected.
+     *
+     * This is the trackpad equivalent of wiggling a sleeping mouse, and it is the first thing
+     * anyone tries. Guarded on [BluetoothController.reconnecting] so repeated touches during a
+     * chase neither restart it nor stack up toasts.
+     */
+    private fun nudgeReconnect() {
+        if (BluetoothController.hostDevice != null || BluetoothController.reconnecting) return
+
+        // The `reconnecting` guard above only holds once a chase actually starts. When there
+        // is nothing to chase -- no pinned host, retrying switched off -- it never engages,
+        // and every tap on a dead pad queued another toast: five taps meant ten seconds of
+        // them, one after another. Rate-limit the ones that cannot self-suppress.
+        val now = SystemClock.uptimeMillis()
+        if (now - lastNudgeAt < NUDGE_TOAST_INTERVAL_MS) return
+        lastNudgeAt = now
+
+        // With retrying switched off, say so rather than reaching for the host behind the
+        // user's back -- but still say *something*, because a pad that swallows touches in
+        // silence is the problem being fixed here.
+        if (!Prefs.of(this).autoReconnect) {
+            Toast.makeText(this, R.string.error_not_connected, Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val message = if (BluetoothController.reconnect()) {
+            R.string.reconnect_nudge
+        } else {
+            R.string.error_nothing_to_reconnect
+        }
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     /**
@@ -288,6 +409,7 @@ class SelectDeviceActivity : Activity() {
         clickBarView.visibility = if (prefs.clickBar) View.VISIBLE else View.GONE
         mediaBarView.visibility = if (prefs.mediaKeys) View.VISIBLE else View.GONE
         BluetoothController.autoPairFlag = prefs.autoPair
+        BluetoothController.autoReconnectFlag = prefs.autoReconnect
         BluetoothController.preferredHost = prefs.preferredHost
         hostLayout = prefs.hostLayout
         invalidateOptionsMenu()
@@ -353,7 +475,12 @@ class SelectDeviceActivity : Activity() {
      * button here and move on the pad above to drag and drop or rubber-band select.
      */
     private fun onClickButtonTouch(view: View, event: MotionEvent, left: Boolean): Boolean {
-        val sender = mouseSender ?: return false
+        val sender = mouseSender ?: run {
+            // Same reasoning as the pad: pressing a button with no host used to do nothing at
+            // all rather than saying so or trying to fix it.
+            if (event.actionMasked == MotionEvent.ACTION_DOWN) nudgeReconnect()
+            return false
+        }
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
                 view.isPressed = true
@@ -568,10 +695,21 @@ class SelectDeviceActivity : Activity() {
         } else {
             R.drawable.ic_action_app_not_connected
         }
-        val label = if (host != null) {
-            getString(R.string.status_connected_to, host.name ?: host.address)
-        } else {
-            getString(R.string.status_not_connected)
+
+        // "Not connected" while the app is busy calling a PC that is waking up is the exact
+        // confusion this feature exists to remove, so the calling state names its target.
+        val calling = linkStatus.host
+            ?.takeIf { host == null && linkStatus.state == BluetoothController.LinkState.CALLING }
+
+        val label = when {
+            host != null -> getString(R.string.status_connected_to, host.name ?: host.address)
+            calling != null -> getString(
+                R.string.status_reconnecting,
+                calling.name ?: calling.address,
+                linkStatus.attempt
+            )
+
+            else -> getString(R.string.status_not_connected)
         }
         bluetoothStatus?.setIcon(icon)
         bluetoothStatus?.tooltipText = label
@@ -629,9 +767,12 @@ class SelectDeviceActivity : Activity() {
         menu?.findItem(R.id.action_send_clipboard)?.isVisible =
             Prefs.of(this).clipboardAction
 
-        val connected = BluetoothController.hostDevice != null
         menu?.findItem(R.id.action_disconnect)?.setTitle(
-            if (connected) R.string.action_disconnect else R.string.action_connect
+            when {
+                BluetoothController.hostDevice != null -> R.string.action_disconnect
+                BluetoothController.reconnecting -> R.string.action_stop_calling
+                else -> R.string.action_connect
+            }
         )
         return super.onPrepareOptionsMenu(menu)
     }
@@ -674,15 +815,25 @@ class SelectDeviceActivity : Activity() {
             true
         }
 
-        // One item, both directions: with no way back from the trackpad screen, a single
-        // stray tap on Disconnect meant restarting the app.
+        // One item, three directions: with no way back from the trackpad screen, a single
+        // stray tap on Disconnect meant restarting the app. While the retry loop is running
+        // it also has to be possible to call it off, or the only way out of a 90-second chase
+        // of a PC that is switched off is to force-stop the app.
         R.id.action_disconnect -> {
-            if (BluetoothController.hostDevice != null) {
-                BluetoothController.btHid?.disconnect(BluetoothController.hostDevice)
-                onHostDisconnected()
-            } else if (!BluetoothController.reconnect()) {
-                Toast.makeText(this, R.string.error_nothing_to_reconnect, Toast.LENGTH_SHORT)
-                    .show()
+            when {
+                BluetoothController.hostDevice != null -> {
+                    BluetoothController.disconnectHost()
+                    onHostDisconnected()
+                }
+
+                // userRequested, or the page still in flight fails a moment later and the
+                // automatic chase reads that as a fresh drop and starts all over again.
+                BluetoothController.reconnecting ->
+                    BluetoothController.stopReconnecting(userRequested = true)
+
+                !BluetoothController.reconnect() ->
+                    Toast.makeText(this, R.string.error_nothing_to_reconnect, Toast.LENGTH_SHORT)
+                        .show()
             }
             invalidateOptionsMenu()
             true
@@ -702,5 +853,8 @@ class SelectDeviceActivity : Activity() {
 
         /** Guard against pasting something enormous one keystroke at a time. */
         const val CLIPBOARD_MAX_CHARS = 5000
+
+        /** Minimum gap between nudge toasts, so tapping a dead pad cannot queue a stack. */
+        const val NUDGE_TOAST_INTERVAL_MS = 3000L
     }
 }

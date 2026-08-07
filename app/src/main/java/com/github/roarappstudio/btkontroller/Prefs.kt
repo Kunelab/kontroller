@@ -36,6 +36,7 @@ object Prefs {
     private const val KEY_MEDIA_KEYS = "media_keys"
     private const val KEY_CLIPBOARD = "clipboard_action"
     private const val KEY_AUTO_PAIR = "auto_pair"
+    private const val KEY_AUTO_RECONNECT = "auto_reconnect"
     private const val KEY_KEEP_SCREEN_ON = "keep_screen_on"
     private const val KEY_SENSITIVITY = "pointer_sensitivity"
     private const val KEY_BACKGROUND = "stay_connected"
@@ -79,6 +80,18 @@ object Prefs {
     var SharedPreferences.autoPair: Boolean
         get() = getBoolean(KEY_AUTO_PAIR, true)
         set(value) = edit().putBoolean(KEY_AUTO_PAIR, value).apply()
+
+    /**
+     * Keep paging the host after the link drops, instead of giving up after one attempt.
+     *
+     * Defaults on. This is what lets the phone wake a sleeping host the way a Bluetooth mouse
+     * does -- see `BluetoothController.startReconnecting` -- and it also means a link lost to
+     * a brief walk out of range comes back on its own. Bounded either way, so it cannot page
+     * indefinitely.
+     */
+    var SharedPreferences.autoReconnect: Boolean
+        get() = getBoolean(KEY_AUTO_RECONNECT, true)
+        set(value) = edit().putBoolean(KEY_AUTO_RECONNECT, value).apply()
 
     var SharedPreferences.keepScreenOn: Boolean
         get() = getBoolean(KEY_KEEP_SCREEN_ON, false)

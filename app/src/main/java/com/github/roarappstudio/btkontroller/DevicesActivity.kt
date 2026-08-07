@@ -139,12 +139,21 @@ class DevicesActivity : Activity() {
                     )
                     .setNegativeButton(android.R.string.cancel, null)
                     .setPositiveButton(R.string.action_disconnect) { _, _ ->
-                        hid.disconnect(device)
+                        // Not hid.disconnect(): the retry loop would treat a deliberate
+                        // disconnect as a lost link and immediately dial back out.
+                        BluetoothController.disconnectHost(device)
                         labels.postDelayed({ refresh() }, REFRESH_DELAY_MS)
                     }
                     .show()
             } else if (BluetoothController.connectTo(device)) {
-                // The state change arrives asynchronously; show it once it has settled.
+                // Connecting now retries for up to a minute so a sleeping host has time to
+                // wake, which is far longer than the refresh below -- so say what is going on
+                // rather than letting the row flick back to "Disconnected".
+                Toast.makeText(
+                    this,
+                    getString(R.string.devices_waking, device.name ?: device.address),
+                    Toast.LENGTH_LONG
+                ).show()
                 labels.postDelayed({ refresh() }, REFRESH_DELAY_MS)
             } else {
                 // The return value used to be discarded, so a refused connect looked exactly
