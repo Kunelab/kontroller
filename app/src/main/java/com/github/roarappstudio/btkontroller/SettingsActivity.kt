@@ -17,12 +17,14 @@ import android.widget.Spinner
 import android.widget.Switch
 import android.widget.TextView
 import com.github.roarappstudio.btkontroller.Prefs.autoPair
+import com.github.roarappstudio.btkontroller.Prefs.autoReconnect
 import com.github.roarappstudio.btkontroller.Prefs.clickBar
 import com.github.roarappstudio.btkontroller.Prefs.clipboardAction
 import com.github.roarappstudio.btkontroller.Prefs.gyroInvertX
 import com.github.roarappstudio.btkontroller.Prefs.gyroInvertY
 import com.github.roarappstudio.btkontroller.Prefs.gyroPointer
 import com.github.roarappstudio.btkontroller.Prefs.hostLayout
+import com.github.roarappstudio.btkontroller.Prefs.keepScreenOn
 import com.github.roarappstudio.btkontroller.Prefs.mediaKeys
 import com.github.roarappstudio.btkontroller.Prefs.orientation
 import com.github.roarappstudio.btkontroller.Prefs.sensitivity
@@ -95,7 +97,9 @@ class SettingsActivity : Activity() {
         bind(R.id.switchMediaKeys, prefs.mediaKeys) { prefs.mediaKeys = it }
         bind(R.id.switchClipboard, prefs.clipboardAction) { prefs.clipboardAction = it }
         bind(R.id.switchAutoPair, prefs.autoPair) { prefs.autoPair = it }
+        bind(R.id.switchAutoReconnect, prefs.autoReconnect) { prefs.autoReconnect = it }
         bind(R.id.switchStayConnected, prefs.stayConnected) { prefs.stayConnected = it }
+        bind(R.id.switchKeepScreenOn, prefs.keepScreenOn) { prefs.keepScreenOn = it }
 
         invertX = bind(R.id.switchGyroInvertX, prefs.gyroInvertX) { prefs.gyroInvertX = it }
         invertY = bind(R.id.switchGyroInvertY, prefs.gyroInvertY) { prefs.gyroInvertY = it }

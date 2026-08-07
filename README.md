@@ -88,6 +88,9 @@ keystroke* and *held*, so you can do Ctrl+click style combinations with the soft
 - **Connect automatically** — let the phone open the HID connection to a known host as soon
   as the app starts. On by default, because a host-initiated connection tends to bring up
   audio profiles instead of HID.
+- **Keep trying to reconnect** — keep calling the host for a while after the link drops
+  instead of giving up after one attempt. On by default. This is also what lets the phone
+  wake a sleeping host; see [Waking a sleeping host](#waking-a-sleeping-host).
 - **Stay connected in background** — runs a foreground service that owns the HID
   registration, so the phone keeps working as a keyboard and mouse when you leave the app or
   the screen turns off. Shows an ongoing notification with a Stop action. On by default.
@@ -185,6 +188,84 @@ new connections. Toggle Bluetooth off and on on the phone:
 ```sh
 adb shell svc bluetooth disable && sleep 5 && adb shell svc bluetooth enable
 ```
+
+## Waking a sleeping host
+
+A Bluetooth mouse wakes a PC with no special privilege: the host's controller stays powered
+while the machine is suspended and listens for pages from bonded devices, and the *device* is
+what initiates. Clicking a sleeping mouse makes it page its last host **repeatedly** — the
+first page wakes the machine, and a later one lands on a stack that has finished resuming.
+
+MaxKontroller uses the same primitive (`BluetoothHidDevice.connect`), so with **Keep trying to
+reconnect** on it can wake a host the same way. Opening the app, tapping the host under
+**Devices**, or choosing **Connect** all start a bounded retry loop; the action bar shows
+`Calling <host>… (n)` while it runs, and **Stop calling the host** calls it off.
+
+The persistence is the whole mechanism. A single attempt cannot work: the host does wake, but
+Android's page times out in 5–10 s while the resume — firmware reload, `bluetoothd` re-init —
+is still going, so the PC comes back and the app still says "not connected".
+
+The host end has to allow it, and this is not universal:
+
+| Host | Wakes from sleep | What it needs |
+|---|---|---|
+| Windows 10/11 | Usually already | Otherwise Device Manager → Bluetooth radio → Power Management → *Allow this device to wake the computer*. Check with `powercfg /devicequery wake_armed` |
+| macOS | Natively | *Allow Bluetooth devices to wake this computer* |
+| Linux, kernel ≥ 5.9 | Only on controllers that support it | Must be armed by hand, below — and many controllers simply cannot, with no setting that fixes it. Intel (`btintel`) is the best bet; Realtek frequently cannot |
+| Hibernate (S4) or powered off (S5) | **Never** | The controller is unpowered. A real Bluetooth mouse cannot do this either — only Wake-on-LAN can |
+
+**Check this first, before spending an evening in sysfs.** Arming only works if the controller
+is wakeup-capable to begin with, and plenty are not — the kernel's suspend path programs an
+event filter so the chip wakes the host on a connection request from a bonded device, but only
+when `btusb` marked the device wakeup-capable. If it did not, `power/wakeup` either does not
+exist or refuses `enabled`, and there is no configuration that helps: it is a firmware and
+driver gap, not a setting. Realtek parts are the common disappointment here.
+
+```sh
+cat /sys/class/bluetooth/hci0/device/power/wakeup
+# "disabled" -> can be armed, carry on below
+# "enabled"  -> already armed; the problem is elsewhere
+# missing, or will not take "enabled" -> this controller cannot do it. Stop here.
+```
+
+Note that none of this involves the desktop environment. While the host is suspended there is
+no `bluetoothd`, no session and no compositor; the wake is handled by the controller firmware
+and the kernel. GNOME, KDE or a bare server all behave identically.
+
+Worth ruling out one userspace cause before blaming the hardware: something soft-blocking the
+radio before suspend. TLP is the usual suspect on Debian — check `rfkill list bluetooth` right
+after a resume, and `USB_AUTOSUSPEND` in `/etc/tlp.conf`.
+
+If the adapter is wakeup-capable, it still has to be armed. Bluetooth on M.2 combo cards is
+USB-attached, so it shows up under `/sys/bus/usb`:
+
+```sh
+lsusb | grep -i blue
+dmesg | grep -i "Bluetooth: hci0"          # which chip, hence how likely this is to work
+readlink -f /sys/class/bluetooth/hci0/device
+echo enabled | sudo tee /sys/bus/usb/devices/<X-Y>/power/wakeup
+grep -i xhc /proc/acpi/wakeup              # the USB controller must show *enabled
+```
+
+Persist it with a udev rule, taking the IDs from `lsusb`:
+
+```
+# /etc/udev/rules.d/90-bt-wake.rules
+ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="0bda", ATTR{idProduct}=="XXXX", ATTR{power/wakeup}="enabled"
+```
+
+Then suspend the host, tap it under **Devices**, and check what woke it:
+
+```sh
+journalctl -b | grep -iE "PM: Wakeup|wakeup source|Bluetooth.*(suspend|resume)"
+```
+
+If `dmesg` shows the kernel powering the controller down on suspend rather than configuring an
+event filter, that controller cannot do it and no app-side change will help.
+
+Note that a machine serving anything over the network is the wrong place to want this: while it
+is suspended its services are down regardless of how quickly it can be woken. Waking on
+Bluetooth is for laptops, HTPCs and media boxes, where sleeping is the correct behaviour.
 
 ## What changed from upstream
 
@@ -304,9 +385,6 @@ Scroll, drag & drop and double click confirmed by hand.
   implemented.
 - `applicationId` is still `com.github.roarappstudio.btkontroller`. Changing it is a
   one-line edit, but it installs as a separate app rather than upgrading in place.
-- **"Keep screen on" has no switch.** The preference is read and applied, and the strings
-  exist and are translated, but `activity_settings.xml` never got the row — so the setting
-  documented above is currently unreachable and always off.
 - **No tests and no CI.** The report bit-packing, the `HostLayout` tables and `sendMove`'s
   clamping are pure functions and the obvious place to start.
 - Strings added after the initial translation pass are English-only in the other 21 locales;
@@ -353,6 +431,46 @@ pointer travels past the touch slop. The single tap that follows is identified b
 thread per click (three per double click) that mutated the shared report off the main
 thread. All timing is now on the main looper. Clipboard sending posts one self-reposting
 runnable instead of up to 5000 uncancellable messages.
+
+**Reconnection.** Every connection attempt was a single shot, so any lost link stayed lost:
+auto-connect ran once on registration and nothing retried, `onConnectionStateChanged` noticed
+`STATE_DISCONNECTED` and only updated the UI, and reopening the app did nothing at all when
+"stay connected" was on, because the registration was already up and no callback fired.
+`BluetoothController` now owns a bounded retry loop — see
+[Waking a sleeping host](#waking-a-sleeping-host) for why persistence rather than one attempt
+is the whole point. Deliberate disconnects are tracked so they are not chased, a loop that
+gives up sets a cooldown so its own trailing timeout is not read as a fresh drop (which would
+have restarted it forever), and disconnects go through `disconnectHost` rather than straight to
+`BluetoothHidDevice.disconnect` so the loop can tell a user's disconnect from a lost link.
+
+**Recovering from a Bluetooth restart.** Nothing watched `ACTION_STATE_CHANGED`, so toggling
+Bluetooth invalidated the profile proxy and the app had to be restarted to work again. This was
+particularly poor because the stuck-registration dialog *tells the user to toggle Bluetooth* and
+then did not come back by itself. `BluetoothController` now drops its stale proxy when the
+adapter goes down and re-registers when it returns, unless nothing wants the registration any
+more.
+
+**Unpairing the pinned host.** A pin is a MAC address, and once the bond was gone the app went
+quietly dead: the pin restricts auto-connect to that address and nothing else, so there was no
+host, no attempts and no explanation. `ACTION_BOND_STATE_CHANGED` now drops the pin (and
+`lastHost`, or the retry loop chases a device it can no longer reach), persists that, and says
+so.
+
+**Reachable "Keep screen on".** The preference was read and applied from the first release and
+its strings were translated into all 21 locales, but `activity_settings.xml` never got the row —
+so a documented setting could not be reached and was permanently off.
+
+**A notification that says something.** The foreground service showed one fixed string, which
+made it the least informative surface in the app while being the *only* surface once the app is
+closed: a phone that had silently lost its host looked identical to one that was working. It now
+tracks the link — connected to X, calling X, or not connected — through a new observer list that
+is deliberately separate from the single-slot sender callbacks, because `clearListeners()` runs
+when the activity goes away and would otherwise take the service's subscription with it.
+
+**A trackpad that is not silently dead.** The pad's touch listener was only attached once a host
+had connected, so with no host every touch did nothing at all — no movement, no message, no
+hint. Touching the pad or a click button now starts the wake loop, which is the closest thing to
+wiggling a sleeping mouse and the first thing anyone tries.
 
 **Host safety.** A host can be pinned from **Devices**; auto-connect then targets only that
 device instead of whichever bonded device appears first. The action bar names the connected

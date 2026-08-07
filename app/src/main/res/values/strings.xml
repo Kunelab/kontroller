@@ -13,7 +13,11 @@
     <string name="action_tool_tip">Modifier keys: (N) releases Ctrl/Alt/Shift after every keystroke, (P) holds them down until you switch back</string>
     <string name="action_disconnect">Disconnect</string>
     <string name="action_connect">Connect</string>
+    <string name="action_stop_calling">Stop calling the host</string>
     <string name="error_nothing_to_reconnect">No host to reconnect to — pick one under Devices.</string>
+    <string name="devices_waking">Calling %1$s — this can take up to a minute if it is asleep.</string>
+    <string name="reconnect_nudge">Calling the host…</string>
+    <string name="device_unpaired_toast">%1$s was unpaired, so it is no longer the preferred host.</string>
     <string name="device_disconnect_title">Disconnect?</string>
     <string name="device_disconnect_message">Stop using this phone as a keyboard and mouse for %1$s?</string>
     <string name="action_devices">Devices</string>
@@ -58,6 +62,7 @@
     <!-- Shown as the action bar subtitle, which is narrow: keep both short or they clip. -->
     <string name="status_connected_to">Connected to %1$s</string>
     <string name="status_not_connected">Not connected</string>
+    <string name="status_reconnecting">Calling %1$s… (%2$d)</string>
 
     <string name="error_registration_title">Bluetooth needs restarting</string>
     <string name="error_registration_message">Android did not finish registering this phone as a keyboard.\n\nThis happens when a previous run was killed without disconnecting — the Bluetooth stack keeps holding the old registration and refuses new connections. Only one app can be a Bluetooth keyboard at a time.\n\nTurn Bluetooth off and on again, then reopen this app.</string>
@@ -132,6 +137,9 @@
     <string name="setting_auto_pair_title">Connect automatically</string>
     <string name="setting_auto_pair_summary">Let the phone open the connection to a known host as soon as the app starts. More reliable than connecting from the PC, which tends to pick audio profiles instead.</string>
 
+    <string name="setting_auto_reconnect_title">Keep trying to reconnect</string>
+    <string name="setting_auto_reconnect_summary">Keep calling the host for a while after the link drops, instead of giving up after one try. This is also what lets this phone wake a sleeping PC, the way a Bluetooth mouse does — the host has to be set up to allow it.</string>
+
     <string name="setting_stay_connected_title">Stay connected in background</string>
     <string name="setting_stay_connected_summary">Keep acting as a keyboard and mouse when you leave the app or the screen turns off. Shows an ongoing notification while active.</string>
 
@@ -165,6 +173,9 @@
 
     <string name="help_keyboard_title">Keyboard</string>
     <string name="help_keyboard_body">Tap the keyboard icon to bring up the soft keyboard; whatever you type is sent to the host.\n\nThe (N)/(P) button controls modifier keys. (N) releases Ctrl/Alt/Shift after each keystroke; (P) holds them down so you can build combinations such as Ctrl held while clicking. Remember to switch back to (N), or modifiers stay stuck.\n\nGboard has no Ctrl, Esc, arrows or function keys. A keyboard app that does — Unexpected Keyboard or Hacker’s Keyboard — makes shortcuts such as Shift+F10 (context menu) possible.</string>
+
+    <string name="help_sleep_title">If the host is asleep</string>
+    <string name="help_sleep_body">With “Keep trying to reconnect” on, opening the app or tapping the host under Devices keeps calling it for up to a minute — the same way a Bluetooth mouse wakes a PC when you click it. The action bar shows the attempts while it tries.\n\nWhether the host actually wakes is up to the host, and not every one can:\n\n• Windows and Mac normally can already.\n• On Linux the adapter has to be armed as a wake source by hand — and some adapters cannot do it at all. Intel chips are the safest bet; Realtek ones often lack the firmware support, in which case no setting will fix it.\n• A machine that is hibernated or switched off can never be woken this way. Its Bluetooth radio has no power, and a real Bluetooth mouse cannot wake it either.\n\nThis has nothing to do with which desktop the host runs — GNOME, KDE or none at all makes no difference. While the machine is asleep the wake is handled by the Bluetooth chip and the kernel, long before any desktop exists.\n\nIf your host turns out not to wake, retrying is still worth leaving on: after you wake the machine yourself, the phone reconnects on its own instead of leaving you to reconnect it by hand.</string>
 
     <string name="help_stuck_title">If nothing connects at all</string>
     <string name="help_stuck_body">If tapping a device under Devices does nothing, and Connect does nothing either, the phone\'s Bluetooth stack is most likely stuck.\n\nAndroid allows only one app at a time to act as a Bluetooth keyboard. If a previous run was killed without disconnecting — it crashed, was force-stopped, or was reinstalled while connected — the stack keeps holding that dead registration and quietly refuses every new connection. The app cannot clear this itself.\n\nTurn Bluetooth off, wait a few seconds, turn it back on, then reopen this app. That releases the stale registration and connecting works again.\n\nIf the app notices this has happened it will offer the same advice in a dialog.</string>

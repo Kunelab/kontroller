@@ -146,6 +146,15 @@
             android:text="@string/setting_auto_pair_summary" />
 
         <Switch
+            android:id="@+id/switchAutoReconnect"
+            style="@style/SettingsSwitch"
+            android:text="@string/setting_auto_reconnect_title" />
+
+        <TextView
+            style="@style/SettingsSummary"
+            android:text="@string/setting_auto_reconnect_summary" />
+
+        <Switch
             android:id="@+id/switchStayConnected"
             style="@style/SettingsSwitch"
             android:text="@string/setting_stay_connected_title" />
@@ -217,6 +226,18 @@
             style="@style/SettingsSummary"
             android:text="@string/setting_orientation_gyro_note"
             android:visibility="gone" />
+
+        <!-- The preference was read and applied from the start, and its strings were
+             translated into all 21 locales, but this row was never added, so a documented
+             setting could not be reached and was permanently off. -->
+        <Switch
+            android:id="@+id/switchKeepScreenOn"
+            style="@style/SettingsSwitch"
+            android:text="@string/setting_keep_screen_on_title" />
+
+        <TextView
+            style="@style/SettingsSummary"
+            android:text="@string/setting_keep_screen_on_summary" />
 
         <!-- ── Help ────────────────────────────────────────────────── -->
         <TextView
