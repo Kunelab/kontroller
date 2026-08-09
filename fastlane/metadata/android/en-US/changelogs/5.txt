@@ -1,0 +1,3 @@
+* Wake a sleeping host over Bluetooth
+* Recover the connection automatically after it drops
+* Live connection statistics

@@ -1,0 +1,31 @@
+MaxKontroller turns your Android phone into a Bluetooth keyboard and mouse for anything that accepts one: a PC, a Mac, a Linux box, a smart TV or a tablet.
+
+It works by registering the phone as a Bluetooth HID device, the same profile a shop-bought wireless keyboard uses. The host simply sees a plain keyboard and mouse appear. There is nothing to install on the other end: no companion app, no driver, no USB dongle, and no account.
+
+That also means it keeps working before the host has finished booting, on a login screen, or in a BIOS menu, where a software remote could not help you.
+
+CONTROL
+
+* Trackpad with drag, two-finger scroll and double-tap
+* Dedicated left and right click buttons, with press-and-hold for drag and drop
+* Gyroscope pointer, so you can tilt the phone to aim at a TV across the room
+* Adjustable pointer speed from 25% to 300%, with invertible axes
+* Full keyboard input including modifier keys
+* Media keys for volume and playback, plus a Home key
+* Send the phone's clipboard to the host as keystrokes
+* Choose the host's keyboard layout, so accented characters land correctly
+
+CONNECTION
+
+* Remembers a preferred host and reconnects to it automatically
+* Can wake a sleeping host over Bluetooth
+* A foreground service keeps the link alive while you use other apps
+* Live connection status and statistics
+
+BUILT SMALL
+
+The whole app is about 330 KB and has no third-party dependencies at all. It asks for Bluetooth permissions and nothing else. There is no analytics, no telemetry, no network access, and no advertising. Your keystrokes go to the paired host and nowhere else.
+
+Requires Android 9 or later, on a phone whose Bluetooth stack supports the HID Device profile. Tested against Linux (BlueZ 5.82+), Windows 10 and 11, and macOS.
+
+Free software, released under the Apache License 2.0.

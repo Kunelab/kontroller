@@ -1,0 +1,3 @@
+* Réveil d'un hôte en veille via Bluetooth
+* Reprise automatique de la connexion après une coupure
+* Statistiques de connexion en direct

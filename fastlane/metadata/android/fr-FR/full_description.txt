@@ -1,0 +1,31 @@
+MaxKontroller transforme votre téléphone Android en clavier et souris Bluetooth pour tout appareil qui en accepte un : un PC, un Mac, une machine Linux, une TV connectée ou une tablette.
+
+Le principe : le téléphone s'enregistre comme périphérique Bluetooth HID, le même profil qu'un clavier sans fil du commerce. L'hôte voit simplement apparaître un clavier et une souris ordinaires. Rien à installer en face : ni application compagnon, ni pilote, ni dongle USB, ni compte à créer.
+
+Cela veut aussi dire que ça fonctionne avant même que l'hôte ait fini de démarrer, sur un écran de connexion ou dans un menu du BIOS, là où une télécommande logicielle serait impuissante.
+
+CONTRÔLE
+
+* Trackpad avec glisser, défilement à deux doigts et double tape
+* Boutons clic gauche et droit dédiés, avec appui maintenu pour le glisser-déposer
+* Pointeur gyroscopique : inclinez le téléphone pour viser une TV à l'autre bout de la pièce
+* Vitesse du pointeur réglable de 25 % à 300 %, axes inversables
+* Saisie clavier complète, touches de modification comprises
+* Touches multimédia pour le volume et la lecture, plus une touche Accueil
+* Envoi du presse-papiers du téléphone vers l'hôte sous forme de frappes
+* Choix de la disposition clavier de l'hôte, pour que les accents arrivent au bon endroit
+
+CONNEXION
+
+* Mémorise un hôte préféré et s'y reconnecte automatiquement
+* Peut réveiller un hôte en veille via Bluetooth
+* Un service de premier plan maintient le lien pendant que vous utilisez d'autres applications
+* État de la connexion et statistiques en direct
+
+LÉGER PAR CONSTRUCTION
+
+L'application pèse environ 330 Ko et n'a aucune dépendance tierce. Elle ne demande que les autorisations Bluetooth. Aucune analyse d'audience, aucune télémétrie, aucun accès réseau, aucune publicité. Vos frappes vont vers l'hôte appairé et nulle part ailleurs.
+
+Nécessite Android 9 ou plus récent, sur un téléphone dont la pile Bluetooth prend en charge le profil HID Device. Testé sous Linux (BlueZ 5.82+), Windows 10 et 11, et macOS.
+
+Logiciel libre, publié sous licence Apache 2.0.
