@@ -9,7 +9,7 @@
     <!-- No background: the pad is just the empty area above the separator.
          height 0dp + weight 1 means it gives up exactly the space the click bar takes,
          so enabling the bar shrinks the pad automatically. -->
-    <com.github.roarappstudio.btkontroller.TrackpadView
+    <io.github.maximepinard.maxkontroller.TrackpadView
         android:id="@id/mouseView"
         android:layout_width="match_parent"
         android:layout_height="0dp"

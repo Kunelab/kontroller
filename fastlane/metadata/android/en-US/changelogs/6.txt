@@ -1,0 +1,6 @@
+New application ID and a new launcher icon, so MaxKontroller is clearly distinct
+from the upstream Kontroller project it was forked from.
+
+Because the application ID changed, Android treats this as a separate app: if you
+installed 0.2.1 from GitHub it will not be replaced, and you can remove it once
+you have moved over.

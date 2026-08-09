@@ -33,7 +33,7 @@
 
     <string name="devices_title">Cihazlar</string>
     <string name="devices_hint">Eşleştirilmiş cihazlar. Bağlamak veya bağlantıyı kesmek için dokunun.</string>
-    <string name="devices_none">Henüz eşleştirilmiş cihaz yok. Önce bilgisayardan bu telefonla eşleştirme yapın — kılavuza bakın.</string>
+    <string name="devices_none">Henüz eşleştirilmiş cihaz yok. Önce bilgisayardan bu telefonla eşleştirme yapın, kılavuza bakın.</string>
     <string name="devices_not_registered">Henüz klavye olarak kaydedilmedi. Dokunmatik yüzeye dönün, biraz bekleyin ve yeniden deneyin.</string>
     <string name="devices_no_bluetooth">Kullanılabilir Bluetooth bağdaştırıcısı yok.</string>
     <string name="device_state_connected">Bağlı · %1$s</string>
@@ -75,7 +75,7 @@
     <string name="setting_media_keys_summary">Ses, oynatma ve Ana ekran tuşlarından bir sıra göstererek uygulamayı TV kumandasına dönüştürür. Varsayılan olarak kapalı.</string>
 
     <string name="setting_clipboard_title">Panoyu gönder</string>
-    <string name="setting_clipboard_summary">Telefonun panosunu bilgisayara yazan bir menü öğesi ekler — şifreler, bağlantılar ve uzun metinler için kullanışlı.</string>
+    <string name="setting_clipboard_summary">Telefonun panosunu bilgisayara yazan bir menü öğesi ekler, şifreler, bağlantılar ve uzun metinler için kullanışlı.</string>
 
     <string name="setting_auto_pair_title">Otomatik bağlan</string>
     <string name="setting_auto_pair_summary">Uygulama açıldığında telefonun bilinen bir bilgisayara kendisinin bağlanmasını sağlar. Genellikle ses profillerini seçen bilgisayar tarafından bağlanmaya kıyasla daha güvenilirdir.</string>
@@ -108,10 +108,10 @@
     <string name="help_pairing_body">1. Bu uygulamayı açık bırakın ve «keşfedilebilir yap» isteğine izin verin.\n2. Bilgisayarda Bluetooth cihazlarını arayın ve bu telefonla eşleştirin.\n3. Şifre anahtarını iki tarafta da onaylayın.\n\nSonrasında ayarlarda «Otomatik bağlan»ı açık bırakın; telefon her açılışta bağlantıyı kendisi kurar.</string>
 
     <string name="help_gestures_title">Hareketler</string>
-    <string name="help_gestures_body">• İmleci hareket ettirme — tek parmakla kaydırma\n• Sol tık — dokunma veya Sol tık düğmesi\n• Sağ tık — Sağ tık düğmesi\n• Çift tık — iki kez dokunma\n• Sürükle bırak — bir tık düğmesini basılı tutup yüzeyde kaydırma\n• Kaydırma — iki parmakla kaydırma\n\nİki parmakla dokunma da sağ tıktır, ancak iki parmağın 100 ms içinde inip kalkması gerekir; bu yüzden düğme daha kolaydır.</string>
+    <string name="help_gestures_body">• İmleci hareket ettirme: tek parmakla kaydırma\n• Sol tık: dokunma veya Sol tık düğmesi\n• Sağ tık: Sağ tık düğmesi\n• Çift tık: iki kez dokunma\n• Sürükle bırak: bir tık düğmesini basılı tutup yüzeyde kaydırma\n• Kaydırma: iki parmakla kaydırma\n\nİki parmakla dokunma da sağ tıktır, ancak iki parmağın 100 ms içinde inip kalkması gerekir; bu yüzden düğme daha kolaydır.</string>
 
     <string name="help_keyboard_title">Klavye</string>
-    <string name="help_keyboard_body">Ekran klavyesini açmak için klavye simgesine dokunun; yazdığınız her şey bilgisayara gönderilir.\n\n(N)/(P) düğmesi değiştirici tuşları yönetir. (N) her vuruştan sonra Ctrl/Alt/Shift\'i bırakır; (P) basılı tutarak Ctrl basılıyken tıklamak gibi kombinasyonlar kurmanızı sağlar. (N)\'e geri dönmeyi unutmayın, yoksa değiştirici tuşlar basılı kalır.\n\nGboard\'da Ctrl, Esc, yön tuşları ve işlev tuşları yok. Bunlara sahip bir klavye — Unexpected Keyboard veya Hacker\'s Keyboard — Shift+F10 (bağlam menüsü) gibi kısayolları mümkün kılar.</string>
+    <string name="help_keyboard_body">Ekran klavyesini açmak için klavye simgesine dokunun; yazdığınız her şey bilgisayara gönderilir.\n\n(N)/(P) düğmesi değiştirici tuşları yönetir. (N) her vuruştan sonra Ctrl/Alt/Shift\'i bırakır; (P) basılı tutarak Ctrl basılıyken tıklamak gibi kombinasyonlar kurmanızı sağlar. (N)\'e geri dönmeyi unutmayın, yoksa değiştirici tuşlar basılı kalır.\n\nGboard\'da Ctrl, Esc, yön tuşları ve işlev tuşları yok. Bunlara sahip bir klavye, Unexpected Keyboard veya Hacker\'s Keyboard, Shift+F10 (bağlam menüsü) gibi kısayolları mümkün kılar.</string>
 
     <string name="help_trouble_title">Bilgisayar klavyeyi görmüyorsa</string>
     <string name="help_trouble_body">Linux\'ta düz bir «connect» genellikle klavye yerine ses profillerini etkinleştirir. Telefonun inisiyatif almasını sağlamak için «Otomatik bağlan»ı kullanın veya HID profilini açıkça bağlayın:\n\nbluetoothctl connect &lt;MAC&gt; 00001124-0000-1000-8000-00805f9b34fb\n\nBilgisayar hâlâ klavye görmüyorsa, BlueZ uygulama kaydedilmeden önceki bir hizmet listesini önbelleğe almış olabilir. /var/lib/bluetooth altındaki bu telefona ait önbellek dosyasını silip yeniden bağlanın; eşleştirmenin kendisi korunur.</string>

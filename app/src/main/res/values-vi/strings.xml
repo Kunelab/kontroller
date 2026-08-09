@@ -33,7 +33,7 @@
 
     <string name="devices_title">Thiết bị</string>
     <string name="devices_hint">Các thiết bị đã ghép nối. Nhấn để kết nối hoặc ngắt kết nối.</string>
-    <string name="devices_none">Chưa có thiết bị nào được ghép nối. Hãy ghép nối điện thoại này từ máy tính trước — xem hướng dẫn.</string>
+    <string name="devices_none">Chưa có thiết bị nào được ghép nối. Hãy ghép nối điện thoại này từ máy tính trước, xem hướng dẫn.</string>
     <string name="devices_not_registered">Chưa được đăng ký làm bàn phím. Hãy trở lại bàn cảm ứng, đợi một lát rồi thử lại.</string>
     <string name="devices_no_bluetooth">Không có bộ tiếp hợp Bluetooth nào.</string>
     <string name="device_state_connected">Đã kết nối · %1$s</string>
@@ -75,7 +75,7 @@
     <string name="setting_media_keys_summary">Hiện một dãy phím âm lượng, phát nhạc và Trang chủ, biến ứng dụng thành điều khiển TV. Tắt theo mặc định.</string>
 
     <string name="setting_clipboard_title">Gửi bảng nhớ tạm</string>
-    <string name="setting_clipboard_summary">Thêm một mục menu để nhập nội dung bảng nhớ tạm của điện thoại vào máy tính — tiện cho mật khẩu, đường dẫn và văn bản dài.</string>
+    <string name="setting_clipboard_summary">Thêm một mục menu để nhập nội dung bảng nhớ tạm của điện thoại vào máy tính, tiện cho mật khẩu, đường dẫn và văn bản dài.</string>
 
     <string name="setting_auto_pair_title">Tự động kết nối</string>
     <string name="setting_auto_pair_summary">Để điện thoại tự mở kết nối tới máy tính đã biết ngay khi ứng dụng khởi động. Đáng tin cậy hơn so với kết nối từ máy tính, vì máy tính thường chọn cấu hình âm thanh.</string>
@@ -108,10 +108,10 @@
     <string name="help_pairing_body">1. Giữ ứng dụng này mở và cho phép yêu cầu «cho phép tìm thấy».\n2. Trên máy tính, tìm thiết bị Bluetooth và ghép nối với điện thoại này.\n3. Xác nhận mã ở cả hai bên.\n\nSau đó hãy bật «Tự động kết nối» trong cài đặt, điện thoại sẽ tự mở kết nối mỗi lần bạn mở ứng dụng.</string>
 
     <string name="help_gestures_title">Thao tác</string>
-    <string name="help_gestures_body">• Di chuyển con trỏ — trượt một ngón tay\n• Nhấp trái — nhấn, hoặc nút Nhấp chuột trái\n• Nhấp phải — nút Nhấp chuột phải\n• Nhấp đúp — nhấn hai lần\n• Kéo và thả — giữ nút nhấp rồi trượt trên bàn cảm ứng\n• Cuộn — trượt hai ngón tay\n\nNhấn hai ngón tay cũng là nhấp phải, nhưng cả hai ngón phải chạm và rời trong 100 ms, nên dùng nút dễ hơn.</string>
+    <string name="help_gestures_body">• Di chuyển con trỏ: trượt một ngón tay\n• Nhấp trái: nhấn, hoặc nút Nhấp chuột trái\n• Nhấp phải: nút Nhấp chuột phải\n• Nhấp đúp: nhấn hai lần\n• Kéo và thả: giữ nút nhấp rồi trượt trên bàn cảm ứng\n• Cuộn: trượt hai ngón tay\n\nNhấn hai ngón tay cũng là nhấp phải, nhưng cả hai ngón phải chạm và rời trong 100 ms, nên dùng nút dễ hơn.</string>
 
     <string name="help_keyboard_title">Bàn phím</string>
-    <string name="help_keyboard_body">Nhấn biểu tượng bàn phím để hiện bàn phím trên màn hình; mọi thứ bạn nhập đều được gửi tới máy tính.\n\nNút (N)/(P) điều khiển các phím bổ trợ. (N) nhả Ctrl/Alt/Shift sau mỗi lần nhấn; (P) giữ chúng để bạn tạo tổ hợp, ví dụ giữ Ctrl khi nhấp chuột. Hãy nhớ chuyển lại (N), nếu không các phím bổ trợ sẽ bị kẹt.\n\nGboard không có Ctrl, Esc, phím mũi tên hay phím chức năng. Một bàn phím có chúng — Unexpected Keyboard hoặc Hacker\'s Keyboard — cho phép dùng phím tắt như Shift+F10 (menu ngữ cảnh).</string>
+    <string name="help_keyboard_body">Nhấn biểu tượng bàn phím để hiện bàn phím trên màn hình; mọi thứ bạn nhập đều được gửi tới máy tính.\n\nNút (N)/(P) điều khiển các phím bổ trợ. (N) nhả Ctrl/Alt/Shift sau mỗi lần nhấn; (P) giữ chúng để bạn tạo tổ hợp, ví dụ giữ Ctrl khi nhấp chuột. Hãy nhớ chuyển lại (N), nếu không các phím bổ trợ sẽ bị kẹt.\n\nGboard không có Ctrl, Esc, phím mũi tên hay phím chức năng. Một bàn phím có chúng, Unexpected Keyboard hoặc Hacker\'s Keyboard, cho phép dùng phím tắt như Shift+F10 (menu ngữ cảnh).</string>
 
     <string name="help_trouble_title">Nếu máy tính không thấy bàn phím</string>
     <string name="help_trouble_body">Trên Linux, lệnh «connect» thông thường hay bật cấu hình âm thanh thay vì bàn phím. Hãy dùng «Tự động kết nối» để điện thoại chủ động, hoặc kết nối cấu hình HID một cách rõ ràng:\n\nbluetoothctl connect &lt;MAC&gt; 00001124-0000-1000-8000-00805f9b34fb\n\nNếu máy tính vẫn không thấy bàn phím, có thể BlueZ đã lưu danh sách dịch vụ từ trước khi ứng dụng đăng ký. Hãy xóa tệp cache của điện thoại này trong /var/lib/bluetooth rồi kết nối lại; việc ghép nối vẫn được giữ.</string>

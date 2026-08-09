@@ -81,10 +81,10 @@
     <string name="help_pairing_body">1. Deixe este app aberto e permita o pedido de «tornar visível».\n2. No computador, procure dispositivos Bluetooth e pareie com este celular.\n3. Confirme a senha nos dois lados.\n\nDepois, deixe «Conectar automaticamente» ativado nas configurações e o celular abrirá a conexão por conta própria a cada abertura do app.</string>
 
     <string name="help_gestures_title">Gestos</string>
-    <string name="help_gestures_body">• Mover o ponteiro — arrastar um dedo\n• Clique esquerdo — tocar, ou o botão Clique esquerdo\n• Clique direito — o botão Clique direito\n• Clique duplo — tocar duas vezes\n• Arrastar e soltar — manter um botão de clique e arrastar no touchpad\n• Rolagem — arrastar dois dedos\n\nUm toque com dois dedos também é clique direito, mas os dois dedos precisam encostar e sair em menos de 100 ms, então o botão é mais fácil.</string>
+    <string name="help_gestures_body">• Mover o ponteiro: arrastar um dedo\n• Clique esquerdo: tocar, ou o botão Clique esquerdo\n• Clique direito: o botão Clique direito\n• Clique duplo: tocar duas vezes\n• Arrastar e soltar: manter um botão de clique e arrastar no touchpad\n• Rolagem: arrastar dois dedos\n\nUm toque com dois dedos também é clique direito, mas os dois dedos precisam encostar e sair em menos de 100 ms, então o botão é mais fácil.</string>
 
     <string name="help_keyboard_title">Teclado</string>
-    <string name="help_keyboard_body">Toque no ícone do teclado para abrir o teclado na tela; tudo o que você digitar é enviado ao computador.\n\nO botão (N)/(P) controla as teclas modificadoras. (N) solta Ctrl/Alt/Shift após cada tecla; (P) mantém pressionadas para montar combinações, como Ctrl pressionado enquanto clica. Lembre-se de voltar para (N), senão os modificadores ficam presos.\n\nO Gboard não tem Ctrl, Esc, setas nem teclas de função. Um teclado que tenha — Unexpected Keyboard ou Hacker\'s Keyboard — permite atalhos como Shift+F10 (menu de contexto).</string>
+    <string name="help_keyboard_body">Toque no ícone do teclado para abrir o teclado na tela; tudo o que você digitar é enviado ao computador.\n\nO botão (N)/(P) controla as teclas modificadoras. (N) solta Ctrl/Alt/Shift após cada tecla; (P) mantém pressionadas para montar combinações, como Ctrl pressionado enquanto clica. Lembre-se de voltar para (N), senão os modificadores ficam presos.\n\nO Gboard não tem Ctrl, Esc, setas nem teclas de função. Um teclado que tenha, Unexpected Keyboard ou Hacker\'s Keyboard, permite atalhos como Shift+F10 (menu de contexto).</string>
 
     <string name="media_vol_down">Vol −</string>
     <string name="media_vol_up">Vol +</string>
@@ -96,7 +96,7 @@
 
     <string name="devices_title">Dispositivos</string>
     <string name="devices_hint">Dispositivos pareados. Toque em um para conectar ou desconectar.</string>
-    <string name="devices_none">Nenhum dispositivo pareado ainda. Pareie este celular pelo computador primeiro — veja o guia.</string>
+    <string name="devices_none">Nenhum dispositivo pareado ainda. Pareie este celular pelo computador primeiro, veja o guia.</string>
     <string name="devices_not_registered">Ainda não registrado como teclado. Volte ao touchpad, aguarde um momento e tente de novo.</string>
     <string name="devices_no_bluetooth">Nenhum adaptador Bluetooth disponível.</string>
     <string name="device_state_connected">Conectado · %1$s</string>
@@ -111,7 +111,7 @@
     <string name="setting_media_keys_title">Teclas de mídia</string>
     <string name="setting_media_keys_summary">Mostra uma linha de teclas de volume, reprodução e Início, transformando o app em um controle remoto de TV. Desativado por padrão.</string>
     <string name="setting_clipboard_title">Enviar área de transferência</string>
-    <string name="setting_clipboard_summary">Adiciona um item de menu que digita a área de transferência do celular no computador — útil para senhas, URLs e textos longos.</string>
+    <string name="setting_clipboard_summary">Adiciona um item de menu que digita a área de transferência do celular no computador, útil para senhas, URLs e textos longos.</string>
 
     <string name="help_trouble_title">Se o computador não vê nenhum teclado</string>
     <string name="help_trouble_body">No Linux, um simples «connect» costuma ativar os perfis de áudio em vez do teclado. Use «Conectar automaticamente» para que o celular tome a iniciativa, ou conecte o perfil HID explicitamente:\n\nbluetoothctl connect &lt;MAC&gt; 00001124-0000-1000-8000-00805f9b34fb\n\nSe o computador ainda não vê um teclado, o BlueZ pode ter armazenado em cache uma lista de serviços anterior ao registro do app. Apague o arquivo de cache deste celular em /var/lib/bluetooth e reconecte; o pareamento em si é preservado.</string>

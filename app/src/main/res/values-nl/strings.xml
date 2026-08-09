@@ -33,7 +33,7 @@
 
     <string name="devices_title">Apparaten</string>
     <string name="devices_hint">Gekoppelde apparaten. Tik erop om te verbinden of de verbinding te verbreken.</string>
-    <string name="devices_none">Nog geen gekoppelde apparaten. Koppel deze telefoon eerst vanaf de computer — zie de handleiding.</string>
+    <string name="devices_none">Nog geen gekoppelde apparaten. Koppel deze telefoon eerst vanaf de computer, zie de handleiding.</string>
     <string name="devices_not_registered">Nog niet geregistreerd als toetsenbord. Ga terug naar het touchpad, wacht even en probeer het opnieuw.</string>
     <string name="devices_no_bluetooth">Geen bluetooth-adapter beschikbaar.</string>
     <string name="device_state_connected">Verbonden · %1$s</string>
@@ -75,7 +75,7 @@
     <string name="setting_media_keys_summary">Toont een rij toetsen voor volume, weergave en Home, waarmee de app een tv-afstandsbediening wordt. Standaard uit.</string>
 
     <string name="setting_clipboard_title">Klembord verzenden</string>
-    <string name="setting_clipboard_summary">Voegt een menu-item toe dat het klembord van de telefoon op de computer typt — handig voor wachtwoorden, URL\'s en lange teksten.</string>
+    <string name="setting_clipboard_summary">Voegt een menu-item toe dat het klembord van de telefoon op de computer typt, handig voor wachtwoorden, URL\'s en lange teksten.</string>
 
     <string name="setting_auto_pair_title">Automatisch verbinden</string>
     <string name="setting_auto_pair_summary">Laat de telefoon zelf verbinding maken met een bekende computer zodra de app start. Betrouwbaarder dan verbinden vanaf de pc, die meestal audioprofielen kiest.</string>
@@ -108,10 +108,10 @@
     <string name="help_pairing_body">1. Laat deze app open staan en sta het verzoek «zichtbaar maken» toe.\n2. Zoek op de computer naar bluetooth-apparaten en koppel met deze telefoon.\n3. Bevestig de code aan beide kanten.\n\nLaat daarna «Automatisch verbinden» aan in de instellingen; de telefoon maakt dan bij elke start zelf verbinding.</string>
 
     <string name="help_gestures_title">Gebaren</string>
-    <string name="help_gestures_body">• Aanwijzer bewegen — veeg met één vinger\n• Linkerklik — tik, of de knop Linkerklik\n• Rechterklik — de knop Rechterklik\n• Dubbelklik — tik twee keer\n• Slepen — houd een klikknop ingedrukt en veeg over het touchpad\n• Scrollen — veeg met twee vingers\n\nEen tik met twee vingers is ook een rechterklik, maar beide vingers moeten binnen 100 ms neerkomen en loskomen, dus de knop is eenvoudiger.</string>
+    <string name="help_gestures_body">• Aanwijzer bewegen: veeg met één vinger\n• Linkerklik: tik, of de knop Linkerklik\n• Rechterklik: de knop Rechterklik\n• Dubbelklik: tik twee keer\n• Slepen: houd een klikknop ingedrukt en veeg over het touchpad\n• Scrollen: veeg met twee vingers\n\nEen tik met twee vingers is ook een rechterklik, maar beide vingers moeten binnen 100 ms neerkomen en loskomen, dus de knop is eenvoudiger.</string>
 
     <string name="help_keyboard_title">Toetsenbord</string>
-    <string name="help_keyboard_body">Tik op het toetsenbordpictogram om het schermtoetsenbord te openen; alles wat je typt gaat naar de computer.\n\nDe knop (N)/(P) regelt de modificatietoetsen. (N) laat Ctrl/Alt/Shift na elke aanslag los; (P) houdt ze ingedrukt zodat je combinaties kunt maken, zoals Ctrl tijdens het klikken. Vergeet niet terug te schakelen naar (N), anders blijven de modificatietoetsen hangen.\n\nGboard heeft geen Ctrl, Esc, pijltjes of functietoetsen. Een toetsenbord dat die wel heeft — Unexpected Keyboard of Hacker\'s Keyboard — maakt sneltoetsen als Shift+F10 (contextmenu) mogelijk.</string>
+    <string name="help_keyboard_body">Tik op het toetsenbordpictogram om het schermtoetsenbord te openen; alles wat je typt gaat naar de computer.\n\nDe knop (N)/(P) regelt de modificatietoetsen. (N) laat Ctrl/Alt/Shift na elke aanslag los; (P) houdt ze ingedrukt zodat je combinaties kunt maken, zoals Ctrl tijdens het klikken. Vergeet niet terug te schakelen naar (N), anders blijven de modificatietoetsen hangen.\n\nGboard heeft geen Ctrl, Esc, pijltjes of functietoetsen. Een toetsenbord dat die wel heeft, Unexpected Keyboard of Hacker\'s Keyboard, maakt sneltoetsen als Shift+F10 (contextmenu) mogelijk.</string>
 
     <string name="help_trouble_title">Als de computer geen toetsenbord ziet</string>
     <string name="help_trouble_body">Op Linux schakelt een eenvoudige «connect» vaak de audioprofielen in in plaats van het toetsenbord. Gebruik «Automatisch verbinden» zodat de telefoon het initiatief neemt, of verbind het HID-profiel expliciet:\n\nbluetoothctl connect &lt;MAC&gt; 00001124-0000-1000-8000-00805f9b34fb\n\nZiet de computer nog steeds geen toetsenbord, dan heeft BlueZ mogelijk een servicelijst van vóór de registratie van de app in de cache. Verwijder het cachebestand van deze telefoon in /var/lib/bluetooth en verbind opnieuw; de koppeling zelf blijft bewaard.</string>

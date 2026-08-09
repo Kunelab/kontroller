@@ -33,7 +33,7 @@
 
     <string name="devices_title">Urządzenia</string>
     <string name="devices_hint">Sparowane urządzenia. Dotknij, aby połączyć lub rozłączyć.</string>
-    <string name="devices_none">Brak sparowanych urządzeń. Najpierw sparuj ten telefon z komputera — zobacz przewodnik.</string>
+    <string name="devices_none">Brak sparowanych urządzeń. Najpierw sparuj ten telefon z komputera, zobacz przewodnik.</string>
     <string name="devices_not_registered">Jeszcze nie zarejestrowano jako klawiatura. Wróć do panelu dotykowego, chwilę odczekaj i spróbuj ponownie.</string>
     <string name="devices_no_bluetooth">Brak dostępnego adaptera Bluetooth.</string>
     <string name="device_state_connected">Połączono · %1$s</string>
@@ -75,7 +75,7 @@
     <string name="setting_media_keys_summary">Pokazuje rząd klawiszy głośności, odtwarzania i ekranu głównego, zamieniając aplikację w pilota do telewizora. Domyślnie wyłączone.</string>
 
     <string name="setting_clipboard_title">Wyślij schowek</string>
-    <string name="setting_clipboard_summary">Dodaje pozycję menu, która wpisuje schowek telefonu na komputerze — przydatne przy hasłach, adresach URL i długich tekstach.</string>
+    <string name="setting_clipboard_summary">Dodaje pozycję menu, która wpisuje schowek telefonu na komputerze, przydatne przy hasłach, adresach URL i długich tekstach.</string>
 
     <string name="setting_auto_pair_title">Łącz automatycznie</string>
     <string name="setting_auto_pair_summary">Telefon sam otwiera połączenie ze znanym komputerem po uruchomieniu aplikacji. Bardziej niezawodne niż łączenie z komputera, który zwykle wybiera profile audio.</string>
@@ -108,10 +108,10 @@
     <string name="help_pairing_body">1. Zostaw tę aplikację otwartą i zezwól na prośbę „uczyń widocznym”.\n2. Na komputerze wyszukaj urządzenia Bluetooth i sparuj go z tym telefonem.\n3. Potwierdź kod po obu stronach.\n\nPotem zostaw w ustawieniach włączone „Łącz automatycznie”, a telefon sam otworzy połączenie przy każdym uruchomieniu.</string>
 
     <string name="help_gestures_title">Gesty</string>
-    <string name="help_gestures_body">• Przesuwanie wskaźnika — przesuń jednym palcem\n• Lewe kliknięcie — dotknij lub użyj przycisku Lewy przycisk\n• Prawe kliknięcie — przycisk Prawy przycisk\n• Podwójne kliknięcie — dotknij dwa razy\n• Przeciąganie — przytrzymaj przycisk kliknięcia i przesuwaj po panelu\n• Przewijanie — przesuń dwoma palcami\n\nDotknięcie dwoma palcami też daje prawe kliknięcie, ale oba palce muszą dotknąć i oderwać się w ciągu 100 ms, więc przyciskiem jest łatwiej.</string>
+    <string name="help_gestures_body">• Przesuwanie wskaźnika: przesuń jednym palcem\n• Lewe kliknięcie: dotknij lub użyj przycisku Lewy przycisk\n• Prawe kliknięcie: przycisk Prawy przycisk\n• Podwójne kliknięcie: dotknij dwa razy\n• Przeciąganie: przytrzymaj przycisk kliknięcia i przesuwaj po panelu\n• Przewijanie: przesuń dwoma palcami\n\nDotknięcie dwoma palcami też daje prawe kliknięcie, ale oba palce muszą dotknąć i oderwać się w ciągu 100 ms, więc przyciskiem jest łatwiej.</string>
 
     <string name="help_keyboard_title">Klawiatura</string>
-    <string name="help_keyboard_body">Dotknij ikony klawiatury, aby wyświetlić klawiaturę ekranową; wszystko, co wpiszesz, jest wysyłane do komputera.\n\nPrzycisk (N)/(P) steruje klawiszami modyfikującymi. (N) zwalnia Ctrl/Alt/Shift po każdym naciśnięciu; (P) trzyma je wciśnięte, dzięki czemu można tworzyć kombinacje, na przykład Ctrl przy kliknięciu. Pamiętaj o powrocie do (N), inaczej modyfikatory pozostaną wciśnięte.\n\nGboard nie ma Ctrl, Esc, strzałek ani klawiszy funkcyjnych. Klawiatura, która je ma — Unexpected Keyboard lub Hacker\'s Keyboard — umożliwia skróty takie jak Shift+F10 (menu kontekstowe).</string>
+    <string name="help_keyboard_body">Dotknij ikony klawiatury, aby wyświetlić klawiaturę ekranową; wszystko, co wpiszesz, jest wysyłane do komputera.\n\nPrzycisk (N)/(P) steruje klawiszami modyfikującymi. (N) zwalnia Ctrl/Alt/Shift po każdym naciśnięciu; (P) trzyma je wciśnięte, dzięki czemu można tworzyć kombinacje, na przykład Ctrl przy kliknięciu. Pamiętaj o powrocie do (N), inaczej modyfikatory pozostaną wciśnięte.\n\nGboard nie ma Ctrl, Esc, strzałek ani klawiszy funkcyjnych. Klawiatura, która je ma, Unexpected Keyboard lub Hacker\'s Keyboard, umożliwia skróty takie jak Shift+F10 (menu kontekstowe).</string>
 
     <string name="help_trouble_title">Jeśli komputer nie widzi klawiatury</string>
     <string name="help_trouble_body">W Linuksie zwykłe „connect” często włącza profile audio zamiast klawiatury. Użyj „Łącz automatycznie”, aby inicjatywę przejął telefon, albo połącz profil HID wprost:\n\nbluetoothctl connect &lt;MAC&gt; 00001124-0000-1000-8000-00805f9b34fb\n\nJeśli komputer nadal nie widzi klawiatury, BlueZ mógł zapisać w pamięci listę usług z czasu przed rejestracją aplikacji. Usuń plik cache tego telefonu w /var/lib/bluetooth i połącz się ponownie; samo parowanie zostaje zachowane.</string>

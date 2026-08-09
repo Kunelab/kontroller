@@ -1,0 +1,6 @@
+Nouvel identifiant d'application et nouvelle icône, afin de distinguer clairement
+MaxKontroller du projet Kontroller dont il est issu.
+
+L'identifiant ayant changé, Android considère qu'il s'agit d'une application
+distincte : si vous aviez installé la version 0.2.1 depuis GitHub, elle ne sera
+pas remplacée et vous pourrez la désinstaller une fois la migration faite.

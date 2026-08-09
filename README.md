@@ -41,7 +41,7 @@ keytool -genkeypair -v -keystore maxkontroller.jks -storetype PKCS12 \
 ./gradlew assembleRelease
 ```
 
-The output is `app/build/outputs/apk/release/app-release.apk` — the absence of an
+The output is `app/build/outputs/apk/release/app-release.apk`. The absence of an
 `-unsigned` suffix is how you know signing was picked up. Verify it with:
 
 ```sh
@@ -55,7 +55,7 @@ carries the proof-of-rotation record that allows the signing key to be replaced 
 That record cannot be added retroactively, which is why it is on from the first release.
 
 **Keep the keystore and its password.** Losing either means no future build can upgrade an
-installed copy in place — users would have to uninstall and lose their settings.
+installed copy in place: users would have to uninstall and lose their settings.
 
 ## Using it
 
@@ -65,7 +65,7 @@ installed copy in place — users would have to uninstall and lose their setting
 | Left click | single tap, or the **Left click** button |
 | Right click | the **Right click** button (recommended), or a two-finger tap |
 | Double click | double tap |
-| Drag & drop / rubber-band select | hold a click button and drag on the pad — or double-tap and hold the second tap, then drag |
+| Drag & drop / rubber-band select | hold a click button and drag on the pad, or double-tap and hold the second tap, then drag |
 | Scroll | two-finger drag |
 | Keyboard | the keyboard icon in the action bar |
 
@@ -78,38 +78,38 @@ keystroke* and *held*, so you can do Ctrl+click style combinations with the soft
 
 ### Settings
 
-- **Pointer speed** — 25–300 %, where 100 % is the raw one-to-one touch delta. Applies to
+- **Pointer speed**: 25–300 %, where 100 % is the raw one-to-one touch delta. Applies to
   both the trackpad and the gyro pointer.
-- **Gyro pointer (air mouse)** — move the pointer by tilting the phone. Pad movement is
+- **Gyro pointer (air mouse)**: move the pointer by tilting the phone. Pad movement is
   disabled while it is on so the two do not fight; taps, scroll and the click buttons keep
   working. Off by default.
-- **Click buttons** — show the left/right click buttons under the pad. The trackpad shrinks
+- **Click buttons**: show the left/right click buttons under the pad. The trackpad shrinks
   to make room. On by default.
-- **Connect automatically** — let the phone open the HID connection to a known host as soon
+- **Connect automatically**: let the phone open the HID connection to a known host as soon
   as the app starts. On by default, because a host-initiated connection tends to bring up
   audio profiles instead of HID.
-- **Keep trying to reconnect** — keep calling the host for a while after the link drops
+- **Keep trying to reconnect**: keep calling the host for a while after the link drops
   instead of giving up after one attempt. On by default. This is also what lets the phone
   wake a sleeping host; see [Waking a sleeping host](#waking-a-sleeping-host).
-- **Stay connected in background** — runs a foreground service that owns the HID
+- **Stay connected in background**: runs a foreground service that owns the HID
   registration, so the phone keeps working as a keyboard and mouse when you leave the app or
   the screen turns off. Shows an ongoing notification with a Stop action. On by default.
-- **Theme** — Light, Black, or follow the phone's setting.
-- **Orientation** — Portrait, Landscape or Auto-rotate. Auto-rotate is unavailable while the
+- **Theme**: Light, Black, or follow the phone's setting.
+- **Orientation**: Portrait, Landscape or Auto-rotate. Auto-rotate is unavailable while the
   gyro pointer is on, since tilting the phone to aim would spin the screen; an
   already-selected Auto falls back to portrait.
-- **Keep screen on** — stop the screen turning off while the app is open.
+- **Keep screen on**: stop the screen turning off while the app is open.
 
-- **Media keys** — show a row of volume, playback and Home keys, turning the app into a
+- **Media keys**: show a row of volume, playback and Home keys, turning the app into a
   TV-style remote. Off by default.
-- **Send clipboard** — adds a menu item that types the phone's clipboard to the host.
+- **Send clipboard**: adds a menu item that types the phone's clipboard to the host.
 
 A getting-started guide opens on first launch and is available afterwards from the overflow
 menu or the bottom of Settings.
 
 The overflow menu also has **Devices**, which lists the paired devices with their live HID
 connection state; tap one to connect or disconnect it. (It lists everything the phone is
-paired with, speakers included — only a host can actually accept a keyboard connection.)
+paired with, speakers included: only a host can actually accept a keyboard connection.)
 
 Tap the **star** next to a device to make it the preferred host. This matters for more than
 convenience: everything typed goes to whatever holds the HID link, the clipboard included,
@@ -133,7 +133,7 @@ Tested against Debian 13 with BlueZ 5.82.
    ```
    Confirm the passkey on both ends.
 3. With **Connect automatically** enabled (the default), the phone opens the HID connection
-   itself from then on — just launch the app.
+   itself from then on. Just launch the app.
 
 Two `/dev/input` devices appear on the host once connected:
 
@@ -165,7 +165,7 @@ sudo systemctl start bluetooth
 
 **`Could not parse HID SDP record` after clearing the BlueZ cache.** Deleting the cache file
 removes the stored service records, and BlueZ does not re-fetch them just because it
-reconnects — so `hidp_add_connection` finds nothing to parse. A plain profile-less connect
+reconnects, so `hidp_add_connection` finds nothing to parse. A plain profile-less connect
 forces a full SDP browse and repopulates them:
 
 ```sh
@@ -173,7 +173,7 @@ bluetoothctl connect <PHONE_MAC>      # repopulates the record cache
 ```
 
 Then let the phone open the HID link itself (*Connect automatically*), because a host-side
-connect afterwards fails with `br-connection-create-socket` — the plain connect already
+connect afterwards fails with `br-connection-create-socket`: the plain connect already
 holds a link.
 
 **After changing the HID descriptor**, a host that cached the old SDP record will not see the
@@ -193,7 +193,7 @@ adb shell svc bluetooth disable && sleep 5 && adb shell svc bluetooth enable
 
 A Bluetooth mouse wakes a PC with no special privilege: the host's controller stays powered
 while the machine is suspended and listens for pages from bonded devices, and the *device* is
-what initiates. Clicking a sleeping mouse makes it page its last host **repeatedly** — the
+what initiates. Clicking a sleeping mouse makes it page its last host **repeatedly**, the
 first page wakes the machine, and a later one lands on a stack that has finished resuming.
 
 MaxKontroller uses the same primitive (`BluetoothHidDevice.connect`), so with **Keep trying to
@@ -202,7 +202,7 @@ reconnect** on it can wake a host the same way. Opening the app, tapping the hos
 `Calling <host>… (n)` while it runs, and **Stop calling the host** calls it off.
 
 The persistence is the whole mechanism. A single attempt cannot work: the host does wake, but
-Android's page times out in 5–10 s while the resume — firmware reload, `bluetoothd` re-init —
+Android's page times out in 5–10 s while the resume (firmware reload, `bluetoothd` re-init)
 is still going, so the PC comes back and the app still says "not connected".
 
 The host end has to allow it, and this is not universal:
@@ -211,11 +211,11 @@ The host end has to allow it, and this is not universal:
 |---|---|---|
 | Windows 10/11 | Usually already | Otherwise Device Manager → Bluetooth radio → Power Management → *Allow this device to wake the computer*. Check with `powercfg /devicequery wake_armed` |
 | macOS | Natively | *Allow Bluetooth devices to wake this computer* |
-| Linux, kernel ≥ 5.9 | Only on controllers that support it | Must be armed by hand, below — and many controllers simply cannot, with no setting that fixes it. Intel (`btintel`) is the best bet; Realtek frequently cannot |
-| Hibernate (S4) or powered off (S5) | **Never** | The controller is unpowered. A real Bluetooth mouse cannot do this either — only Wake-on-LAN can |
+| Linux, kernel ≥ 5.9 | Only on controllers that support it | Must be armed by hand, below, and many controllers simply cannot, with no setting that fixes it. Intel (`btintel`) is the best bet; Realtek frequently cannot |
+| Hibernate (S4) or powered off (S5) | **Never** | The controller is unpowered. A real Bluetooth mouse cannot do this either, only Wake-on-LAN can |
 
 **Check this first, before spending an evening in sysfs.** Arming only works if the controller
-is wakeup-capable to begin with, and plenty are not — the kernel's suspend path programs an
+is wakeup-capable to begin with, and plenty are not: the kernel's suspend path programs an
 event filter so the chip wakes the host on a connection request from a bonded device, but only
 when `btusb` marked the device wakeup-capable. If it did not, `power/wakeup` either does not
 exist or refuses `enabled`, and there is no configuration that helps: it is a firmware and
@@ -233,7 +233,7 @@ no `bluetoothd`, no session and no compositor; the wake is handled by the contro
 and the kernel. GNOME, KDE or a bare server all behave identically.
 
 Worth ruling out one userspace cause before blaming the hardware: something soft-blocking the
-radio before suspend. TLP is the usual suspect on Debian — check `rfkill list bluetooth` right
+radio before suspend. TLP is the usual suspect on Debian. Check `rfkill list bluetooth` right
 after a resume, and `USB_AUTOSUSPEND` in `/etc/tlp.conf`.
 
 If the adapter is wakeup-capable, it still has to be armed. Bluetooth on M.2 combo cards is
@@ -293,7 +293,7 @@ cannot run on JDK 17.
   `ViewListener` into `RelativeMouseSender.sendMove()` (it previously inlined the packing and
   hard-coded report ID 4).
 - **A working gyro pointer.** Upstream's `SensorSender` sent an `AbsMouseReport` on report
-  ID 2, but ID 2 only exists in the unused `MOUSE_ABSOLUTE` descriptor — the active combo
+  ID 2, but ID 2 only exists in the unused `MOUSE_ABSOLUTE` descriptor, the active combo
   descriptor has no absolute-pointer report, so it could never have worked. `GyroPointer`
   differentiates yaw/pitch from the rotation vector and sends relative deltas on report ID 4
   like the trackpad does.
@@ -326,7 +326,7 @@ cannot run on JDK 17.
   now uses the public `ACTION_REQUEST_DISCOVERABLE` intent. (`removeBond` and
   `cancelBondProcess` were never called and were deleted.)
 - **Android 12+ permissions.** Upstream requested only `ACCESS_COARSE_LOCATION`, which was
-  the pre-Android-12 requirement for *scanning* — something this app never does. It now
+  the pre-Android-12 requirement for *scanning*, something this app never does. It now
   requests `BLUETOOTH_CONNECT`, `BLUETOOTH_ADVERTISE` and `BLUETOOTH_SCAN` at runtime, and
   the legacy permissions are capped with `maxSdkVersion="30"`.
 - **Keyboard input actually works.** Input was read solely from `Activity.onKeyUp`, which
@@ -341,7 +341,7 @@ cannot run on JDK 17.
   sent a report.
 - **HID registration survives dialogs.** `unregisterApp()` was called from `onStop`, so the
   discoverability prompt and the pairing dialog each tore down the HID service at exactly
-  the moment the host was resolving it — the host then saw only an audio device. Teardown
+  the moment the host was resolving it. The host then saw only an audio device. Teardown
   moved to `onDestroy`.
 - **SET_REPORT handshake.** `onSetReport` only logged, never replying, so the host logged
   `HIDP SET_REPORT request timed out` (typically when setting keyboard LEDs). It now replies
@@ -364,9 +364,9 @@ Host: Debian 13, kernel 6.12, BlueZ 5.82, Realtek RTL8852BU adapter.
 
 Confirmed by reading raw `/dev/input/event*` on the host:
 
-- Pointer movement — expected `REL_X`/`REL_Y` deltas
-- Typing — `hello` produced `H↓H↑E↓E↑L↓L↑L↓L↑O↓O↑`; `wasd`+Tab+Space likewise
-- Click buttons — tap gives `BTN_LEFT`/`BTN_RIGHT` down+up ~10 ms apart; a 1.5 s press
+- Pointer movement: expected `REL_X`/`REL_Y` deltas
+- Typing: `hello` produced `H↓H↑E↓E↑L↓L↑L↓L↑O↓O↑`; `wasd`+Tab+Space likewise
+- Click buttons: tap gives `BTN_LEFT`/`BTN_RIGHT` down+up ~10 ms apart; a 1.5 s press
   holds the button down for 1.52 s, which is what makes press-and-drag work
 - Phone-initiated connection creates both the Mouse and Keyboard input devices with no
   host-side `connect` at all
@@ -379,7 +379,7 @@ Scroll, drag & drop and double click confirmed by hand.
 - **The gyro pointer's gain is a first guess.** `PIXELS_PER_RADIAN` (900) and the noise floor
   were picked analytically, not tuned against a real screen, so it may feel too fast or too
   twitchy and want adjusting.
-- No middle click — the HID descriptor declares `USAGE_MAXIMUM (Button 2)`, so adding one
+- No middle click: the HID descriptor declares `USAGE_MAXIMUM (Button 2)`, so adding one
   means editing `DescriptorCollection`, not just the report class.
 - `KeyboardReport` sends a single key at a time (`key1`); simultaneous key rollover is not
   implemented.
@@ -406,7 +406,7 @@ of dex in a 2.32 MB APK. Those rules are gone and `shrinkResources` is on. **237
   `BluetoothController` now reference-counts its owners and only tears down when the last
   one goes.
 - The three callbacks on `BluetoothController` capture the activity and were only cleared on
-  teardown — which was skipped in the default configuration — so every rotation and theme
+  teardown (which was skipped in the default configuration) so every rotation and theme
   change leaked a whole view hierarchy. They are now always cleared in `onDestroy`, and a
   configuration change no longer drops the host's link.
 - `SelectDeviceActivity` re-checks the Bluetooth permissions in `onStart`. It is reachable
@@ -416,8 +416,8 @@ of dex in a 2.32 MB APK. Those rules are gone and `shrinkResources` is on. **237
 app asked for insets, so the click buttons and media row drew behind the navigation bar.
 `SystemBars` applies them. *(Written against the framework API; not yet verified on a device.)*
 
-**Pointer.** Movement was sent straight from `ACTION_MOVE` — 120-240 Hz of touch samples into
-a link that carries 50-100 reports a second — and rounded to whole pixels per event, so slow
+**Pointer.** Movement was sent straight from `ACTION_MOVE` (120-240 Hz of touch samples into
+a link that carries 50-100 reports a second) and rounded to whole pixels per event, so slow
 movement at low sensitivity was discarded entirely. `PointerPump` coalesces onto the frame
 clock and carries the sub-pixel remainder.
 
@@ -436,7 +436,7 @@ runnable instead of up to 5000 uncancellable messages.
 auto-connect ran once on registration and nothing retried, `onConnectionStateChanged` noticed
 `STATE_DISCONNECTED` and only updated the UI, and reopening the app did nothing at all when
 "stay connected" was on, because the registration was already up and no callback fired.
-`BluetoothController` now owns a bounded retry loop — see
+`BluetoothController` now owns a bounded retry loop, see
 [Waking a sleeping host](#waking-a-sleeping-host) for why persistence rather than one attempt
 is the whole point. Deliberate disconnects are tracked so they are not chased, a loop that
 gives up sets a cooldown so its own trailing timeout is not read as a fresh drop (which would
@@ -457,18 +457,18 @@ host, no attempts and no explanation. `ACTION_BOND_STATE_CHANGED` now drops the 
 so.
 
 **Reachable "Keep screen on".** The preference was read and applied from the first release and
-its strings were translated into all 21 locales, but `activity_settings.xml` never got the row —
+its strings were translated into all 21 locales, but `activity_settings.xml` never got the row,
 so a documented setting could not be reached and was permanently off.
 
 **A notification that says something.** The foreground service showed one fixed string, which
 made it the least informative surface in the app while being the *only* surface once the app is
 closed: a phone that had silently lost its host looked identical to one that was working. It now
-tracks the link — connected to X, calling X, or not connected — through a new observer list that
+tracks the link (connected to X, calling X, or not connected) through a new observer list that
 is deliberately separate from the single-slot sender callbacks, because `clearListeners()` runs
 when the activity goes away and would otherwise take the service's subscription with it.
 
 **A trackpad that is not silently dead.** The pad's touch listener was only attached once a host
-had connected, so with no host every touch did nothing at all — no movement, no message, no
+had connected, so with no host every touch did nothing at all: no movement, no message, no
 hint. Touching the pad or a click button now starts the wake loop, which is the closest thing to
 wiggling a sleeping mouse and the first thing anyone tries.
 

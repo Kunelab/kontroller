@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Themed-icon layer (Android 13+). One colour, tinted by the system, so the drawing has to
+     hold on silhouette alone. It is the same geometry as the coloured layer and needs no
+     redraw: the display and the phone were placed 6 units apart precisely so that losing the
+     white and blue split costs nothing, and the cursor was already a hole rather than a
+     painted shape, so the themed ground shows through it. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:pathData="M30,39 H56 A6,6 0 0 1 62,45 V63 A6,6 0 0 1 56,69 H30 A6,6 0 0 1 24,63 V45 A6,6 0 0 1 30,39 Z M37.48,44.56 L37.48,61.14 L41.47,57.14 L44.45,63.43 L47,62.24 L44.11,56.13 L48.52,55.53 Z"
+        android:fillColor="#FFFFFF"
+        android:fillType="evenOdd" />
+    <path
+        android:pathData="M72,40 H78 A4,4 0 0 1 82,44 V64 A4,4 0 0 1 78,68 H72 A4,4 0 0 1 68,64 V44 A4,4 0 0 1 72,40 Z"
+        android:fillColor="#FFFFFF" />
+</vector>

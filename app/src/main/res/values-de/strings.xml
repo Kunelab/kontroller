@@ -42,7 +42,7 @@
     <string name="setting_gyro_invert_summary">Kehre eine der Gyro-Achsen um, wenn sie sich für deine Handhaltung falsch anfühlt.</string>
 
     <string name="setting_host_layout_title">Tastaturlayout des Computers</string>
-    <string name="setting_host_layout_summary">Das Layout des Computers, den du steuerst — nicht das dieses Telefons. Bluetooth überträgt Tastenpositionen und keine Zeichen, deshalb muss dies zum Computer passen, sonst werden Buchstaben und Satzzeichen vertauscht. Computer mit Chinesisch, Koreanisch, Hindi, Arabisch, Thai und Vietnamesisch verwenden US-QWERTY und setzen ihre Schrift selbst zusammen.</string>
+    <string name="setting_host_layout_summary">Das Layout des Computers, den du steuerst, nicht das dieses Telefons. Bluetooth überträgt Tastenpositionen und keine Zeichen, deshalb muss dies zum Computer passen, sonst werden Buchstaben und Satzzeichen vertauscht. Computer mit Chinesisch, Koreanisch, Hindi, Arabisch, Thai und Vietnamesisch verwenden US-QWERTY und setzen ihre Schrift selbst zusammen.</string>
 
     <string name="setting_language_title">App-Sprache</string>
     <string name="setting_language_summary">Die Sprache dieser App. Sie hat keinen Einfluss darauf, was am Computer eingegeben wird.</string>
@@ -81,10 +81,10 @@
     <string name="help_pairing_body">1. Lass diese App offen und bestätige die Anfrage „sichtbar machen“.\n2. Suche am Computer nach Bluetooth-Geräten und koppele ihn mit diesem Telefon.\n3. Bestätige den Code auf beiden Seiten.\n\nLass danach „Automatisch verbinden“ in den Einstellungen aktiviert, dann baut das Telefon die Verbindung bei jedem Start selbst auf.</string>
 
     <string name="help_gestures_title">Gesten</string>
-    <string name="help_gestures_body">• Zeiger bewegen — mit einem Finger wischen\n• Linksklick — tippen oder die Taste Linksklick\n• Rechtsklick — die Taste Rechtsklick\n• Doppelklick — zweimal tippen\n• Ziehen und ablegen — eine Klicktaste halten und auf dem Pad wischen\n• Scrollen — mit zwei Fingern wischen\n\nEin Tippen mit zwei Fingern ist ebenfalls ein Rechtsklick, aber beide Finger müssen innerhalb von 100 ms aufsetzen und abheben — die Taste ist einfacher.</string>
+    <string name="help_gestures_body">• Zeiger bewegen: mit einem Finger wischen\n• Linksklick: tippen oder die Taste Linksklick\n• Rechtsklick: die Taste Rechtsklick\n• Doppelklick: zweimal tippen\n• Ziehen und ablegen: eine Klicktaste halten und auf dem Pad wischen\n• Scrollen: mit zwei Fingern wischen\n\nEin Tippen mit zwei Fingern ist ebenfalls ein Rechtsklick, aber beide Finger müssen innerhalb von 100 ms aufsetzen und abheben: die Taste ist einfacher.</string>
 
     <string name="help_keyboard_title">Tastatur</string>
-    <string name="help_keyboard_body">Tippe auf das Tastatursymbol, um die Bildschirmtastatur einzublenden; alles, was du eingibst, geht an den Computer.\n\nDie Taste (N)/(P) steuert die Modifikatortasten. (N) lässt Strg/Alt/Umschalt nach jedem Anschlag los; (P) hält sie gedrückt, sodass du Kombinationen bilden kannst, etwa Strg beim Klicken. Denk daran, zurück auf (N) zu schalten, sonst bleiben die Modifikatoren hängen.\n\nGboard hat kein Strg, Esc, keine Pfeiltasten und keine Funktionstasten. Eine Tastatur, die das bietet — Unexpected Keyboard oder Hacker\'s Keyboard — ermöglicht Kürzel wie Umschalt+F10 (Kontextmenü).</string>
+    <string name="help_keyboard_body">Tippe auf das Tastatursymbol, um die Bildschirmtastatur einzublenden; alles, was du eingibst, geht an den Computer.\n\nDie Taste (N)/(P) steuert die Modifikatortasten. (N) lässt Strg/Alt/Umschalt nach jedem Anschlag los; (P) hält sie gedrückt, sodass du Kombinationen bilden kannst, etwa Strg beim Klicken. Denk daran, zurück auf (N) zu schalten, sonst bleiben die Modifikatoren hängen.\n\nGboard hat kein Strg, Esc, keine Pfeiltasten und keine Funktionstasten. Eine Tastatur, die das bietet, Unexpected Keyboard oder Hacker\'s Keyboard, ermöglicht Kürzel wie Umschalt+F10 (Kontextmenü).</string>
 
     <string name="media_vol_down">Vol −</string>
     <string name="media_vol_up">Vol +</string>
@@ -96,7 +96,7 @@
 
     <string name="devices_title">Geräte</string>
     <string name="devices_hint">Gekoppelte Geräte. Tippe auf eines, um es zu verbinden oder zu trennen.</string>
-    <string name="devices_none">Noch keine gekoppelten Geräte. Koppele dieses Telefon zuerst vom Computer aus — siehe Anleitung.</string>
+    <string name="devices_none">Noch keine gekoppelten Geräte. Koppele dieses Telefon zuerst vom Computer aus, siehe Anleitung.</string>
     <string name="devices_not_registered">Noch nicht als Tastatur registriert. Geh zurück zum Touchpad, warte einen Moment und versuche es erneut.</string>
     <string name="devices_no_bluetooth">Kein Bluetooth-Adapter verfügbar.</string>
     <string name="device_state_connected">Verbunden · %1$s</string>
@@ -111,7 +111,7 @@
     <string name="setting_media_keys_title">Medientasten</string>
     <string name="setting_media_keys_summary">Zeigt eine Reihe mit Lautstärke-, Wiedergabe- und Start-Tasten und macht die App damit zur Fernbedienung. Standardmäßig aus.</string>
     <string name="setting_clipboard_title">Zwischenablage senden</string>
-    <string name="setting_clipboard_summary">Fügt einen Menüpunkt hinzu, der die Zwischenablage des Telefons am Computer eintippt — praktisch für Passwörter, URLs und lange Texte.</string>
+    <string name="setting_clipboard_summary">Fügt einen Menüpunkt hinzu, der die Zwischenablage des Telefons am Computer eintippt, praktisch für Passwörter, URLs und lange Texte.</string>
 
     <string name="help_trouble_title">Wenn der Computer keine Tastatur sieht</string>
     <string name="help_trouble_body">Unter Linux aktiviert ein einfaches „connect“ oft die Audioprofile statt der Tastatur. Nutze entweder „Automatisch verbinden“, damit das Telefon die Initiative übernimmt, oder verbinde das HID-Profil ausdrücklich:\n\nbluetoothctl connect &lt;MAC&gt; 00001124-0000-1000-8000-00805f9b34fb\n\nSieht der Computer weiterhin keine Tastatur, hat BlueZ möglicherweise eine Diensteliste von vor der Registrierung der App zwischengespeichert. Lösche die Cache-Datei dieses Telefons unter /var/lib/bluetooth und verbinde erneut; die Kopplung selbst bleibt erhalten.</string>

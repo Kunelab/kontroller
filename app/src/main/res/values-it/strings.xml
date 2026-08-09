@@ -81,10 +81,10 @@
     <string name="help_pairing_body">1. Lascia questa app aperta e accetta la richiesta di «rendere rilevabile».\n2. Sul computer cerca i dispositivi Bluetooth e associalo a questo telefono.\n3. Conferma il codice su entrambi i lati.\n\nPoi lascia attivo «Connetti automaticamente» nelle impostazioni: il telefono aprirà la connessione da solo a ogni avvio.</string>
 
     <string name="help_gestures_title">Gesti</string>
-    <string name="help_gestures_body">• Muovere il puntatore — trascinare un dito\n• Clic sinistro — toccare, o il pulsante Clic sinistro\n• Clic destro — il pulsante Clic destro\n• Doppio clic — toccare due volte\n• Trascina e rilascia — tenere premuto un pulsante di clic e trascinare sul trackpad\n• Scorrimento — trascinare due dita\n\nAnche un tocco con due dita è un clic destro, ma entrambe le dita devono appoggiarsi e sollevarsi entro 100 ms: il pulsante è più semplice.</string>
+    <string name="help_gestures_body">• Muovere il puntatore: trascinare un dito\n• Clic sinistro: toccare, o il pulsante Clic sinistro\n• Clic destro: il pulsante Clic destro\n• Doppio clic: toccare due volte\n• Trascina e rilascia: tenere premuto un pulsante di clic e trascinare sul trackpad\n• Scorrimento: trascinare due dita\n\nAnche un tocco con due dita è un clic destro, ma entrambe le dita devono appoggiarsi e sollevarsi entro 100 ms: il pulsante è più semplice.</string>
 
     <string name="help_keyboard_title">Tastiera</string>
-    <string name="help_keyboard_body">Tocca l\'icona della tastiera per mostrare la tastiera a schermo; tutto ciò che digiti viene inviato al computer.\n\nIl pulsante (N)/(P) controlla i tasti modificatori. (N) rilascia Ctrl/Alt/Maiusc dopo ogni battuta; (P) li tiene premuti per creare combinazioni, come Ctrl tenuto premuto mentre fai clic. Ricordati di tornare su (N), altrimenti i modificatori restano bloccati.\n\nGboard non ha Ctrl, Esc, frecce né tasti funzione. Una tastiera che li offre — Unexpected Keyboard o Hacker\'s Keyboard — rende possibili scorciatoie come Maiusc+F10 (menu contestuale).</string>
+    <string name="help_keyboard_body">Tocca l\'icona della tastiera per mostrare la tastiera a schermo; tutto ciò che digiti viene inviato al computer.\n\nIl pulsante (N)/(P) controlla i tasti modificatori. (N) rilascia Ctrl/Alt/Maiusc dopo ogni battuta; (P) li tiene premuti per creare combinazioni, come Ctrl tenuto premuto mentre fai clic. Ricordati di tornare su (N), altrimenti i modificatori restano bloccati.\n\nGboard non ha Ctrl, Esc, frecce né tasti funzione. Una tastiera che li offre, Unexpected Keyboard o Hacker\'s Keyboard, rende possibili scorciatoie come Maiusc+F10 (menu contestuale).</string>
 
     <string name="media_vol_down">Vol −</string>
     <string name="media_vol_up">Vol +</string>
@@ -96,7 +96,7 @@
 
     <string name="devices_title">Dispositivi</string>
     <string name="devices_hint">Dispositivi associati. Toccane uno per connetterlo o disconnetterlo.</string>
-    <string name="devices_none">Nessun dispositivo associato. Associa prima questo telefono dal computer — vedi la guida.</string>
+    <string name="devices_none">Nessun dispositivo associato. Associa prima questo telefono dal computer, vedi la guida.</string>
     <string name="devices_not_registered">Non ancora registrato come tastiera. Torna al trackpad, attendi un momento e riprova.</string>
     <string name="devices_no_bluetooth">Nessun adattatore Bluetooth disponibile.</string>
     <string name="device_state_connected">Connesso · %1$s</string>
@@ -111,7 +111,7 @@
     <string name="setting_media_keys_title">Tasti multimediali</string>
     <string name="setting_media_keys_summary">Mostra una riga di tasti volume, riproduzione e Home, trasformando l\'app in un telecomando. Disattivato per impostazione predefinita.</string>
     <string name="setting_clipboard_title">Invia appunti</string>
-    <string name="setting_clipboard_summary">Aggiunge una voce di menu che digita gli appunti del telefono sul computer — utile per password, URL e testi lunghi.</string>
+    <string name="setting_clipboard_summary">Aggiunge una voce di menu che digita gli appunti del telefono sul computer, utile per password, URL e testi lunghi.</string>
 
     <string name="help_trouble_title">Se il computer non vede nessuna tastiera</string>
     <string name="help_trouble_body">Su Linux un semplice «connect» attiva spesso i profili audio anziché la tastiera. Usa «Connetti automaticamente» perché sia il telefono a prendere l\'iniziativa, oppure connetti esplicitamente il profilo HID:\n\nbluetoothctl connect &lt;MAC&gt; 00001124-0000-1000-8000-00805f9b34fb\n\nSe il computer continua a non vedere una tastiera, BlueZ potrebbe aver memorizzato un elenco di servizi precedente alla registrazione dell\'app. Elimina il file di cache di questo telefono in /var/lib/bluetooth e riconnettiti; l\'associazione viene conservata.</string>

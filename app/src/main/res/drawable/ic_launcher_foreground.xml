@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The phone drives the cursor on the screen, said with two objects instead of four. White is
+     the host display, blue is the phone. The cursor is not painted on top of the display, it is
+     punched through it with evenOdd, so it shows the background colour instead of hard-coding
+     it, and it reads at full contrast rather than as a mid-tone shape on the icon ground.
+     The two objects never touch: 6 units of clear air between the display and the phone means
+     the silhouette still separates when the themed layer drops the colour split.
+     One stroke system throughout, radii 6 (display) and 4 (phone). Everything sits inside the
+     66dp keyline, farthest point 31.6 of the 33 available, so aggressive OEM masks cannot
+     clip a corner. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:pathData="M30,39 H56 A6,6 0 0 1 62,45 V63 A6,6 0 0 1 56,69 H30 A6,6 0 0 1 24,63 V45 A6,6 0 0 1 30,39 Z M37.48,44.56 L37.48,61.14 L41.47,57.14 L44.45,63.43 L47,62.24 L44.11,56.13 L48.52,55.53 Z"
+        android:fillColor="#F2F2F5"
+        android:fillType="evenOdd" />
+    <path
+        android:pathData="M72,40 H78 A4,4 0 0 1 82,44 V64 A4,4 0 0 1 78,68 H72 A4,4 0 0 1 68,64 V44 A4,4 0 0 1 72,40 Z"
+        android:fillColor="#3378FF" />
+</vector>

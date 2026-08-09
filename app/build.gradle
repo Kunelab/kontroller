@@ -13,17 +13,17 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace 'com.github.roarappstudio.btkontroller'
+    namespace 'io.github.maximepinard.maxkontroller'
     compileSdk 36
 
     defaultConfig {
-        applicationId "com.github.roarappstudio.btkontroller"
+        applicationId "io.github.maximepinard.maxkontroller"
         minSdk 28
         targetSdk 36
         // versionCode must increase for every published build or Android refuses the
         // upgrade. versionName is what users see and should match the release tag.
-        versionCode 5
-        versionName "0.2.1"
+        versionCode 6
+        versionName "0.3.0"
     }
 
     compileOptions {

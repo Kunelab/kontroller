@@ -81,10 +81,10 @@
     <string name="help_pairing_body">1. Laissez cette application ouverte et acceptez la demande « rendre visible ».\n2. Sur l\'ordinateur, recherchez les appareils Bluetooth et associez-le à ce téléphone.\n3. Confirmez le code des deux côtés.\n\nEnsuite, laissez « Connexion automatique » activée dans les paramètres et le téléphone ouvrira lui-même la connexion à chaque lancement.</string>
 
     <string name="help_gestures_title">Gestes</string>
-    <string name="help_gestures_body">• Déplacer le pointeur — glisser un doigt\n• Clic gauche — appuyer, ou le bouton Clic gauche\n• Clic droit — le bouton Clic droit\n• Double-clic — appuyer deux fois\n• Glisser-déposer — maintenir un bouton de clic et glisser sur le pavé\n• Défilement — glisser deux doigts\n\nUn appui à deux doigts fait aussi un clic droit, mais les deux doigts doivent se poser et se lever en moins de 100 ms : le bouton est plus simple.</string>
+    <string name="help_gestures_body">• Déplacer le pointeur: glisser un doigt\n• Clic gauche: appuyer, ou le bouton Clic gauche\n• Clic droit: le bouton Clic droit\n• Double-clic: appuyer deux fois\n• Glisser-déposer: maintenir un bouton de clic et glisser sur le pavé\n• Défilement: glisser deux doigts\n\nUn appui à deux doigts fait aussi un clic droit, mais les deux doigts doivent se poser et se lever en moins de 100 ms : le bouton est plus simple.</string>
 
     <string name="help_keyboard_title">Clavier</string>
-    <string name="help_keyboard_body">Appuyez sur l\'icône du clavier pour afficher le clavier virtuel ; tout ce que vous tapez est envoyé à l\'ordinateur.\n\nLe bouton (N)/(P) gère les touches de modification. (N) relâche Ctrl/Alt/Maj après chaque frappe ; (P) les maintient enfoncées pour composer des combinaisons, par exemple Ctrl maintenu pendant un clic. Pensez à revenir en (N), sinon les modificateurs restent bloqués.\n\nGboard n\'a ni Ctrl, ni Échap, ni flèches, ni touches de fonction. Un clavier qui les propose — Unexpected Keyboard ou Hacker\'s Keyboard — permet des raccourcis comme Maj+F10 (menu contextuel).</string>
+    <string name="help_keyboard_body">Appuyez sur l\'icône du clavier pour afficher le clavier virtuel ; tout ce que vous tapez est envoyé à l\'ordinateur.\n\nLe bouton (N)/(P) gère les touches de modification. (N) relâche Ctrl/Alt/Maj après chaque frappe ; (P) les maintient enfoncées pour composer des combinaisons, par exemple Ctrl maintenu pendant un clic. Pensez à revenir en (N), sinon les modificateurs restent bloqués.\n\nGboard n\'a ni Ctrl, ni Échap, ni flèches, ni touches de fonction. Un clavier qui les propose, Unexpected Keyboard ou Hacker\'s Keyboard, permet des raccourcis comme Maj+F10 (menu contextuel).</string>
 
     <string name="media_vol_down">Vol −</string>
     <string name="media_vol_up">Vol +</string>
@@ -96,7 +96,7 @@
 
     <string name="devices_title">Appareils</string>
     <string name="devices_hint">Appareils associés. Touchez-en un pour le connecter ou le déconnecter.</string>
-    <string name="devices_none">Aucun appareil associé pour l\'instant. Associez d\'abord ce téléphone depuis l\'ordinateur — voir le guide.</string>
+    <string name="devices_none">Aucun appareil associé pour l\'instant. Associez d\'abord ce téléphone depuis l\'ordinateur, voir le guide.</string>
     <string name="devices_not_registered">Pas encore enregistré comme clavier. Revenez au pavé tactile, attendez un instant puis réessayez.</string>
     <string name="devices_no_bluetooth">Aucun adaptateur Bluetooth disponible.</string>
     <string name="device_state_connected">Connecté · %1$s</string>
@@ -111,7 +111,7 @@
     <string name="setting_media_keys_title">Touches multimédias</string>
     <string name="setting_media_keys_summary">Affiche une rangée de touches de volume, de lecture et Accueil, transformant l\'application en télécommande. Désactivé par défaut.</string>
     <string name="setting_clipboard_title">Envoyer le presse-papiers</string>
-    <string name="setting_clipboard_summary">Ajoute une entrée de menu qui tape le presse-papiers du téléphone sur l\'ordinateur — pratique pour les mots de passe, les URL et les textes longs.</string>
+    <string name="setting_clipboard_summary">Ajoute une entrée de menu qui tape le presse-papiers du téléphone sur l\'ordinateur, pratique pour les mots de passe, les URL et les textes longs.</string>
 
     <string name="help_trouble_title">Si l\'ordinateur ne voit pas de clavier</string>
     <string name="help_trouble_body">Sous Linux, une simple commande « connect » active souvent les profils audio au lieu du clavier. Utilisez « Connexion automatique » pour que le téléphone prenne l\'initiative, ou connectez explicitement le profil HID :\n\nbluetoothctl connect &lt;MAC&gt; 00001124-0000-1000-8000-00805f9b34fb\n\nSi l\'ordinateur ne voit toujours pas de clavier, BlueZ a peut-être mis en cache une liste de services antérieure à l\'enregistrement de l\'application. Supprimez le fichier de cache de ce téléphone dans /var/lib/bluetooth puis reconnectez-vous ; l\'association elle-même est conservée.</string>

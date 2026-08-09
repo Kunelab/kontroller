@@ -108,7 +108,7 @@
     <string name="help_pairing_body">1. 保持本應用程式開啟，並允許「設為可被偵測」的要求。\n2. 在電腦上搜尋藍牙裝置，並與這支手機配對。\n3. 在兩端確認配對碼。\n\n之後請在設定中保持「自動連線」開啟，手機會在每次開啟應用程式時自動建立連線。</string>
 
     <string name="help_gestures_title">手勢</string>
-    <string name="help_gestures_body">• 移動指標 — 單指滑動\n• 左鍵 — 輕觸，或使用左鍵按鈕\n• 右鍵 — 使用右鍵按鈕\n• 雙擊 — 連續輕觸兩次\n• 拖放 — 按住點擊按鈕並在觸控板上滑動\n• 捲動 — 雙指滑動\n\n雙指輕觸也是右鍵，但兩指必須在 100 毫秒內同時按下並抬起，因此使用按鈕更方便。</string>
+    <string name="help_gestures_body">• 移動指標：單指滑動\n• 左鍵：輕觸，或使用左鍵按鈕\n• 右鍵：使用右鍵按鈕\n• 雙擊：連續輕觸兩次\n• 拖放：按住點擊按鈕並在觸控板上滑動\n• 捲動：雙指滑動\n\n雙指輕觸也是右鍵，但兩指必須在 100 毫秒內同時按下並抬起，因此使用按鈕更方便。</string>
 
     <string name="help_keyboard_title">鍵盤</string>
     <string name="help_keyboard_body">輕觸鍵盤圖示可叫出螢幕鍵盤，你輸入的內容會傳送到電腦。\n\n(N)/(P) 按鈕用於控制修飾鍵。(N) 在每次按鍵後放開 Ctrl/Alt/Shift；(P) 會持續按住，方便組合操作，例如按住 Ctrl 再點擊。記得切回 (N)，否則修飾鍵會一直處於按下狀態。\n\nGboard 沒有 Ctrl、Esc、方向鍵和功能鍵。使用具備這些按鍵的輸入法（如 Unexpected Keyboard 或 Hacker\'s Keyboard）即可使用 Shift+F10（右鍵選單）等快速鍵。</string>
