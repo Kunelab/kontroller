@@ -1,4 +1,4 @@
-L'application s'appelle désormais Kune Kontroller et fait partie de Kunelab. Elle
+L'application s'appelle désormais KuneLab Kontroller et fait partie de Kunelab. Elle
 reçoit un nouvel identifiant d'application et une icône entièrement redessinée, qui
 la distinguent aussi clairement du projet Kontroller dont elle est issue.
 

@@ -16,13 +16,13 @@
     <string name="status_not_connected">Приложение не подключено по Bluetooth</string>
     <string name="action_ble_status_tool_tip">Приложение не подключено по Bluetooth</string>
 
-    <string name="error_bluetooth_permission">Kune Kontroller нужны разрешения Bluetooth, чтобы работать как клавиатура и мышь.</string>
+    <string name="error_bluetooth_permission">KuneLab Kontroller нужны разрешения Bluetooth, чтобы работать как клавиатура и мышь.</string>
     <string name="error_no_hid_profile">Это устройство не предоставляет профиль Bluetooth HID Device, поэтому его нельзя использовать как клавиатуру или мышь.</string>
     <string name="error_no_gyro">В этом телефоне нет датчика вращения, поэтому гиромышь недоступна.</string>
     <string name="error_not_connected">Подключение к компьютеру ещё не установлено.</string>
 
     <string name="service_channel">Подключение</string>
-    <string name="service_title">Kune Kontroller активен</string>
+    <string name="service_title">KuneLab Kontroller активен</string>
     <string name="service_text">Работает как Bluetooth-клавиатура и мышь.</string>
     <string name="service_stop">Остановить</string>
 
@@ -102,7 +102,7 @@
     <string name="help_title">Начало работы</string>
     <string name="help_continue">Начать</string>
 
-    <string name="help_intro">Kune Kontroller превращает этот телефон в Bluetooth-клавиатуру и мышь. Компьютер видит обычную Bluetooth-клавиатуру, поэтому на нём ничего устанавливать не нужно.</string>
+    <string name="help_intro">KuneLab Kontroller превращает этот телефон в Bluetooth-клавиатуру и мышь. Компьютер видит обычную Bluetooth-клавиатуру, поэтому на нём ничего устанавливать не нужно.</string>
 
     <string name="help_pairing_title">Сопряжение</string>
     <string name="help_pairing_body">1. Оставьте приложение открытым и разрешите запрос «сделать видимым».\n2. На компьютере найдите устройства Bluetooth и выполните сопряжение с этим телефоном.\n3. Подтвердите код с обеих сторон.\n\nЗатем оставьте «Подключаться автоматически» включённым в настройках, и телефон будет сам открывать подключение при каждом запуске.</string>

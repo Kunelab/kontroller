@@ -1,13 +1,13 @@
-# Kune Kontroller
+# KuneLab Kontroller
 
 Use an Android phone as a **Bluetooth keyboard and mouse** for a PC, Mac, TV or tablet.
 
-The phone registers itself as a Bluetooth HID *device*, so the host sees a plain Bluetooth
+The phone registers itself as a Bluetooth HID _device_, so the host sees a plain Bluetooth
 keyboard and mouse. Nothing has to be installed on the host, and because input arrives at
 the kernel/evdev level it works regardless of whether the host runs X11, Wayland or no
 desktop at all.
 
-Kune Kontroller is a modernised and extended fork of
+KuneLab Kontroller is a modernised and extended fork of
 [raghavk92/Kontroller](https://github.com/raghavk92/Kontroller) (Apache-2.0), whose last
 code change was in November 2020 and which no longer builds or runs on current Android.
 The original commit history is preserved in this repository.
@@ -59,22 +59,22 @@ installed copy in place: users would have to uninstall and lose their settings.
 
 ## Using it
 
-| Action | Gesture |
-|---|---|
-| Move pointer | one finger drag on the pad |
-| Left click | single tap, or the **Left click** button |
-| Right click | the **Right click** button (recommended), or a two-finger tap |
-| Double click | double tap |
+| Action                           | Gesture                                                                                   |
+| -------------------------------- | ----------------------------------------------------------------------------------------- |
+| Move pointer                     | one finger drag on the pad                                                                |
+| Left click                       | single tap, or the **Left click** button                                                  |
+| Right click                      | the **Right click** button (recommended), or a two-finger tap                             |
+| Double click                     | double tap                                                                                |
 | Drag & drop / rubber-band select | hold a click button and drag on the pad, or double-tap and hold the second tap, then drag |
-| Scroll | two-finger drag |
-| Keyboard | the keyboard icon in the action bar |
+| Scroll                           | two-finger drag                                                                           |
+| Keyboard                         | the keyboard icon in the action bar                                                       |
 
 The **click buttons** under the pad behave like the physical buttons on a laptop touchpad:
 pressing holds the mouse button down and releasing lets it go, so you can hold one and drag
 on the pad above.
 
-The `(N)` / `(P)` action-bar item switches modifier handling between *released after each
-keystroke* and *held*, so you can do Ctrl+click style combinations with the soft keyboard.
+The `(N)` / `(P)` action-bar item switches modifier handling between _released after each
+keystroke_ and _held_, so you can do Ctrl+click style combinations with the soft keyboard.
 
 ### Settings
 
@@ -113,7 +113,7 @@ paired with, speakers included: only a host can actually accept a keyboard conne
 
 Tap the **star** next to a device to make it the preferred host. This matters for more than
 convenience: everything typed goes to whatever holds the HID link, the clipboard included,
-and with no preferred host set *Connect automatically* will target whichever bonded device
+and with no preferred host set _Connect automatically_ will target whichever bonded device
 the Bluetooth stack offers first. Pinning one is how you say which machine is allowed to be
 on the other end. The action bar shows the host currently connected.
 
@@ -145,7 +145,7 @@ N: Name="<phone> Keyboard"   H: Handlers=sysrq kbd event13
 ### Troubleshooting
 
 **The host sees an audio device but no keyboard or mouse.** A plain `connect` brings up
-whichever profiles win the race, usually A2DP/AVRCP. Either enable *Connect automatically*
+whichever profiles win the race, usually A2DP/AVRCP. Either enable _Connect automatically_
 so the phone initiates, or connect the HID profile explicitly:
 
 ```sh
@@ -172,7 +172,7 @@ forces a full SDP browse and repopulates them:
 bluetoothctl connect <PHONE_MAC>      # repopulates the record cache
 ```
 
-Then let the phone open the HID link itself (*Connect automatically*), because a host-side
+Then let the phone open the HID link itself (_Connect automatically_), because a host-side
 connect afterwards fails with `br-connection-create-socket`: the plain connect already
 holds a link.
 
@@ -192,11 +192,11 @@ adb shell svc bluetooth disable && sleep 5 && adb shell svc bluetooth enable
 ## Waking a sleeping host
 
 A Bluetooth mouse wakes a PC with no special privilege: the host's controller stays powered
-while the machine is suspended and listens for pages from bonded devices, and the *device* is
+while the machine is suspended and listens for pages from bonded devices, and the _device_ is
 what initiates. Clicking a sleeping mouse makes it page its last host **repeatedly**, the
 first page wakes the machine, and a later one lands on a stack that has finished resuming.
 
-Kune Kontroller uses the same primitive (`BluetoothHidDevice.connect`), so with **Keep trying to
+KuneLab Kontroller uses the same primitive (`BluetoothHidDevice.connect`), so with **Keep trying to
 reconnect** on it can wake a host the same way. Opening the app, tapping the host under
 **Devices**, or choosing **Connect** all start a bounded retry loop; the action bar shows
 `Calling <host>… (n)` while it runs, and **Stop calling the host** calls it off.
@@ -207,12 +207,12 @@ is still going, so the PC comes back and the app still says "not connected".
 
 The host end has to allow it, and this is not universal:
 
-| Host | Wakes from sleep | What it needs |
-|---|---|---|
-| Windows 10/11 | Usually already | Otherwise Device Manager → Bluetooth radio → Power Management → *Allow this device to wake the computer*. Check with `powercfg /devicequery wake_armed` |
-| macOS | Natively | *Allow Bluetooth devices to wake this computer* |
-| Linux, kernel ≥ 5.9 | Only on controllers that support it | Must be armed by hand, below, and many controllers simply cannot, with no setting that fixes it. Intel (`btintel`) is the best bet; Realtek frequently cannot |
-| Hibernate (S4) or powered off (S5) | **Never** | The controller is unpowered. A real Bluetooth mouse cannot do this either, only Wake-on-LAN can |
+| Host                               | Wakes from sleep                    | What it needs                                                                                                                                                 |
+| ---------------------------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Windows 10/11                      | Usually already                     | Otherwise Device Manager → Bluetooth radio → Power Management → _Allow this device to wake the computer_. Check with `powercfg /devicequery wake_armed`       |
+| macOS                              | Natively                            | _Allow Bluetooth devices to wake this computer_                                                                                                               |
+| Linux, kernel ≥ 5.9                | Only on controllers that support it | Must be armed by hand, below, and many controllers simply cannot, with no setting that fixes it. Intel (`btintel`) is the best bet; Realtek frequently cannot |
+| Hibernate (S4) or powered off (S5) | **Never**                           | The controller is unpowered. A real Bluetooth mouse cannot do this either, only Wake-on-LAN can                                                               |
 
 **Check this first, before spending an evening in sysfs.** Arming only works if the controller
 is wakeup-capable to begin with, and plenty are not: the kernel's suspend path programs an
@@ -273,6 +273,7 @@ Upstream did not build at all: `jcenter()` is shut down, and Gradle 5.1.1 / AGP 
 cannot run on JDK 17.
 
 **Added in this fork**
+
 - **Media / consumer keys.** Upstream's descriptor had no consumer collection at all, so
   volume and playback keys had no report to travel in. A Consumer Control collection
   (report ID 10, one bit per key) was added to `MOUSE_KEYBOARD_COMBO`.
@@ -303,11 +304,12 @@ cannot run on JDK 17.
   pointer is active.
 - **A getting-started guide** shown on first launch, covering pairing, gestures and the
   BlueZ pitfalls below.
-- Renamed to **Kune Kontroller** (app label and the SDP name the host displays), under the
+- Renamed to **KuneLab Kontroller** (app label and the SDP name the host displays), under the
   `io.github.kunelab.kontroller` application ID and a launcher icon drawn for this fork, so
   nothing about the identity is inherited from upstream.
 
 **Build and toolchain**
+
 - Gradle 5.1.1 → 8.13, AGP 3.4.1 → 8.9.1, Kotlin 1.3.21 → 2.1.20
 - `compileSdk`/`targetSdk` 28 → 36; `minSdk` stays 28
 - `jcenter()` → `mavenCentral()`, with modern `pluginManagement` / `dependencyResolutionManagement`
@@ -316,19 +318,20 @@ cannot run on JDK 17.
   (never referenced) and the support-library `LocalBroadcastManager` (only used in
   commented-out code). The Anko-DSL UI is now a real layout XML.
 - `inline class` → `@JvmInline value class` → plain classes. The report types wrap a
-  *mutable* `ByteArray`, so value-class semantics were wrong for them, and R8 also crashed
+  _mutable_ `ByteArray`, so value-class semantics were wrong for them, and R8 also crashed
   on the generated bytecode (`Invalid stack map table … iload 5`).
 - Fixed `GestureDetector` overrides whose `MotionEvent?` parameters stopped compiling once
   SDK 36 tightened the nullability annotations.
 
 **Correctness / runtime fixes**
+
 - **Removed hidden-API reflection.** `Unhide.kt` called `BluetoothAdapter.setScanMode(int, int)`
   by reflection. That method does not exist on Android 12+, so the lookup threw
   `NoSuchMethodException` from `onServiceConnected` and killed the connection path. The app
   now uses the public `ACTION_REQUEST_DISCOVERABLE` intent. (`removeBond` and
   `cancelBondProcess` were never called and were deleted.)
 - **Android 12+ permissions.** Upstream requested only `ACCESS_COARSE_LOCATION`, which was
-  the pre-Android-12 requirement for *scanning*, something this app never does. It now
+  the pre-Android-12 requirement for _scanning_, something this app never does. It now
   requests `BLUETOOTH_CONNECT`, `BLUETOOTH_ADVERTISE` and `BLUETOOTH_SCAN` at runtime, and
   the legacy permissions are capped with `maxSdkVersion="30"`.
 - **Keyboard input actually works.** Input was read solely from `Activity.onKeyUp`, which
@@ -400,6 +403,7 @@ the code, next to the thing they fix.
 of dex in a 2.32 MB APK. Those rules are gone and `shrinkResources` is on. **2377 KB → 330 KB.**
 
 **Lifecycle.**
+
 - `HidService.onDestroy` released the HID registration unconditionally, so turning "stay
   connected" off and returning to the trackpad unregistered the HID app while the activity
   was still using it, and the app silently stopped working until restarted.
@@ -414,7 +418,7 @@ of dex in a 2.32 MB APK. Those rules are gone and `shrinkResources` is on. **237
 
 **Edge to edge.** At `targetSdk` 36 Android no longer insets the window, and nothing in the
 app asked for insets, so the click buttons and media row drew behind the navigation bar.
-`SystemBars` applies them. *(Written against the framework API; not yet verified on a device.)*
+`SystemBars` applies them. _(Written against the framework API; not yet verified on a device.)_
 
 **Pointer.** Movement was sent straight from `ACTION_MOVE` (120-240 Hz of touch samples into
 a link that carries 50-100 reports a second) and rounded to whole pixels per event, so slow
@@ -445,7 +449,7 @@ have restarted it forever), and disconnects go through `disconnectHost` rather t
 
 **Recovering from a Bluetooth restart.** Nothing watched `ACTION_STATE_CHANGED`, so toggling
 Bluetooth invalidated the profile proxy and the app had to be restarted to work again. This was
-particularly poor because the stuck-registration dialog *tells the user to toggle Bluetooth* and
+particularly poor because the stuck-registration dialog _tells the user to toggle Bluetooth_ and
 then did not come back by itself. `BluetoothController` now drops its stale proxy when the
 adapter goes down and re-registers when it returns, unless nothing wants the registration any
 more.
@@ -461,7 +465,7 @@ its strings were translated into all 21 locales, but `activity_settings.xml` nev
 so a documented setting could not be reached and was permanently off.
 
 **A notification that says something.** The foreground service showed one fixed string, which
-made it the least informative surface in the app while being the *only* surface once the app is
+made it the least informative surface in the app while being the _only_ surface once the app is
 closed: a phone that had silently lost its host looked identical to one that was working. It now
 tracks the link (connected to X, calling X, or not connected) through a new observer list that
 is deliberately separate from the single-slot sender callbacks, because `clearListeners()` runs

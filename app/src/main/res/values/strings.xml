@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Kune Kontroller</string>
+    <string name="app_name">KuneLab Kontroller</string>
     <string name="trackpad_label">Trackpad</string>
 
     <string name="click_left">Left click</string>
@@ -70,13 +70,13 @@
     <!-- Kept for the menu item's default title/tooltip in the XML. -->
     <string name="action_ble_status_tool_tip">App not connected via bluetooth</string>
 
-    <string name="error_bluetooth_permission">Kune Kontroller needs the Bluetooth permissions to act as a keyboard and mouse.</string>
+    <string name="error_bluetooth_permission">KuneLab Kontroller needs the Bluetooth permissions to act as a keyboard and mouse.</string>
     <string name="error_no_hid_profile">This device does not expose the Bluetooth HID Device profile, so it cannot be used as a keyboard or mouse.</string>
     <string name="error_no_gyro">This phone has no rotation sensor, so the gyro pointer is unavailable.</string>
 
     <!-- Foreground service -->
     <string name="service_channel">Connection</string>
-    <string name="service_title">Kune Kontroller is active</string>
+    <string name="service_title">KuneLab Kontroller is active</string>
     <string name="service_text">Acting as a Bluetooth keyboard and mouse.</string>
     <string name="service_stop">Stop</string>
 
@@ -163,7 +163,7 @@
     <string name="help_title">Getting started</string>
     <string name="help_continue">Get started</string>
 
-    <string name="help_intro">Kune Kontroller turns this phone into a Bluetooth keyboard and mouse. The host sees an ordinary Bluetooth keyboard, so nothing needs installing on it.</string>
+    <string name="help_intro">KuneLab Kontroller turns this phone into a Bluetooth keyboard and mouse. The host sees an ordinary Bluetooth keyboard, so nothing needs installing on it.</string>
 
     <string name="help_pairing_title">Pairing</string>
     <string name="help_pairing_body">1. Leave this app open and allow the “make discoverable” prompt.\n2. On the host, scan for Bluetooth devices and pair with this phone.\n3. Confirm the passkey on both sides.\n\nAfterwards, leave “Connect automatically” on in Settings and the phone will open the connection itself whenever you open the app.</string>

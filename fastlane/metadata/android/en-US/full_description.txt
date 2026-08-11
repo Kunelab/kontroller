@@ -1,4 +1,4 @@
-Kune Kontroller turns your Android phone into a Bluetooth keyboard and mouse for anything that accepts one: a PC, a Mac, a Linux box, a smart TV or a tablet.
+KuneLab Kontroller turns your Android phone into a Bluetooth keyboard and mouse for anything that accepts one: a PC, a Mac, a Linux box, a smart TV or a tablet.
 
 It works by registering the phone as a Bluetooth HID device, the same profile a shop-bought wireless keyboard uses. The host simply sees a plain keyboard and mouse appear. There is nothing to install on the other end: no companion app, no driver, no USB dongle, and no account.
 

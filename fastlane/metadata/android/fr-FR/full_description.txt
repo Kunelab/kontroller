@@ -1,4 +1,4 @@
-Kune Kontroller transforme votre téléphone Android en clavier et souris Bluetooth pour tout appareil qui en accepte un : un PC, un Mac, une machine Linux, une TV connectée ou une tablette.
+KuneLab Kontroller transforme votre téléphone Android en clavier et souris Bluetooth pour tout appareil qui en accepte un : un PC, un Mac, une machine Linux, une TV connectée ou une tablette.
 
 Le principe : le téléphone s'enregistre comme périphérique Bluetooth HID, le même profil qu'un clavier sans fil du commerce. L'hôte voit simplement apparaître un clavier et une souris ordinaires. Rien à installer en face : ni application compagnon, ni pilote, ni dongle USB, ni compte à créer.
 

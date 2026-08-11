@@ -850,7 +850,7 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
 
     private val sdpRecord by lazy {
         BluetoothHidDeviceAppSdpSettings(
-            "Kune Kontroller",
+            "KuneLab Kontroller",
             "Android Bluetooth keyboard and mouse",
             "Kunelab",
             BluetoothHidDevice.SUBCLASS1_COMBO,

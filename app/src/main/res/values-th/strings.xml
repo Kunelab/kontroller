@@ -16,13 +16,13 @@
     <string name="status_not_connected">แอปยังไม่ได้เชื่อมต่อผ่านบลูทูธ</string>
     <string name="action_ble_status_tool_tip">แอปยังไม่ได้เชื่อมต่อผ่านบลูทูธ</string>
 
-    <string name="error_bluetooth_permission">Kune Kontroller ต้องได้รับสิทธิ์บลูทูธเพื่อทำงานเป็นแป้นพิมพ์และเมาส์</string>
+    <string name="error_bluetooth_permission">KuneLab Kontroller ต้องได้รับสิทธิ์บลูทูธเพื่อทำงานเป็นแป้นพิมพ์และเมาส์</string>
     <string name="error_no_hid_profile">อุปกรณ์นี้ไม่มีโปรไฟล์ Bluetooth HID Device จึงใช้เป็นแป้นพิมพ์หรือเมาส์ไม่ได้</string>
     <string name="error_no_gyro">โทรศัพท์นี้ไม่มีเซ็นเซอร์การหมุน จึงใช้เมาส์ไจโรไม่ได้</string>
     <string name="error_not_connected">ยังไม่ได้เชื่อมต่อกับคอมพิวเตอร์</string>
 
     <string name="service_channel">การเชื่อมต่อ</string>
-    <string name="service_title">Kune Kontroller กำลังทำงาน</string>
+    <string name="service_title">KuneLab Kontroller กำลังทำงาน</string>
     <string name="service_text">กำลังทำงานเป็นแป้นพิมพ์และเมาส์บลูทูธ</string>
     <string name="service_stop">หยุด</string>
 
@@ -102,7 +102,7 @@
     <string name="help_title">เริ่มต้นใช้งาน</string>
     <string name="help_continue">เริ่ม</string>
 
-    <string name="help_intro">Kune Kontroller เปลี่ยนโทรศัพท์นี้ให้เป็นแป้นพิมพ์และเมาส์บลูทูธ คอมพิวเตอร์จะเห็นเป็นแป้นพิมพ์บลูทูธทั่วไป จึงไม่ต้องติดตั้งอะไรบนคอมพิวเตอร์</string>
+    <string name="help_intro">KuneLab Kontroller เปลี่ยนโทรศัพท์นี้ให้เป็นแป้นพิมพ์และเมาส์บลูทูธ คอมพิวเตอร์จะเห็นเป็นแป้นพิมพ์บลูทูธทั่วไป จึงไม่ต้องติดตั้งอะไรบนคอมพิวเตอร์</string>
 
     <string name="help_pairing_title">การจับคู่</string>
     <string name="help_pairing_body">1. เปิดแอปนี้ไว้และอนุญาตคำขอ «ทำให้ค้นพบได้»\n2. ที่คอมพิวเตอร์ ค้นหาอุปกรณ์บลูทูธและจับคู่กับโทรศัพท์นี้\n3. ยืนยันรหัสผ่านทั้งสองฝ่าย\n\nหลังจากนั้นให้เปิด «เชื่อมต่ออัตโนมัติ» ไว้ในการตั้งค่า โทรศัพท์จะเปิดการเชื่อมต่อเองทุกครั้งที่เปิดแอป</string>

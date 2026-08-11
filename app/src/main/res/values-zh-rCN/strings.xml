@@ -14,12 +14,12 @@
     <string name="status_not_connected">未通过蓝牙连接</string>
     <string name="action_ble_status_tool_tip">未通过蓝牙连接</string>
 
-    <string name="error_bluetooth_permission">Kune Kontroller 需要蓝牙权限才能作为键盘和鼠标使用。</string>
+    <string name="error_bluetooth_permission">KuneLab Kontroller 需要蓝牙权限才能作为键盘和鼠标使用。</string>
     <string name="error_no_hid_profile">此设备未提供蓝牙 HID Device 配置文件，因此无法作为键盘或鼠标使用。</string>
     <string name="error_no_gyro">此手机没有旋转传感器，无法使用体感鼠标。</string>
 
     <string name="service_channel">连接</string>
-    <string name="service_title">Kune Kontroller 正在运行</string>
+    <string name="service_title">KuneLab Kontroller 正在运行</string>
     <string name="service_text">正作为蓝牙键盘和鼠标使用。</string>
     <string name="service_stop">停止</string>
 
@@ -75,7 +75,7 @@
     <string name="help_title">快速上手</string>
     <string name="help_continue">开始使用</string>
 
-    <string name="help_intro">Kune Kontroller 可把这台手机变成蓝牙键盘和鼠标。电脑会将它识别为普通的蓝牙键盘，无需在电脑上安装任何软件。</string>
+    <string name="help_intro">KuneLab Kontroller 可把这台手机变成蓝牙键盘和鼠标。电脑会将它识别为普通的蓝牙键盘，无需在电脑上安装任何软件。</string>
 
     <string name="help_pairing_title">配对</string>
     <string name="help_pairing_body">1. 保持本应用打开，并允许“设为可被发现”的请求。\n2. 在电脑上搜索蓝牙设备，并与这台手机配对。\n3. 在两端确认配对码。\n\n之后请在设置中保持“自动连接”开启，手机会在每次打开应用时自动建立连接。</string>

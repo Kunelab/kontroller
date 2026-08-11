@@ -16,13 +16,13 @@
     <string name="status_not_connected">未透過藍牙連線</string>
     <string name="action_ble_status_tool_tip">未透過藍牙連線</string>
 
-    <string name="error_bluetooth_permission">Kune Kontroller 需要藍牙權限才能作為鍵盤和滑鼠使用。</string>
+    <string name="error_bluetooth_permission">KuneLab Kontroller 需要藍牙權限才能作為鍵盤和滑鼠使用。</string>
     <string name="error_no_hid_profile">此裝置未提供藍牙 HID Device 設定檔，因此無法作為鍵盤或滑鼠使用。</string>
     <string name="error_no_gyro">這支手機沒有旋轉感測器，無法使用體感滑鼠。</string>
     <string name="error_not_connected">尚未連線到電腦。</string>
 
     <string name="service_channel">連線</string>
-    <string name="service_title">Kune Kontroller 正在運作</string>
+    <string name="service_title">KuneLab Kontroller 正在運作</string>
     <string name="service_text">正作為藍牙鍵盤和滑鼠使用。</string>
     <string name="service_stop">停止</string>
 
@@ -102,7 +102,7 @@
     <string name="help_title">快速上手</string>
     <string name="help_continue">開始使用</string>
 
-    <string name="help_intro">Kune Kontroller 可把這支手機變成藍牙鍵盤和滑鼠。電腦會將它辨識為一般的藍牙鍵盤，不需在電腦上安裝任何軟體。</string>
+    <string name="help_intro">KuneLab Kontroller 可把這支手機變成藍牙鍵盤和滑鼠。電腦會將它辨識為一般的藍牙鍵盤，不需在電腦上安裝任何軟體。</string>
 
     <string name="help_pairing_title">配對</string>
     <string name="help_pairing_body">1. 保持本應用程式開啟，並允許「設為可被偵測」的要求。\n2. 在電腦上搜尋藍牙裝置，並與這支手機配對。\n3. 在兩端確認配對碼。\n\n之後請在設定中保持「自動連線」開啟，手機會在每次開啟應用程式時自動建立連線。</string>

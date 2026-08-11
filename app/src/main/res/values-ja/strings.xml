@@ -14,12 +14,12 @@
     <string name="status_not_connected">Bluetooth で未接続</string>
     <string name="action_ble_status_tool_tip">Bluetooth で未接続</string>
 
-    <string name="error_bluetooth_permission">キーボードとマウスとして動作するには、Kune Kontroller に Bluetooth の権限が必要です。</string>
+    <string name="error_bluetooth_permission">キーボードとマウスとして動作するには、KuneLab Kontroller に Bluetooth の権限が必要です。</string>
     <string name="error_no_hid_profile">この端末は Bluetooth HID Device プロファイルに対応していないため、キーボードやマウスとして使用できません。</string>
     <string name="error_no_gyro">この端末には回転センサーがないため、ジャイロマウスは利用できません。</string>
 
     <string name="service_channel">接続</string>
-    <string name="service_title">Kune Kontroller 動作中</string>
+    <string name="service_title">KuneLab Kontroller 動作中</string>
     <string name="service_text">Bluetooth キーボード / マウスとして動作しています。</string>
     <string name="service_stop">停止</string>
 
@@ -75,7 +75,7 @@
     <string name="help_title">はじめに</string>
     <string name="help_continue">開始する</string>
 
-    <string name="help_intro">Kune Kontroller はこの端末を Bluetooth のキーボードとマウスにします。パソコンからは通常の Bluetooth キーボードとして見えるため、パソコン側に何かを入れる必要はありません。</string>
+    <string name="help_intro">KuneLab Kontroller はこの端末を Bluetooth のキーボードとマウスにします。パソコンからは通常の Bluetooth キーボードとして見えるため、パソコン側に何かを入れる必要はありません。</string>
 
     <string name="help_pairing_title">ペア設定</string>
     <string name="help_pairing_body">1. このアプリを開いたままにし、「検出可能にする」の確認を許可します。\n2. パソコン側で Bluetooth デバイスを検索し、この端末とペア設定します。\n3. 両方でパスキーを確認します。\n\n以後は設定の「自動的に接続」を有効にしておけば、アプリを開くたびに端末側から接続します。</string>

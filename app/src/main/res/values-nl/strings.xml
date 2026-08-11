@@ -16,13 +16,13 @@
     <string name="status_not_connected">App niet verbonden via bluetooth</string>
     <string name="action_ble_status_tool_tip">App niet verbonden via bluetooth</string>
 
-    <string name="error_bluetooth_permission">Kune Kontroller heeft de bluetoothrechten nodig om als toetsenbord en muis te werken.</string>
+    <string name="error_bluetooth_permission">KuneLab Kontroller heeft de bluetoothrechten nodig om als toetsenbord en muis te werken.</string>
     <string name="error_no_hid_profile">Dit apparaat biedt het bluetooth HID Device-profiel niet, dus het kan niet als toetsenbord of muis worden gebruikt.</string>
     <string name="error_no_gyro">Deze telefoon heeft geen rotatiesensor, dus de gyromuis is niet beschikbaar.</string>
     <string name="error_not_connected">Nog niet verbonden met een computer.</string>
 
     <string name="service_channel">Verbinding</string>
-    <string name="service_title">Kune Kontroller is actief</string>
+    <string name="service_title">KuneLab Kontroller is actief</string>
     <string name="service_text">Werkt als bluetooth-toetsenbord en -muis.</string>
     <string name="service_stop">Stoppen</string>
 
@@ -102,7 +102,7 @@
     <string name="help_title">Aan de slag</string>
     <string name="help_continue">Beginnen</string>
 
-    <string name="help_intro">Kune Kontroller maakt van deze telefoon een bluetooth-toetsenbord en -muis. De computer ziet een gewoon bluetooth-toetsenbord, dus daar hoeft niets op te worden geïnstalleerd.</string>
+    <string name="help_intro">KuneLab Kontroller maakt van deze telefoon een bluetooth-toetsenbord en -muis. De computer ziet een gewoon bluetooth-toetsenbord, dus daar hoeft niets op te worden geïnstalleerd.</string>
 
     <string name="help_pairing_title">Koppelen</string>
     <string name="help_pairing_body">1. Laat deze app open staan en sta het verzoek «zichtbaar maken» toe.\n2. Zoek op de computer naar bluetooth-apparaten en koppel met deze telefoon.\n3. Bevestig de code aan beide kanten.\n\nLaat daarna «Automatisch verbinden» aan in de instellingen; de telefoon maakt dan bij elke start zelf verbinding.</string>

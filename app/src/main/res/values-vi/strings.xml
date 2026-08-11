@@ -16,13 +16,13 @@
     <string name="status_not_connected">Ứng dụng chưa kết nối qua Bluetooth</string>
     <string name="action_ble_status_tool_tip">Ứng dụng chưa kết nối qua Bluetooth</string>
 
-    <string name="error_bluetooth_permission">Kune Kontroller cần quyền Bluetooth để hoạt động như bàn phím và chuột.</string>
+    <string name="error_bluetooth_permission">KuneLab Kontroller cần quyền Bluetooth để hoạt động như bàn phím và chuột.</string>
     <string name="error_no_hid_profile">Thiết bị này không cung cấp cấu hình Bluetooth HID Device, nên không thể dùng làm bàn phím hay chuột.</string>
     <string name="error_no_gyro">Điện thoại này không có cảm biến quay, nên không dùng được chuột cảm biến.</string>
     <string name="error_not_connected">Chưa kết nối với máy tính.</string>
 
     <string name="service_channel">Kết nối</string>
-    <string name="service_title">Kune Kontroller đang hoạt động</string>
+    <string name="service_title">KuneLab Kontroller đang hoạt động</string>
     <string name="service_text">Đang hoạt động như bàn phím và chuột Bluetooth.</string>
     <string name="service_stop">Dừng</string>
 
@@ -102,7 +102,7 @@
     <string name="help_title">Bắt đầu</string>
     <string name="help_continue">Bắt đầu</string>
 
-    <string name="help_intro">Kune Kontroller biến điện thoại này thành bàn phím và chuột Bluetooth. Máy tính nhận nó như một bàn phím Bluetooth thông thường, nên không cần cài gì trên máy tính.</string>
+    <string name="help_intro">KuneLab Kontroller biến điện thoại này thành bàn phím và chuột Bluetooth. Máy tính nhận nó như một bàn phím Bluetooth thông thường, nên không cần cài gì trên máy tính.</string>
 
     <string name="help_pairing_title">Ghép nối</string>
     <string name="help_pairing_body">1. Giữ ứng dụng này mở và cho phép yêu cầu «cho phép tìm thấy».\n2. Trên máy tính, tìm thiết bị Bluetooth và ghép nối với điện thoại này.\n3. Xác nhận mã ở cả hai bên.\n\nSau đó hãy bật «Tự động kết nối» trong cài đặt, điện thoại sẽ tự mở kết nối mỗi lần bạn mở ứng dụng.</string>

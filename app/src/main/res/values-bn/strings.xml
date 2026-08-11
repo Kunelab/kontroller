@@ -16,13 +16,13 @@
     <string name="status_not_connected">অ্যাপ ব্লুটুথে সংযুক্ত নয়</string>
     <string name="action_ble_status_tool_tip">অ্যাপ ব্লুটুথে সংযুক্ত নয়</string>
 
-    <string name="error_bluetooth_permission">কীবোর্ড ও মাউস হিসেবে কাজ করতে Kune Kontroller-এর ব্লুটুথ অনুমতি প্রয়োজন।</string>
+    <string name="error_bluetooth_permission">কীবোর্ড ও মাউস হিসেবে কাজ করতে KuneLab Kontroller-এর ব্লুটুথ অনুমতি প্রয়োজন।</string>
     <string name="error_no_hid_profile">এই ডিভাইসে ব্লুটুথ HID Device প্রোফাইল নেই, তাই এটি কীবোর্ড বা মাউস হিসেবে ব্যবহার করা যাবে না।</string>
     <string name="error_no_gyro">এই ফোনে রোটেশন সেন্সর নেই, তাই জাইরো মাউস পাওয়া যাচ্ছে না।</string>
     <string name="error_not_connected">এখনও কোনো কম্পিউটারে সংযুক্ত নয়।</string>
 
     <string name="service_channel">সংযোগ</string>
-    <string name="service_title">Kune Kontroller সক্রিয়</string>
+    <string name="service_title">KuneLab Kontroller সক্রিয়</string>
     <string name="service_text">ব্লুটুথ কীবোর্ড ও মাউস হিসেবে কাজ করছে।</string>
     <string name="service_stop">বন্ধ করুন</string>
 
@@ -102,7 +102,7 @@
     <string name="help_title">শুরু করা</string>
     <string name="help_continue">শুরু করুন</string>
 
-    <string name="help_intro">Kune Kontroller এই ফোনটিকে ব্লুটুথ কীবোর্ড ও মাউসে পরিণত করে। কম্পিউটার এটিকে সাধারণ ব্লুটুথ কীবোর্ড হিসেবে দেখে, তাই সেখানে কিছু ইনস্টল করার দরকার নেই।</string>
+    <string name="help_intro">KuneLab Kontroller এই ফোনটিকে ব্লুটুথ কীবোর্ড ও মাউসে পরিণত করে। কম্পিউটার এটিকে সাধারণ ব্লুটুথ কীবোর্ড হিসেবে দেখে, তাই সেখানে কিছু ইনস্টল করার দরকার নেই।</string>
 
     <string name="help_pairing_title">জোড়া লাগানো</string>
     <string name="help_pairing_body">১. এই অ্যাপটি খোলা রাখুন এবং «খুঁজে পাওয়ার যোগ্য করুন» অনুরোধটি অনুমোদন করুন।\n২. কম্পিউটারে ব্লুটুথ ডিভাইস খুঁজুন এবং এই ফোনের সঙ্গে জোড়া লাগান।\n৩. দুই দিকেই পাসকি নিশ্চিত করুন।\n\nএরপর সেটিংসে «স্বয়ংক্রিয়ভাবে সংযুক্ত হোন» চালু রাখুন, ফোন প্রতিবার অ্যাপ খোলার সময় নিজেই সংযোগ খুলে নেবে।</string>

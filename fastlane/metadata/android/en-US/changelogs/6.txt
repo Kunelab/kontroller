@@ -1,4 +1,4 @@
-The app is now called Kune Kontroller and is part of Kunelab. It comes with a new
+The app is now called KuneLab Kontroller and is part of Kunelab. It comes with a new
 application ID and a newly drawn launcher icon, which also keep it clearly distinct
 from the upstream Kontroller project it was forked from.
 

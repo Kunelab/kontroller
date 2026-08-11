@@ -16,13 +16,13 @@
     <string name="status_not_connected">التطبيق غير متصل عبر البلوتوث</string>
     <string name="action_ble_status_tool_tip">التطبيق غير متصل عبر البلوتوث</string>
 
-    <string name="error_bluetooth_permission">يحتاج Kune Kontroller إلى أذونات البلوتوث ليعمل كلوحة مفاتيح وفأرة.</string>
+    <string name="error_bluetooth_permission">يحتاج KuneLab Kontroller إلى أذونات البلوتوث ليعمل كلوحة مفاتيح وفأرة.</string>
     <string name="error_no_hid_profile">لا يوفّر هذا الجهاز ملف تعريف Bluetooth HID Device، لذا لا يمكن استخدامه كلوحة مفاتيح أو فأرة.</string>
     <string name="error_no_gyro">لا يحتوي هذا الهاتف على مستشعر دوران، لذا فأرة الجيروسكوب غير متاحة.</string>
     <string name="error_not_connected">لا يوجد اتصال بحاسوب بعد.</string>
 
     <string name="service_channel">الاتصال</string>
-    <string name="service_title">Kune Kontroller يعمل</string>
+    <string name="service_title">KuneLab Kontroller يعمل</string>
     <string name="service_text">يعمل كلوحة مفاتيح وفأرة بلوتوث.</string>
     <string name="service_stop">إيقاف</string>
 
@@ -102,7 +102,7 @@
     <string name="help_title">البداية</string>
     <string name="help_continue">لنبدأ</string>
 
-    <string name="help_intro">يحوّل Kune Kontroller هذا الهاتف إلى لوحة مفاتيح وفأرة بلوتوث. يرى الحاسوب لوحة مفاتيح بلوتوث عادية، لذا لا حاجة إلى تثبيت أي شيء عليه.</string>
+    <string name="help_intro">يحوّل KuneLab Kontroller هذا الهاتف إلى لوحة مفاتيح وفأرة بلوتوث. يرى الحاسوب لوحة مفاتيح بلوتوث عادية، لذا لا حاجة إلى تثبيت أي شيء عليه.</string>
 
     <string name="help_pairing_title">الاقتران</string>
     <string name="help_pairing_body">١. اترك هذا التطبيق مفتوحًا واسمح بطلب «السماح بالاكتشاف».\n٢. من الحاسوب، ابحث عن أجهزة البلوتوث واقترن بهذا الهاتف.\n٣. أكّد رمز المرور على الجهازين.\n\nبعد ذلك اترك «الاتصال تلقائيًا» مفعّلًا في الإعدادات، وسيفتح الهاتف الاتصال بنفسه في كل مرة تفتح التطبيق.</string>
