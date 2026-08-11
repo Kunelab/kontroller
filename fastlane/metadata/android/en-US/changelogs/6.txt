@@ -5,3 +5,10 @@ from the upstream Kontroller project it was forked from.
 Because the application ID changed, Android treats this as a separate app: the
 MaxKontroller 0.2.1 you installed from GitHub will not be replaced, and you can
 remove it once you have moved over.
+
+Reconnection is smarter: retries back off gradually, and a stale pairing (the host
+accepts the link, then drops it at once) no longer causes an endless rapid retry
+storm -- the app stops after a few tries and suggests re-pairing instead.
+
+The app also repairs a wedged keyboard registration by itself after a crash, update
+or force stop, instead of asking you to toggle Bluetooth off and on.

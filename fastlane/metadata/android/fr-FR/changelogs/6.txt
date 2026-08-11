@@ -5,3 +5,12 @@ la distinguent aussi clairement du projet Kontroller dont elle est issue.
 L'identifiant ayant changé, Android considère qu'il s'agit d'une application
 distincte : la version MaxKontroller 0.2.1 installée depuis GitHub ne sera pas
 remplacée et vous pourrez la désinstaller une fois la migration faite.
+
+La reconnexion est plus maligne : les tentatives s'espacent progressivement, et un
+appairage périmé (l'hôte accepte la connexion puis la coupe aussitôt) ne déclenche
+plus une tempête de tentatives sans fin -- l'application s'arrête après quelques
+essais et suggère de refaire l'appairage.
+
+L'application répare aussi d'elle-même un enregistrement clavier bloqué après un
+plantage, une mise à jour ou un arrêt forcé, au lieu de demander de couper puis
+rallumer le Bluetooth.

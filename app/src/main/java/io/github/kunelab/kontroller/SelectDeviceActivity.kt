@@ -260,6 +260,18 @@ class SelectDeviceActivity : Activity() {
             }
         }
 
+        // The one hint the user gets that re-pairing is the fix -- Android shows both sides
+        // as paired while every connection dies at encryption setup.
+        BluetoothController.onStaleBondSuspected { device ->
+            runOnUiThread {
+                Toast.makeText(
+                    this,
+                    getString(R.string.stale_bond_toast, device.name ?: device.address),
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+
         // Opening the app with the link already down used to do nothing at all. Auto-connect
         // runs on registration, and with "stay connected" on the registration is already up by
         // the time this activity starts, so no callback fires and the user is left looking at

@@ -149,6 +149,39 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
     @Volatile
     private var chaseBlockedUntil = 0L
 
+    /**
+     * [SystemClock.uptimeMillis] when the current link came up, or 0 while it is down.
+     *
+     * This is what separates a link that was *lost* from one that was *rejected*: a host
+     * holding a stale link key accepts the connection and drops it moments later, when
+     * encryption setup fails against a key it no longer has. BlueZ draws this line with the
+     * HCI disconnect reason and only ever chases genuine link loss; the reason never reaches
+     * this API, so how long the link held is the proxy.
+     */
+    @Volatile
+    private var connectedAt = 0L
+
+    /**
+     * How many times in a row the link has come up and collapsed within [LINK_STABLE_MS].
+     *
+     * Cleared by a link that holds, a deliberate disconnect, or the user asking for a fresh
+     * chase. At [MAX_FLAPS] the loop stops and [staleBondListener] suggests re-pairing,
+     * because paging on can only produce more of the same.
+     */
+    @Volatile
+    private var flapCount = 0
+
+    /**
+     * Deadline of the chase that was running when the link came up, kept so a flap resumes
+     * what is left of that window instead of being granted a fresh one.
+     *
+     * A fresh window per flap is what made the loop immortal: every brief connection wiped
+     * the give-up state and every collapse re-armed it, so against a host that accepts and
+     * immediately drops the link the app paged as fast as the host could reject it, forever.
+     */
+    @Volatile
+    private var resumableDeadline = 0L
+
     val reconnecting: Boolean get() = reconnectDeadline != 0L
 
     /**
@@ -165,19 +198,40 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
      * back to say the app is registered.
      *
      * Android allows one registered HID app at a time, and if a process holding a
-     * registration dies without unregistering -- a crash, a force-stop, an uninstall
-     * mid-session -- the stack can keep the dead one. `registerApp()` then returns
-     * successfully, `onAppStatusChanged` never arrives, and every `connect()` silently does
-     * nothing. Nothing distinguishes it from a working app that simply has no host, which is
-     * why it has to be detected explicitly rather than left to the user to guess.
+     * registration dies without unregistering -- a crash, a force-stop, a reinstall, the
+     * system reclaiming the app -- the stack can keep the dead one. `registerApp()` then
+     * returns successfully, `onAppStatusChanged` never arrives, and every `connect()`
+     * silently does nothing. Nothing distinguishes it from a working app that simply has no
+     * host, which is why it has to be detected explicitly rather than left to the user to
+     * guess.
      *
-     * Only a Bluetooth restart clears it.
+     * Recovery is attempted once before the user is asked to restart Bluetooth: the stack
+     * checks `unregisterApp()` against the calling UID, not the callback, so this process
+     * can clear a registration left behind by its own predecessor -- which is all a
+     * Bluetooth restart was achieving.
      */
-    private val registrationWatchdog = Runnable {
-        if (appRegistered) return@Runnable
-        Log.e(TAG, "registerApp() was accepted but never completed -- stale registration?")
-        registrationFailedListener?.invoke()
+    private val registrationWatchdog = object : Runnable {
+        override fun run() {
+            if (appRegistered) return
+
+            val hid = btHid
+            if (hid != null && !registrationRetried) {
+                registrationRetried = true
+                Log.w(TAG, "registerApp() never completed; clearing what may be a stale registration and retrying")
+                hid.unregisterApp()
+                hid.registerApp(sdpRecord, null, qosOut, { it.run() }, this@BluetoothController)
+                mainHandler.postDelayed(this, REGISTRATION_TIMEOUT_MS)
+                return
+            }
+
+            Log.e(TAG, "registerApp() was accepted but never completed -- stale registration?")
+            registrationFailedListener?.invoke()
+        }
     }
+
+    /** Whether the watchdog has already spent its one clear-and-retry for this proxy. */
+    @Volatile
+    private var registrationRetried = false
 
     /**
      * Registers [owner] as needing the HID profile and acquires the proxy if it is not up
@@ -219,6 +273,7 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
         registeredListener = null
         registrationFailedListener = null
         unpairedHostListener = null
+        staleBondListener = null
     }
 
     /**
@@ -380,6 +435,18 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
         unpairedHostListener = callback
     }
 
+    /**
+     * Fired when the link has flapped [MAX_FLAPS] times in a row: the host accepts every
+     * connection and drops it straight away, which retrying cannot fix and re-pairing
+     * usually does. Worth a message, because nothing else surfaces it -- both sides still
+     * list the other as paired while every connection quietly dies.
+     */
+    private var staleBondListener: ((BluetoothDevice) -> Unit)? = null
+
+    fun onStaleBondSuspected(callback: (BluetoothDevice) -> Unit) {
+        staleBondListener = callback
+    }
+
     private fun teardown() {
         mainHandler.removeCallbacks(registrationWatchdog)
         stopReconnecting()
@@ -520,14 +587,20 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
     fun startReconnecting(
         target: BluetoothDevice,
         windowMs: Long,
-        userInitiated: Boolean = true
+        userInitiated: Boolean = true,
+        firstDelayMs: Long = 0L
     ): Boolean {
         if (btAdapter == null) return false
 
         // Whatever asked for this outranks a previous deliberate disconnect. Only a genuine
         // user action outranks the cooldown left by a loop that gave up -- see [reconnect].
         userDisconnected = false
-        if (userInitiated) chaseBlockedUntil = 0L
+        if (userInitiated) {
+            chaseBlockedUntil = 0L
+            // The user asked again, so the flap budget starts over: they may well have just
+            // re-paired and deserve a chase that is not primed to give up.
+            flapCount = 0
+        }
 
         val extending = reconnecting && reconnectTarget?.address == target.address
         val proposed = SystemClock.uptimeMillis() + windowMs
@@ -549,7 +622,13 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
         mainHandler.post {
             mainHandler.removeCallbacks(reconnectTick)
             Log.i(TAG, "Chasing $target for ${windowMs}ms")
-            reconnectTick.run()
+            // A flap passes a delay here: the whole connect-and-collapse cycle can take well
+            // under a second, and paging again the instant it ends is what made the storm.
+            if (firstDelayMs > 0) {
+                mainHandler.postDelayed(reconnectTick, firstDelayMs)
+            } else {
+                reconnectTick.run()
+            }
         }
         // Publish the CALLING state now. attemptReconnect only notifies once it has actually
         // paged, and it legitimately skips the first few ticks while the profile proxy and
@@ -614,50 +693,62 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
 
     private val reconnectTick = object : Runnable {
         override fun run() {
-            if (attemptReconnect()) {
-                mainHandler.postDelayed(this, RECONNECT_INTERVAL_MS)
+            val nextDelayMs = attemptReconnect()
+            if (nextDelayMs > 0) {
+                mainHandler.postDelayed(this, nextDelayMs)
             } else {
                 stopReconnecting()
             }
         }
     }
 
-    /** Makes one attempt if it is worth making. Returns whether the loop should keep going. */
-    private fun attemptReconnect(): Boolean {
+    /**
+     * Makes one attempt if it is worth making. Returns how long the loop should wait before
+     * the next tick, or 0 to stop.
+     */
+    private fun attemptReconnect(): Long {
         // Stopped while this tick was already in flight -- removeCallbacks cannot recall a
         // Runnable that is mid-execution. Not an expiry: it must not log "giving up" and must
         // not lay down a cooldown that would suppress a legitimate chase for half a minute.
-        if (reconnectDeadline == 0L) return false
+        if (reconnectDeadline == 0L) return 0L
 
-        if (hostDevice != null) return false
+        if (hostDevice != null) return 0L
         if (SystemClock.uptimeMillis() > reconnectDeadline) {
             Log.i(TAG, "Giving up after $reconnectAttempt attempts")
             chaseBlockedUntil = SystemClock.uptimeMillis() + CHASE_COOLDOWN_MS
-            return false
+            return 0L
         }
 
-        val target = reconnectTarget ?: return false
+        val target = reconnectTarget ?: return 0L
 
         // Bluetooth turned off mid-loop: there is no radio to page with, and the adapter
         // coming back re-registers the app and starts a fresh loop anyway.
-        val adapter = btAdapter ?: return false
-        if (!adapter.isEnabled) return false
+        val adapter = btAdapter ?: return 0L
+        if (!adapter.isEnabled) return 0L
 
         // Not ready yet rather than not working: the profile proxy and the registration both
         // arrive asynchronously, and on a cold start the loop can easily begin first. Keep
         // waiting -- the window is the budget, not the attempt count.
-        val hid = btHid ?: return true
-        if (!appRegistered) return true
+        val hid = btHid ?: return RECONNECT_INTERVAL_MS
+        if (!appRegistered) return RECONNECT_INTERVAL_MS
 
         // A page is already in flight. Stacking another on top achieves nothing and the
         // stack may reject it outright, so let this one time out first.
-        if (hid.getConnectionState(target) == BluetoothProfile.STATE_CONNECTING) return true
+        if (hid.getConnectionState(target) == BluetoothProfile.STATE_CONNECTING) {
+            return RECONNECT_INTERVAL_MS
+        }
 
         reconnectAttempt++
         Log.i(TAG, "Attempt $reconnectAttempt: paging $target")
         hid.connect(target)
         notifyStatus()
-        return true
+        // Exponential backoff, the way BlueZ paces its reconnects (1 through 64 seconds) --
+        // but capped low, because unlike BlueZ this loop exists to *wake* a host, and the
+        // host's controller only wakes the machine when it actually hears a page. Long
+        // silences late in the window would read as the wake having failed, so the gaps
+        // stop growing at [RECONNECT_INTERVAL_MAX_MS].
+        return (RECONNECT_INTERVAL_MS shl (reconnectAttempt - 1).coerceAtMost(3))
+            .coerceAtMost(RECONNECT_INTERVAL_MAX_MS)
     }
 
     /**
@@ -711,10 +802,22 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
             return
         }
         this.btHid = btHid
+        registrationRetried = false
         // registerApp() returning true only means the call was accepted. Give the stack a
         // few seconds to actually confirm it, then assume it is wedged.
         mainHandler.removeCallbacks(registrationWatchdog)
         mainHandler.postDelayed(registrationWatchdog, REGISTRATION_TIMEOUT_MS)
+
+        // Clear any registration a previous run of this app left behind. The stack allows a
+        // single HID app, and a process that died without unregistering -- a crash, a
+        // reinstall, the system reclaiming the app -- can leave its registration in place,
+        // after which registerApp() below is accepted and silently ignored, and the only
+        // published remedy is restarting Bluetooth. unregisterApp() is checked against the
+        // calling UID, so it can only ever remove this app's own leftovers, and it is a
+        // harmless no-op when there is nothing to remove. A fresh proxy can never hold a
+        // registration this process still wants: init() only requests one when btHid is
+        // null, and losing btHid means the old registration is unreachable anyway.
+        btHid.unregisterApp()
 
         // The executor runs inline, so every callback below arrives on a Bluetooth binder
         // thread. That is deliberate: onGetReport/onSetReport have to answer within the
@@ -769,12 +872,17 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
             if (device != null) {
                 hostDevice = device
                 lastHost = device
-                // A link that came up is proof the host is reachable, so the next drop
-                // deserves a fresh chase regardless of what the previous loop concluded --
-                // and regardless of a stale userDisconnected left by a disconnect that never
-                // produced a state change.
-                chaseBlockedUntil = 0L
+                connectedAt = SystemClock.uptimeMillis()
+                // Not proof of health yet: a host with a stale link key accepts the
+                // connection and drops it during encryption setup a moment later. Whether
+                // this link counts for anything is decided by how long it holds -- see the
+                // classification in the DISCONNECTED branch. Only userDisconnected is
+                // cleared here, so a stale flag left by a disconnect that never produced a
+                // state change cannot suppress the chase for the next drop.
                 userDisconnected = false
+                // Keep what is left of the running window: if this connection collapses
+                // straight away, it resumes that window rather than earning a fresh one.
+                resumableDeadline = if (reconnecting) reconnectDeadline else 0L
                 // stopReconnecting() notifies too, but only if a loop was running -- a
                 // host-initiated connection arrives with no loop at all.
                 stopReconnecting()
@@ -786,6 +894,9 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
         } else {
             hostDevice = null
             if (state == BluetoothProfile.STATE_DISCONNECTED) {
+                val heldFor =
+                    if (connectedAt != 0L) SystemClock.uptimeMillis() - connectedAt else -1L
+                connectedAt = 0L
                 notifyStatus()
                 disconnectListener?.invoke()
 
@@ -793,9 +904,72 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
                 // unexpected drop should be.
                 val deliberate = userDisconnected
                 userDisconnected = false
-                if (!deliberate) chaseLostLink()
+                when {
+                    deliberate -> flapCount = 0
+
+                    // The link never came up at all: either one failed page of a running
+                    // chase, which chaseLostLink ignores because the loop is still going,
+                    // or some drop with no connection on record, which it chases as before.
+                    heldFor < 0 -> chaseLostLink()
+
+                    // The link held, which is the actual proof the host is reachable, so
+                    // the drop deserves a fresh chase regardless of what any previous loop
+                    // concluded.
+                    heldFor >= LINK_STABLE_MS -> {
+                        flapCount = 0
+                        chaseBlockedUntil = 0L
+                        chaseLostLink()
+                    }
+
+                    // Came up and collapsed within seconds: a rejection, not a loss.
+                    else -> device?.let { onLinkFlapped(it) }
+                }
             }
         }
+    }
+
+    /**
+     * Handles a link that collapsed within [LINK_STABLE_MS] of coming up.
+     *
+     * That shape is a rejection, not a loss: the host answered the page, accepted the HID
+     * channel, and then closed it -- which is what a stale link key looks like from here.
+     * The pairing does not expire, but the host can regenerate or lose its half of the key
+     * (a reinstall, a dual-boot OS overwriting it, re-pairing on the host side), after which
+     * both sides still show "paired" and every connection dies at encryption setup.
+     *
+     * Retrying cannot fix that, and this used to be a storm: each brief connection cleared
+     * the give-up state and each collapse read as a fresh drop worth a fresh 45-second
+     * window, so the loop paged as fast as the host could reject it, indefinitely. BlueZ
+     * never chases these at all -- it reconnects only on link loss, identified by the HCI
+     * disconnect reason. That reason never reaches this API, so flaps are tolerated a few
+     * times, damped, and then given up on with an explanation.
+     */
+    private fun onLinkFlapped(device: BluetoothDevice) {
+        flapCount++
+        Log.w(TAG, "Link collapsed right after connecting (flap $flapCount of $MAX_FLAPS)")
+
+        if (flapCount >= MAX_FLAPS) {
+            Log.e(TAG, "Host keeps accepting and immediately dropping the link -- stale pairing?")
+            flapCount = 0
+            chaseBlockedUntil = SystemClock.uptimeMillis() + CHASE_COOLDOWN_MS
+            staleBondListener?.invoke(device)
+            return
+        }
+
+        // Resume what is left of the interrupted window. No window means the host connected
+        // on its own initiative and then dropped us: there is nothing to resume, and chasing
+        // a rejection is pointless, so leave the next move to the host or the user.
+        val remaining = resumableDeadline - SystemClock.uptimeMillis()
+        if (remaining <= 0) {
+            chaseBlockedUntil = SystemClock.uptimeMillis() + CHASE_COOLDOWN_MS
+            return
+        }
+        startReconnecting(
+            device,
+            remaining,
+            userInitiated = false,
+            firstDelayMs = RECONNECT_INTERVAL_MS
+        )
     }
 
     override fun onAppStatusChanged(pluggedDevice: BluetoothDevice?, registered: Boolean) {
@@ -865,15 +1039,38 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
     private const val REGISTRATION_TIMEOUT_MS = 4000L
 
     /**
-     * Gap between connection attempts.
+     * Gap after the first connection attempt, doubling per attempt up to
+     * [RECONNECT_INTERVAL_MAX_MS].
      *
      * Not much shorter than this: a page that finds nothing takes several seconds to time out
      * on its own, and [attemptReconnect] skips a tick while one is still in flight, so a
-     * tighter interval mostly just spins. Not much longer either -- the host's controller only
-     * wakes the machine when it actually hears a page, so the gaps are dead time during which
-     * a PC that just went to sleep is not being called.
+     * tighter interval mostly just spins.
      */
     private const val RECONNECT_INTERVAL_MS = 3_000L
+
+    /**
+     * Ceiling on the backoff between attempts, i.e. three doublings of
+     * [RECONNECT_INTERVAL_MS].
+     *
+     * BlueZ walks its reconnect intervals out to 64 seconds, but it is not trying to wake
+     * anyone; here the host's controller only wakes the machine when it actually hears a
+     * page, so the gaps are dead time during which a PC that just went to sleep is not
+     * being called. The cap keeps the radio cost falling without the wake going quiet.
+     */
+    private const val RECONNECT_INTERVAL_MAX_MS = 24_000L
+
+    /**
+     * How long a link has to hold before it counts as proof the host is really reachable.
+     *
+     * Shorter than this and the connection was a rejection in slow motion: with a stale link
+     * key the host accepts the HID channel and drops it as soon as encryption setup fails,
+     * typically well within a second. Long enough to cover a slow handshake, short enough
+     * that no genuine session ever looks like a flap.
+     */
+    private const val LINK_STABLE_MS = 5_000L
+
+    /** Consecutive flaps tolerated before the loop stops and suggests re-pairing. */
+    private const val MAX_FLAPS = 3
 
     /**
      * Budget for chasing a link that dropped by itself.

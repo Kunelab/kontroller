@@ -18,6 +18,7 @@
     <string name="devices_waking">Calling %1$s. This can take up to a minute if it is asleep.</string>
     <string name="reconnect_nudge">Calling the host…</string>
     <string name="device_unpaired_toast">%1$s was unpaired, so it is no longer the preferred host.</string>
+    <string name="stale_bond_toast">%1$s keeps dropping the connection right after accepting it. The pairing may be stale: remove it on both devices, then pair again.</string>
     <string name="device_disconnect_title">Disconnect?</string>
     <string name="device_disconnect_message">Stop using this phone as a keyboard and mouse for %1$s?</string>
     <string name="action_devices">Devices</string>

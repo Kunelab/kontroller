@@ -46,10 +46,32 @@ class DevicesActivity : Activity() {
 
     override fun onResume() {
         super.onResume()
+        registrationPolls = 0
         refresh()
     }
 
+    override fun onPause() {
+        super.onPause()
+        hint.removeCallbacks(registrationPoll)
+    }
+
+    /**
+     * Re-runs [refresh] while the registration is still in flight.
+     *
+     * Opening this screen right after launching the app races the HID registration, which
+     * takes a moment to complete -- and the hint was computed once, so "Not registered as a
+     * keyboard yet" stayed on screen long after it had stopped being true, until the user
+     * left and came back. Bounded, so a registration that is genuinely wedged does not have
+     * this screen rebuilding itself forever.
+     */
+    private val registrationPoll = Runnable {
+        if (!isFinishing && !isDestroyed) refresh()
+    }
+
+    private var registrationPolls = 0
+
     private fun refresh() {
+        hint.removeCallbacks(registrationPoll)
         list.removeAllViews()
 
         val adapter = BluetoothController.btAdapter
@@ -67,10 +89,14 @@ class DevicesActivity : Activity() {
         // appRegistered, not btHid != null: the proxy can be up while the registration never
         // completed, and in that state the old check claimed everything was fine while every
         // tap did nothing.
+        val registered = BluetoothController.appRegistered
         hint.setText(
-            if (!BluetoothController.appRegistered) R.string.devices_not_registered
+            if (!registered) R.string.devices_not_registered
             else R.string.devices_hint
         )
+        if (!registered && registrationPolls++ < MAX_REGISTRATION_POLLS) {
+            hint.postDelayed(registrationPoll, REGISTRATION_POLL_MS)
+        }
 
         bonded.forEach { list.addView(rowFor(it)) }
     }
@@ -241,6 +267,15 @@ class DevicesActivity : Activity() {
 
     private companion object {
         const val REFRESH_DELAY_MS = 1500L
+
+        /**
+         * A healthy registration completes within a second or two of launch; the watchdog
+         * plus its one retry need about twice [BluetoothController]'s 4-second timeout.
+         * Ten seconds of polling comfortably covers both without rebuilding the list
+         * forever in front of a registration that is genuinely dead.
+         */
+        const val REGISTRATION_POLL_MS = 1_000L
+        const val MAX_REGISTRATION_POLLS = 10
 
         /** Plain glyphs rather than drawables -- no asset, and they theme with the text. */
         const val STAR_FILLED = "★"
