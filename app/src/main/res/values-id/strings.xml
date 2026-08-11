@@ -16,13 +16,13 @@
     <string name="status_not_connected">Aplikasi tidak tersambung via Bluetooth</string>
     <string name="action_ble_status_tool_tip">Aplikasi tidak tersambung via Bluetooth</string>
 
-    <string name="error_bluetooth_permission">MaxKontroller memerlukan izin Bluetooth agar dapat berfungsi sebagai keyboard dan mouse.</string>
+    <string name="error_bluetooth_permission">Kune Kontroller memerlukan izin Bluetooth agar dapat berfungsi sebagai keyboard dan mouse.</string>
     <string name="error_no_hid_profile">Perangkat ini tidak menyediakan profil Bluetooth HID Device, sehingga tidak dapat digunakan sebagai keyboard atau mouse.</string>
     <string name="error_no_gyro">Ponsel ini tidak memiliki sensor rotasi, jadi mouse giro tidak tersedia.</string>
     <string name="error_not_connected">Belum tersambung ke komputer.</string>
 
     <string name="service_channel">Sambungan</string>
-    <string name="service_title">MaxKontroller aktif</string>
+    <string name="service_title">Kune Kontroller aktif</string>
     <string name="service_text">Berfungsi sebagai keyboard dan mouse Bluetooth.</string>
     <string name="service_stop">Hentikan</string>
 
@@ -102,7 +102,7 @@
     <string name="help_title">Memulai</string>
     <string name="help_continue">Mulai</string>
 
-    <string name="help_intro">MaxKontroller mengubah ponsel ini menjadi keyboard dan mouse Bluetooth. Komputer melihatnya sebagai keyboard Bluetooth biasa, jadi tidak ada yang perlu diinstal di sana.</string>
+    <string name="help_intro">Kune Kontroller mengubah ponsel ini menjadi keyboard dan mouse Bluetooth. Komputer melihatnya sebagai keyboard Bluetooth biasa, jadi tidak ada yang perlu diinstal di sana.</string>
 
     <string name="help_pairing_title">Pemasangan</string>
     <string name="help_pairing_body">1. Biarkan aplikasi ini terbuka dan izinkan permintaan «jadikan dapat ditemukan».\n2. Di komputer, cari perangkat Bluetooth dan pasangkan dengan ponsel ini.\n3. Konfirmasi kode sandi di kedua sisi.\n\nSetelah itu, biarkan «Sambungkan otomatis» aktif di setelan, dan ponsel akan membuka sambungan sendiri setiap kali aplikasi dibuka.</string>

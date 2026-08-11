@@ -1,4 +1,4 @@
-# MaxKontroller
+# Kune Kontroller
 
 Use an Android phone as a **Bluetooth keyboard and mouse** for a PC, Mac, TV or tablet.
 
@@ -7,7 +7,7 @@ keyboard and mouse. Nothing has to be installed on the host, and because input a
 the kernel/evdev level it works regardless of whether the host runs X11, Wayland or no
 desktop at all.
 
-MaxKontroller is a modernised and extended fork of
+Kune Kontroller is a modernised and extended fork of
 [raghavk92/Kontroller](https://github.com/raghavk92/Kontroller) (Apache-2.0), whose last
 code change was in November 2020 and which no longer builds or runs on current Android.
 The original commit history is preserved in this repository.
@@ -36,8 +36,8 @@ To build a signed release, copy `keystore.properties.example` to `keystore.prope
 (gitignored) and fill it in. Without one the build still works and produces an unsigned APK.
 
 ```sh
-keytool -genkeypair -v -keystore maxkontroller.jks -storetype PKCS12 \
-        -alias maxkontroller -keyalg RSA -keysize 4096 -validity 10000
+keytool -genkeypair -v -keystore kune-kontroller.jks -storetype PKCS12 \
+        -alias kune-kontroller -keyalg RSA -keysize 4096 -validity 10000
 ./gradlew assembleRelease
 ```
 
@@ -196,7 +196,7 @@ while the machine is suspended and listens for pages from bonded devices, and th
 what initiates. Clicking a sleeping mouse makes it page its last host **repeatedly**, the
 first page wakes the machine, and a later one lands on a stack that has finished resuming.
 
-MaxKontroller uses the same primitive (`BluetoothHidDevice.connect`), so with **Keep trying to
+Kune Kontroller uses the same primitive (`BluetoothHidDevice.connect`), so with **Keep trying to
 reconnect** on it can wake a host the same way. Opening the app, tapping the host under
 **Devices**, or choosing **Connect** all start a bounded retry loop; the action bar shows
 `Calling <host>… (n)` while it runs, and **Stop calling the host** calls it off.
@@ -303,7 +303,9 @@ cannot run on JDK 17.
   pointer is active.
 - **A getting-started guide** shown on first launch, covering pairing, gestures and the
   BlueZ pitfalls below.
-- Renamed to **MaxKontroller** (app label and the SDP name the host displays).
+- Renamed to **Kune Kontroller** (app label and the SDP name the host displays), under the
+  `io.github.kunelab.kontroller` application ID and a launcher icon drawn for this fork, so
+  nothing about the identity is inherited from upstream.
 
 **Build and toolchain**
 - Gradle 5.1.1 → 8.13, AGP 3.4.1 → 8.9.1, Kotlin 1.3.21 → 2.1.20
@@ -383,8 +385,6 @@ Scroll, drag & drop and double click confirmed by hand.
   means editing `DescriptorCollection`, not just the report class.
 - `KeyboardReport` sends a single key at a time (`key1`); simultaneous key rollover is not
   implemented.
-- `applicationId` is still `com.github.roarappstudio.btkontroller`. Changing it is a
-  one-line edit, but it installs as a separate app rather than upgrading in place.
 - **No tests and no CI.** The report bit-packing, the `HostLayout` tables and `sendMove`'s
   clamping are pure functions and the obvious place to start.
 - Strings added after the initial translation pass are English-only in the other 21 locales;

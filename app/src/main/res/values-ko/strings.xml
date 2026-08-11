@@ -16,13 +16,13 @@
     <string name="status_not_connected">블루투스로 연결되지 않음</string>
     <string name="action_ble_status_tool_tip">블루투스로 연결되지 않음</string>
 
-    <string name="error_bluetooth_permission">키보드와 마우스로 작동하려면 MaxKontroller에 블루투스 권한이 필요합니다.</string>
+    <string name="error_bluetooth_permission">키보드와 마우스로 작동하려면 Kune Kontroller에 블루투스 권한이 필요합니다.</string>
     <string name="error_no_hid_profile">이 기기는 블루투스 HID Device 프로필을 제공하지 않으므로 키보드나 마우스로 사용할 수 없습니다.</string>
     <string name="error_no_gyro">이 휴대전화에는 회전 센서가 없어 자이로 마우스를 사용할 수 없습니다.</string>
     <string name="error_not_connected">아직 컴퓨터에 연결되지 않았습니다.</string>
 
     <string name="service_channel">연결</string>
-    <string name="service_title">MaxKontroller 실행 중</string>
+    <string name="service_title">Kune Kontroller 실행 중</string>
     <string name="service_text">블루투스 키보드와 마우스로 작동 중입니다.</string>
     <string name="service_stop">중지</string>
 
@@ -102,7 +102,7 @@
     <string name="help_title">시작하기</string>
     <string name="help_continue">시작</string>
 
-    <string name="help_intro">MaxKontroller는 이 휴대전화를 블루투스 키보드와 마우스로 만듭니다. 컴퓨터는 일반 블루투스 키보드로 인식하므로 컴퓨터에 따로 설치할 것이 없습니다.</string>
+    <string name="help_intro">Kune Kontroller는 이 휴대전화를 블루투스 키보드와 마우스로 만듭니다. 컴퓨터는 일반 블루투스 키보드로 인식하므로 컴퓨터에 따로 설치할 것이 없습니다.</string>
 
     <string name="help_pairing_title">페어링</string>
     <string name="help_pairing_body">1. 이 앱을 열어 둔 상태에서 «검색 허용» 요청을 허용하세요.\n2. 컴퓨터에서 블루투스 기기를 검색해 이 휴대전화와 페어링하세요.\n3. 양쪽에서 인증 번호를 확인하세요.\n\n이후에는 설정에서 «자동으로 연결»을 켜 두면 앱을 열 때마다 휴대전화가 직접 연결합니다.</string>

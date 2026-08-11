@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Declares the languages this app ships, so Android shows it in the system
-     per-app language picker (Settings > Apps > MaxKontroller > Language). -->
+     per-app language picker (Settings > Apps > Kune Kontroller > Language). -->
 <locale-config xmlns:android="http://schemas.android.com/apk/res/android">
     <locale android:name="en" />
     <locale android:name="zh-CN" />

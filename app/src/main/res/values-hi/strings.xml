@@ -16,13 +16,13 @@
     <string name="status_not_connected">ऐप ब्लूटूथ से कनेक्ट नहीं है</string>
     <string name="action_ble_status_tool_tip">ऐप ब्लूटूथ से कनेक्ट नहीं है</string>
 
-    <string name="error_bluetooth_permission">कीबोर्ड और माउस की तरह काम करने के लिए MaxKontroller को ब्लूटूथ अनुमतियाँ चाहिए।</string>
+    <string name="error_bluetooth_permission">कीबोर्ड और माउस की तरह काम करने के लिए Kune Kontroller को ब्लूटूथ अनुमतियाँ चाहिए।</string>
     <string name="error_no_hid_profile">यह डिवाइस ब्लूटूथ HID Device प्रोफ़ाइल नहीं देता, इसलिए इसे कीबोर्ड या माउस के रूप में इस्तेमाल नहीं किया जा सकता।</string>
     <string name="error_no_gyro">इस फ़ोन में रोटेशन सेंसर नहीं है, इसलिए जायरो माउस उपलब्ध नहीं है।</string>
     <string name="error_not_connected">अभी किसी कंप्यूटर से कनेक्ट नहीं है।</string>
 
     <string name="service_channel">कनेक्शन</string>
-    <string name="service_title">MaxKontroller चालू है</string>
+    <string name="service_title">Kune Kontroller चालू है</string>
     <string name="service_text">ब्लूटूथ कीबोर्ड और माउस की तरह काम कर रहा है।</string>
     <string name="service_stop">रोकें</string>
 
@@ -102,7 +102,7 @@
     <string name="help_title">शुरू करें</string>
     <string name="help_continue">शुरू करें</string>
 
-    <string name="help_intro">MaxKontroller इस फ़ोन को ब्लूटूथ कीबोर्ड और माउस बना देता है। कंप्यूटर इसे एक सामान्य ब्लूटूथ कीबोर्ड के रूप में देखता है, इसलिए उस पर कुछ इंस्टॉल करने की ज़रूरत नहीं।</string>
+    <string name="help_intro">Kune Kontroller इस फ़ोन को ब्लूटूथ कीबोर्ड और माउस बना देता है। कंप्यूटर इसे एक सामान्य ब्लूटूथ कीबोर्ड के रूप में देखता है, इसलिए उस पर कुछ इंस्टॉल करने की ज़रूरत नहीं।</string>
 
     <string name="help_pairing_title">युग्मन</string>
     <string name="help_pairing_body">1. इस ऐप को खुला रखें और «खोजे जाने योग्य बनाएँ» अनुरोध की अनुमति दें।\n2. कंप्यूटर पर ब्लूटूथ डिवाइस खोजें और इस फ़ोन से युग्मित करें।\n3. दोनों तरफ़ पासकी की पुष्टि करें।\n\nइसके बाद सेटिंग में «स्वचालित रूप से कनेक्ट करें» चालू रखें, फ़ोन हर बार ऐप खुलने पर खुद कनेक्शन बना लेगा।</string>

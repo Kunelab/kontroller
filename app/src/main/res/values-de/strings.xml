@@ -14,12 +14,12 @@
     <string name="status_not_connected">App nicht über Bluetooth verbunden</string>
     <string name="action_ble_status_tool_tip">App nicht über Bluetooth verbunden</string>
 
-    <string name="error_bluetooth_permission">MaxKontroller benötigt die Bluetooth-Berechtigungen, um als Tastatur und Maus zu funktionieren.</string>
+    <string name="error_bluetooth_permission">Kune Kontroller benötigt die Bluetooth-Berechtigungen, um als Tastatur und Maus zu funktionieren.</string>
     <string name="error_no_hid_profile">Dieses Gerät stellt das Bluetooth-HID-Device-Profil nicht bereit und kann daher nicht als Tastatur oder Maus dienen.</string>
     <string name="error_no_gyro">Dieses Telefon hat keinen Rotationssensor, die Gyro-Maus ist daher nicht verfügbar.</string>
 
     <string name="service_channel">Verbindung</string>
-    <string name="service_title">MaxKontroller ist aktiv</string>
+    <string name="service_title">Kune Kontroller ist aktiv</string>
     <string name="service_text">Arbeitet als Bluetooth-Tastatur und -Maus.</string>
     <string name="service_stop">Beenden</string>
 
@@ -75,7 +75,7 @@
     <string name="help_title">Erste Schritte</string>
     <string name="help_continue">Los geht\'s</string>
 
-    <string name="help_intro">MaxKontroller macht aus diesem Telefon eine Bluetooth-Tastatur und -Maus. Der Computer sieht eine gewöhnliche Bluetooth-Tastatur, es muss dort also nichts installiert werden.</string>
+    <string name="help_intro">Kune Kontroller macht aus diesem Telefon eine Bluetooth-Tastatur und -Maus. Der Computer sieht eine gewöhnliche Bluetooth-Tastatur, es muss dort also nichts installiert werden.</string>
 
     <string name="help_pairing_title">Kopplung</string>
     <string name="help_pairing_body">1. Lass diese App offen und bestätige die Anfrage „sichtbar machen“.\n2. Suche am Computer nach Bluetooth-Geräten und koppele ihn mit diesem Telefon.\n3. Bestätige den Code auf beiden Seiten.\n\nLass danach „Automatisch verbinden“ in den Einstellungen aktiviert, dann baut das Telefon die Verbindung bei jedem Start selbst auf.</string>

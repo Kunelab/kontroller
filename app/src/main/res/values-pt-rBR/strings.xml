@@ -14,12 +14,12 @@
     <string name="status_not_connected">App não conectado por Bluetooth</string>
     <string name="action_ble_status_tool_tip">App não conectado por Bluetooth</string>
 
-    <string name="error_bluetooth_permission">O MaxKontroller precisa das permissões de Bluetooth para funcionar como teclado e mouse.</string>
+    <string name="error_bluetooth_permission">O Kune Kontroller precisa das permissões de Bluetooth para funcionar como teclado e mouse.</string>
     <string name="error_no_hid_profile">Este dispositivo não expõe o perfil Bluetooth HID Device, portanto não pode ser usado como teclado ou mouse.</string>
     <string name="error_no_gyro">Este celular não tem sensor de rotação, então o mouse giroscópico não está disponível.</string>
 
     <string name="service_channel">Conexão</string>
-    <string name="service_title">MaxKontroller está ativo</string>
+    <string name="service_title">Kune Kontroller está ativo</string>
     <string name="service_text">Funcionando como teclado e mouse Bluetooth.</string>
     <string name="service_stop">Parar</string>
 
@@ -75,7 +75,7 @@
     <string name="help_title">Primeiros passos</string>
     <string name="help_continue">Começar</string>
 
-    <string name="help_intro">O MaxKontroller transforma este celular em um teclado e mouse Bluetooth. O computador vê um teclado Bluetooth comum, então não é preciso instalar nada nele.</string>
+    <string name="help_intro">O Kune Kontroller transforma este celular em um teclado e mouse Bluetooth. O computador vê um teclado Bluetooth comum, então não é preciso instalar nada nele.</string>
 
     <string name="help_pairing_title">Pareamento</string>
     <string name="help_pairing_body">1. Deixe este app aberto e permita o pedido de «tornar visível».\n2. No computador, procure dispositivos Bluetooth e pareie com este celular.\n3. Confirme a senha nos dois lados.\n\nDepois, deixe «Conectar automaticamente» ativado nas configurações e o celular abrirá a conexão por conta própria a cada abertura do app.</string>

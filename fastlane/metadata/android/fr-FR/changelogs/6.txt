@@ -1,6 +1,7 @@
-Nouvel identifiant d'application et nouvelle icône, afin de distinguer clairement
-MaxKontroller du projet Kontroller dont il est issu.
+L'application s'appelle désormais Kune Kontroller et fait partie de Kunelab. Elle
+reçoit un nouvel identifiant d'application et une icône entièrement redessinée, qui
+la distinguent aussi clairement du projet Kontroller dont elle est issue.
 
 L'identifiant ayant changé, Android considère qu'il s'agit d'une application
-distincte : si vous aviez installé la version 0.2.1 depuis GitHub, elle ne sera
-pas remplacée et vous pourrez la désinstaller une fois la migration faite.
+distincte : la version MaxKontroller 0.2.1 installée depuis GitHub ne sera pas
+remplacée et vous pourrez la désinstaller une fois la migration faite.

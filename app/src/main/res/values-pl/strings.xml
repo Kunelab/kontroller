@@ -16,13 +16,13 @@
     <string name="status_not_connected">Aplikacja nie jest połączona przez Bluetooth</string>
     <string name="action_ble_status_tool_tip">Aplikacja nie jest połączona przez Bluetooth</string>
 
-    <string name="error_bluetooth_permission">MaxKontroller potrzebuje uprawnień Bluetooth, aby działać jako klawiatura i mysz.</string>
+    <string name="error_bluetooth_permission">Kune Kontroller potrzebuje uprawnień Bluetooth, aby działać jako klawiatura i mysz.</string>
     <string name="error_no_hid_profile">To urządzenie nie udostępnia profilu Bluetooth HID Device, więc nie może działać jako klawiatura ani mysz.</string>
     <string name="error_no_gyro">Ten telefon nie ma czujnika obrotu, więc mysz żyroskopowa jest niedostępna.</string>
     <string name="error_not_connected">Brak połączenia z komputerem.</string>
 
     <string name="service_channel">Połączenie</string>
-    <string name="service_title">MaxKontroller jest aktywny</string>
+    <string name="service_title">Kune Kontroller jest aktywny</string>
     <string name="service_text">Działa jako klawiatura i mysz Bluetooth.</string>
     <string name="service_stop">Zatrzymaj</string>
 
@@ -102,7 +102,7 @@
     <string name="help_title">Pierwsze kroki</string>
     <string name="help_continue">Rozpocznij</string>
 
-    <string name="help_intro">MaxKontroller zamienia ten telefon w klawiaturę i mysz Bluetooth. Komputer widzi zwykłą klawiaturę Bluetooth, więc nie trzeba na nim nic instalować.</string>
+    <string name="help_intro">Kune Kontroller zamienia ten telefon w klawiaturę i mysz Bluetooth. Komputer widzi zwykłą klawiaturę Bluetooth, więc nie trzeba na nim nic instalować.</string>
 
     <string name="help_pairing_title">Parowanie</string>
     <string name="help_pairing_body">1. Zostaw tę aplikację otwartą i zezwól na prośbę „uczyń widocznym”.\n2. Na komputerze wyszukaj urządzenia Bluetooth i sparuj go z tym telefonem.\n3. Potwierdź kod po obu stronach.\n\nPotem zostaw w ustawieniach włączone „Łącz automatycznie”, a telefon sam otworzy połączenie przy każdym uruchomieniu.</string>

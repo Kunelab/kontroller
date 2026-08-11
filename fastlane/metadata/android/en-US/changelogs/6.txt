@@ -1,6 +1,7 @@
-New application ID and a new launcher icon, so MaxKontroller is clearly distinct
+The app is now called Kune Kontroller and is part of Kunelab. It comes with a new
+application ID and a newly drawn launcher icon, which also keep it clearly distinct
 from the upstream Kontroller project it was forked from.
 
-Because the application ID changed, Android treats this as a separate app: if you
-installed 0.2.1 from GitHub it will not be replaced, and you can remove it once
-you have moved over.
+Because the application ID changed, Android treats this as a separate app: the
+MaxKontroller 0.2.1 you installed from GitHub will not be replaced, and you can
+remove it once you have moved over.

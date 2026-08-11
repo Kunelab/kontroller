@@ -16,13 +16,13 @@
     <string name="status_not_connected">Uygulama Bluetooth ile bağlı değil</string>
     <string name="action_ble_status_tool_tip">Uygulama Bluetooth ile bağlı değil</string>
 
-    <string name="error_bluetooth_permission">MaxKontroller\'ın klavye ve fare olarak çalışması için Bluetooth izinleri gerekiyor.</string>
+    <string name="error_bluetooth_permission">Kune Kontroller\'ın klavye ve fare olarak çalışması için Bluetooth izinleri gerekiyor.</string>
     <string name="error_no_hid_profile">Bu cihaz Bluetooth HID Device profilini sunmuyor, bu yüzden klavye veya fare olarak kullanılamaz.</string>
     <string name="error_no_gyro">Bu telefonda dönüş sensörü yok, bu yüzden jiroskop fare kullanılamıyor.</string>
     <string name="error_not_connected">Henüz bir bilgisayara bağlanılmadı.</string>
 
     <string name="service_channel">Bağlantı</string>
-    <string name="service_title">MaxKontroller etkin</string>
+    <string name="service_title">Kune Kontroller etkin</string>
     <string name="service_text">Bluetooth klavye ve fare olarak çalışıyor.</string>
     <string name="service_stop">Durdur</string>
 
@@ -102,7 +102,7 @@
     <string name="help_title">Başlarken</string>
     <string name="help_continue">Başla</string>
 
-    <string name="help_intro">MaxKontroller bu telefonu bir Bluetooth klavye ve fareye dönüştürür. Bilgisayar sıradan bir Bluetooth klavye görür, bu yüzden bilgisayara bir şey kurmanız gerekmez.</string>
+    <string name="help_intro">Kune Kontroller bu telefonu bir Bluetooth klavye ve fareye dönüştürür. Bilgisayar sıradan bir Bluetooth klavye görür, bu yüzden bilgisayara bir şey kurmanız gerekmez.</string>
 
     <string name="help_pairing_title">Eşleştirme</string>
     <string name="help_pairing_body">1. Bu uygulamayı açık bırakın ve «keşfedilebilir yap» isteğine izin verin.\n2. Bilgisayarda Bluetooth cihazlarını arayın ve bu telefonla eşleştirin.\n3. Şifre anahtarını iki tarafta da onaylayın.\n\nSonrasında ayarlarda «Otomatik bağlan»ı açık bırakın; telefon her açılışta bağlantıyı kendisi kurar.</string>

@@ -14,12 +14,12 @@
     <string name="status_not_connected">Application non connectée en Bluetooth</string>
     <string name="action_ble_status_tool_tip">Application non connectée en Bluetooth</string>
 
-    <string name="error_bluetooth_permission">MaxKontroller a besoin des autorisations Bluetooth pour servir de clavier et de souris.</string>
+    <string name="error_bluetooth_permission">Kune Kontroller a besoin des autorisations Bluetooth pour servir de clavier et de souris.</string>
     <string name="error_no_hid_profile">Cet appareil n\'expose pas le profil Bluetooth HID Device : il ne peut donc pas servir de clavier ni de souris.</string>
     <string name="error_no_gyro">Ce téléphone n\'a pas de capteur de rotation, la souris gyroscopique n\'est pas disponible.</string>
 
     <string name="service_channel">Connexion</string>
-    <string name="service_title">MaxKontroller est actif</string>
+    <string name="service_title">Kune Kontroller est actif</string>
     <string name="service_text">Fonctionne comme clavier et souris Bluetooth.</string>
     <string name="service_stop">Arrêter</string>
 
@@ -75,7 +75,7 @@
     <string name="help_title">Premiers pas</string>
     <string name="help_continue">Commencer</string>
 
-    <string name="help_intro">MaxKontroller transforme ce téléphone en clavier et souris Bluetooth. L\'ordinateur voit un clavier Bluetooth ordinaire : rien à installer dessus.</string>
+    <string name="help_intro">Kune Kontroller transforme ce téléphone en clavier et souris Bluetooth. L\'ordinateur voit un clavier Bluetooth ordinaire : rien à installer dessus.</string>
 
     <string name="help_pairing_title">Association</string>
     <string name="help_pairing_body">1. Laissez cette application ouverte et acceptez la demande « rendre visible ».\n2. Sur l\'ordinateur, recherchez les appareils Bluetooth et associez-le à ce téléphone.\n3. Confirmez le code des deux côtés.\n\nEnsuite, laissez « Connexion automatique » activée dans les paramètres et le téléphone ouvrira lui-même la connexion à chaque lancement.</string>

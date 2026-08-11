@@ -13,11 +13,11 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace 'io.github.maximepinard.maxkontroller'
+    namespace 'io.github.kunelab.kontroller'
     compileSdk 36
 
     defaultConfig {
-        applicationId "io.github.maximepinard.maxkontroller"
+        applicationId "io.github.kunelab.kontroller"
         minSdk 28
         targetSdk 36
         // versionCode must increase for every published build or Android refuses the

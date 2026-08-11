@@ -16,13 +16,13 @@
     <string name="status_not_connected">Застосунок не підключено через Bluetooth</string>
     <string name="action_ble_status_tool_tip">Застосунок не підключено через Bluetooth</string>
 
-    <string name="error_bluetooth_permission">MaxKontroller потребує дозволів Bluetooth, щоб працювати як клавіатура та мишка.</string>
+    <string name="error_bluetooth_permission">Kune Kontroller потребує дозволів Bluetooth, щоб працювати як клавіатура та мишка.</string>
     <string name="error_no_hid_profile">Цей пристрій не надає профіль Bluetooth HID Device, тому його не можна використовувати як клавіатуру чи мишку.</string>
     <string name="error_no_gyro">У цьому телефоні немає датчика обертання, тому гіромишка недоступна.</string>
     <string name="error_not_connected">Підключення до комп\'ютера ще не встановлено.</string>
 
     <string name="service_channel">Підключення</string>
-    <string name="service_title">MaxKontroller активний</string>
+    <string name="service_title">Kune Kontroller активний</string>
     <string name="service_text">Працює як Bluetooth-клавіатура та мишка.</string>
     <string name="service_stop">Зупинити</string>
 
@@ -102,7 +102,7 @@
     <string name="help_title">Початок роботи</string>
     <string name="help_continue">Почати</string>
 
-    <string name="help_intro">MaxKontroller перетворює цей телефон на Bluetooth-клавіатуру та мишку. Комп\'ютер бачить звичайну Bluetooth-клавіатуру, тому на ньому нічого встановлювати не потрібно.</string>
+    <string name="help_intro">Kune Kontroller перетворює цей телефон на Bluetooth-клавіатуру та мишку. Комп\'ютер бачить звичайну Bluetooth-клавіатуру, тому на ньому нічого встановлювати не потрібно.</string>
 
     <string name="help_pairing_title">Спарення</string>
     <string name="help_pairing_body">1. Залиште застосунок відкритим і дозвольте запит «зробити видимим».\n2. На комп\'ютері знайдіть пристрої Bluetooth і виконайте спарення з цим телефоном.\n3. Підтвердьте код з обох сторін.\n\nПотім залиште «Підключатися автоматично» увімкненим у налаштуваннях, і телефон сам відкриватиме підключення під час кожного запуску.</string>

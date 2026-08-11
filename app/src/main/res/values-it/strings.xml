@@ -14,12 +14,12 @@
     <string name="status_not_connected">App non connessa via Bluetooth</string>
     <string name="action_ble_status_tool_tip">App non connessa via Bluetooth</string>
 
-    <string name="error_bluetooth_permission">MaxKontroller necessita delle autorizzazioni Bluetooth per funzionare come tastiera e mouse.</string>
+    <string name="error_bluetooth_permission">Kune Kontroller necessita delle autorizzazioni Bluetooth per funzionare come tastiera e mouse.</string>
     <string name="error_no_hid_profile">Questo dispositivo non espone il profilo Bluetooth HID Device, quindi non può essere usato come tastiera o mouse.</string>
     <string name="error_no_gyro">Questo telefono non ha un sensore di rotazione, il mouse giroscopico non è disponibile.</string>
 
     <string name="service_channel">Connessione</string>
-    <string name="service_title">MaxKontroller è attivo</string>
+    <string name="service_title">Kune Kontroller è attivo</string>
     <string name="service_text">Funziona come tastiera e mouse Bluetooth.</string>
     <string name="service_stop">Interrompi</string>
 
@@ -75,7 +75,7 @@
     <string name="help_title">Per iniziare</string>
     <string name="help_continue">Inizia</string>
 
-    <string name="help_intro">MaxKontroller trasforma questo telefono in una tastiera e un mouse Bluetooth. Il computer vede una normale tastiera Bluetooth, quindi non serve installare nulla su di esso.</string>
+    <string name="help_intro">Kune Kontroller trasforma questo telefono in una tastiera e un mouse Bluetooth. Il computer vede una normale tastiera Bluetooth, quindi non serve installare nulla su di esso.</string>
 
     <string name="help_pairing_title">Associazione</string>
     <string name="help_pairing_body">1. Lascia questa app aperta e accetta la richiesta di «rendere rilevabile».\n2. Sul computer cerca i dispositivi Bluetooth e associalo a questo telefono.\n3. Conferma il codice su entrambi i lati.\n\nPoi lascia attivo «Connetti automaticamente» nelle impostazioni: il telefono aprirà la connessione da solo a ogni avvio.</string>

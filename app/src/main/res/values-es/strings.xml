@@ -14,12 +14,12 @@
     <string name="status_not_connected">Aplicación no conectada por Bluetooth</string>
     <string name="action_ble_status_tool_tip">Aplicación no conectada por Bluetooth</string>
 
-    <string name="error_bluetooth_permission">MaxKontroller necesita los permisos de Bluetooth para funcionar como teclado y ratón.</string>
+    <string name="error_bluetooth_permission">Kune Kontroller necesita los permisos de Bluetooth para funcionar como teclado y ratón.</string>
     <string name="error_no_hid_profile">Este dispositivo no expone el perfil Bluetooth HID Device, por lo que no puede usarse como teclado ni ratón.</string>
     <string name="error_no_gyro">Este teléfono no tiene sensor de rotación, así que el ratón giroscópico no está disponible.</string>
 
     <string name="service_channel">Conexión</string>
-    <string name="service_title">MaxKontroller está activo</string>
+    <string name="service_title">Kune Kontroller está activo</string>
     <string name="service_text">Funcionando como teclado y ratón Bluetooth.</string>
     <string name="service_stop">Detener</string>
 
@@ -75,7 +75,7 @@
     <string name="help_title">Primeros pasos</string>
     <string name="help_continue">Empezar</string>
 
-    <string name="help_intro">MaxKontroller convierte este teléfono en un teclado y ratón Bluetooth. El ordenador ve un teclado Bluetooth normal, así que no hay que instalar nada en él.</string>
+    <string name="help_intro">Kune Kontroller convierte este teléfono en un teclado y ratón Bluetooth. El ordenador ve un teclado Bluetooth normal, así que no hay que instalar nada en él.</string>
 
     <string name="help_pairing_title">Emparejamiento</string>
     <string name="help_pairing_body">1. Deja esta aplicación abierta y acepta la petición de «hacer visible».\n2. En el ordenador, busca dispositivos Bluetooth y empareja con este teléfono.\n3. Confirma el código en ambos lados.\n\nDespués, deja «Conectar automáticamente» activado en los ajustes y el teléfono abrirá la conexión por sí solo cada vez que abras la aplicación.</string>

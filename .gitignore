@@ -17,3 +17,10 @@
 /build
 /captures
 .externalNativeBuild
+
+# Built APKs live on GitHub Releases, not in the history. The notes beside them are tracked.
+*.apk
+*.apk.sha256
+
+# Per-machine Claude Code settings.
+/.claude/settings.local.json
