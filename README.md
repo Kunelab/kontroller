@@ -36,8 +36,8 @@ To build a signed release, copy `keystore.properties.example` to `keystore.prope
 (gitignored) and fill it in. Without one the build still works and produces an unsigned APK.
 
 ```sh
-keytool -genkeypair -v -keystore kune-kontroller.jks -storetype PKCS12 \
-        -alias kune-kontroller -keyalg RSA -keysize 4096 -validity 10000
+keytool -genkeypair -v -keystore kontroller.jks -storetype PKCS12 \
+        -alias kontroller -keyalg RSA -keysize 4096 -validity 10000
 ./gradlew assembleRelease
 ```
 
