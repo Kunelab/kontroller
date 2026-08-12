@@ -15,7 +15,7 @@ import android.os.Build
  */
 object AppPermissions {
 
-    val required: Array<String> = buildList {
+    private val required: Array<String> = buildList {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             add(Manifest.permission.BLUETOOTH_CONNECT)
             add(Manifest.permission.BLUETOOTH_ADVERTISE)

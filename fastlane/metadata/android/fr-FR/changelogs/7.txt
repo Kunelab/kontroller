@@ -1,0 +1,8 @@
+La saisie sur un hôte turc est corrigée. Trois caractères sortaient faux parce que
+l'application envoyait la mauvaise position de touche : une apostrophe arrivait en
+barre oblique, une barre oblique en point, et un plus en tiret bas. Les autres
+dispositions d'hôte ne sont pas concernées.
+
+Le reste de cette version est du nettoyage interne, sans changement de comportement :
+code et ressources inutilisés supprimés, et documentation corrigée là où elle n'était
+plus à jour.

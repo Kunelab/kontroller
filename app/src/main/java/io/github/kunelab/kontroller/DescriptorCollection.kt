@@ -59,7 +59,6 @@ object DescriptorCollection {
 
 
         0x85.toByte(), 0x04.toByte(),               //   REPORT_ID (Mouse)
-        //0x05.toByte(), 0x01.toByte(),                         //     USAGE_PAGE (Generic Desktop)
         0x09.toByte(), 0x38.toByte(),        //         USAGE (Wheel)
 
         0x15.toByte(), 0x81.toByte(),        //         LOGICAL_MINIMUM (-127)

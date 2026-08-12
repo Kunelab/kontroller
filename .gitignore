@@ -7,21 +7,27 @@
 *.jks
 *.keystore
 
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
+# IDE project state. Android Studio and IntelliJ regenerate all of it when they import a
+# Gradle project, so there is nothing here worth tracking. The one file that used to carry
+# real settings only set the Kotlin code style, which gradle.properties already sets for
+# every tool via kotlin.code.style=official.
+/.idea
+*.iws
+
 .DS_Store
 /build
 /captures
-.externalNativeBuild
+# Kotlin 2.x scratch directory, created next to .gradle by the compiler daemon.
+/.kotlin
 
-# Built APKs live on GitHub Releases, not in the history. The notes beside them are tracked.
+# Built APKs live on GitHub Releases, not in the history.
 *.apk
 *.apk.sha256
 
+# /release is a staging directory for the artefacts of one release, wiped and rebuilt by
+# the `stageRelease` task in app/build.gradle. Nothing in it is durable, so nothing in it is
+# tracked. The record that outlives a release is fastlane/metadata/.../changelogs/<code>.txt.
+/release
+
 # Per-machine Claude Code settings.
 /.claude/settings.local.json
-/release/*

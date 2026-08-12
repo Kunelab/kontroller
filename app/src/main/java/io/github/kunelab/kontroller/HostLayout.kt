@@ -481,7 +481,7 @@ enum class HostLayout(val key: String) {
         // ── Brazilian ABNT2 ────────────────────────────────────────────────
         private fun br() = variant(
             overrides = mapOf(
-                '"' to sh(N2), '¨' to deadAlone(N6, shift = true),
+                '¨' to deadAlone(N6, shift = true),
                 '&' to sh(N7), '*' to sh(N8), '(' to sh(N9), ')' to sh(N0),
                 '´' to deadAlone(LBRACKET), '`' to deadAlone(LBRACKET, shift = true),
                 '[' to k(RBRACKET), '{' to sh(RBRACKET),
@@ -594,10 +594,17 @@ enum class HostLayout(val key: String) {
         )
 
         // ── Turkish Q ──────────────────────────────────────────────────────
+        //
+        // The shifted digit row is  ! ' ^ + % & / ( ) =  reading from the 1 key, which is
+        // where three of these entries come from. `'` was on the Shift+7 position, and the
+        // two characters that position displaced -- `/` and `+` -- had no entry of their own,
+        // so they fell through to the US base and came out as `.` and `_`: the US slash and
+        // equals positions are both reassigned below.
         private fun tr() = variant(
             overrides = mapOf(
-                '"' to sh(N2), '^' to deadAlone(N3, shift = true),
-                '&' to sh(N6), '\'' to sh(N7), '(' to sh(N8), ')' to sh(N9),
+                '^' to deadAlone(N3, shift = true),
+                '\'' to sh(N2), '+' to sh(N4),
+                '&' to sh(N6), '/' to sh(N7), '(' to sh(N8), ')' to sh(N9),
                 '=' to sh(N0),
                 '*' to k(MINUS), '?' to sh(MINUS),
                 '-' to k(EQUAL), '_' to sh(EQUAL),

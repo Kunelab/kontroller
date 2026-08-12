@@ -26,11 +26,6 @@ class FeatureReport (
                 bytes[0] and 0b1011
         }
 
-
-
-
-    fun reset() = bytes.fill(0)
-
     companion object {
         const val ID = 6.toByte()
     }

@@ -1,0 +1,7 @@
+Typing on a Turkish host is fixed. Three characters came out wrong because the app
+sent the wrong key position: an apostrophe arrived as a slash, a slash arrived as a
+full stop, and a plus arrived as an underscore. Other host layouts are unaffected.
+
+The rest of this release is internal tidying with no change to how the app behaves:
+unused code and resources removed, and the documentation corrected where it had
+drifted out of date.

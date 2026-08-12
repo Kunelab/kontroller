@@ -3,9 +3,6 @@
     <color name="ic_launcher_background">#1A1A2E</color>
 
     <color name="the_black">#000</color>
-    <color name="start_gradient">#3378FF</color>
-    <color name="end_gradient">#000</color>
-
     <color name="surface_light">#FAFAFA</color>
 
     <!-- Translucent grey works against both the black and the light theme, so the

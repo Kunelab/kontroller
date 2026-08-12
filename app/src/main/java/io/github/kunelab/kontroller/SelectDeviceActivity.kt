@@ -638,11 +638,6 @@ class SelectDeviceActivity : Activity() {
     }
 
     /**
-     * The host PC has to be able to find the phone in order to start pairing. Upstream
-     * did this with a reflective call to the hidden setScanMode(), which no longer exists
-     * on Android 12+; ACTION_REQUEST_DISCOVERABLE is the supported equivalent.
-     */
-    /**
      * Explains the one failure the app cannot recover from itself.
      *
      * When the Bluetooth stack holds a registration belonging to a process that died without

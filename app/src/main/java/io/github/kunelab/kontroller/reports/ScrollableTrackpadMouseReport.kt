@@ -55,10 +55,6 @@ class ScrollableTrackpadMouseReport (
             bytes[6]=value
         }
 
-
-
-        fun reset() = bytes.fill(0)
-
         companion object {
             const val ID = 4
         }

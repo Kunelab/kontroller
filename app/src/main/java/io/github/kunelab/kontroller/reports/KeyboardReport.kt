@@ -44,24 +44,15 @@ class KeyboardReport (
                 bytes[0] and 0b11110111.toByte()
         }
 
-    var rightControl: Boolean
-        get() = bytes[0] and 0b10000 != 0.toByte()
-        set(value) {
-            bytes[0] = if (value)
-                bytes[0] or 0b10000
-            else
-                bytes[0] and 0b11101111.toByte()
-        }
-
-    var rightShift: Boolean
-        get() = bytes[0] and 0b100000 != 0.toByte()
-        set(value) {
-            bytes[0] = if (value)
-                bytes[0] or 0b100000
-            else
-                bytes[0] and 0b11011111.toByte()
-        }
-
+    /**
+     * Bit 6 of the standard modifier byte, which is AltGr on every non-US layout and is
+     * what the [io.github.kunelab.kontroller.HostLayout] tables reach for.
+     *
+     * Bits 4, 5 and 7 (right Control, right Shift, right GUI) are the remaining halves of
+     * that byte. They had accessors here that nothing ever called: a HID host cannot tell
+     * the left and right of a modifier apart for anything but AltGr, so the left-hand
+     * setters above cover every case the app needs.
+     */
     var rightAlt: Boolean
         get() = bytes[0] and 0b1000000 != 0.toByte()
         set(value) {
@@ -69,14 +60,6 @@ class KeyboardReport (
                 bytes[0] or 0b1000000
             else
                 bytes[0] and 0b10111111.toByte()
-        }
-    var rightGui: Boolean
-        get() = bytes[0] and 0b10000000.toByte() != 0.toByte()
-        set(value) {
-            bytes[0] = if (value)
-                bytes[0] or 0b10000000.toByte()
-            else
-                bytes[0] and 0b01111111
         }
 
     var key1: Byte
@@ -177,16 +160,6 @@ class KeyboardReport (
             KeyEvent.KEYCODE_AT to 31,
             KeyEvent.KEYCODE_POUND to 32,
             KeyEvent.KEYCODE_STAR to 37
-
-
-
-
-
-
-
-
-
-
         )
 
         /** The HID usage for [keyCode], or null when the key has no equivalent. */

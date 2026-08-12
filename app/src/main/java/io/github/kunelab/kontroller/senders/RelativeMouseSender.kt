@@ -132,7 +132,7 @@ class RelativeMouseSender(
         private const val TAG = "RelativeMouseSender"
 
         /** Largest delta the 12-bit signed X/Y fields can carry. */
-        const val MAX_DELTA = 2047
+        private const val MAX_DELTA = 2047
 
         /** The scroll fields are single signed bytes. */
         private const val MAX_SCROLL = 127

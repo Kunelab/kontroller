@@ -22,8 +22,8 @@ android {
         targetSdk 36
         // versionCode must increase for every published build or Android refuses the
         // upgrade. versionName is what users see and should match the release tag.
-        versionCode 6
-        versionName "0.3.0"
+        versionCode 7
+        versionName "0.3.1"
     }
 
     compileOptions {
@@ -56,7 +56,7 @@ android {
     buildTypes {
         release {
             minifyEnabled true
-            // Without this the 22 locales and the unused launcher/action-bar drawables are
+            // Without this the 21 locales and the unused launcher/action-bar drawables are
             // all packaged even when nothing references them.
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -69,9 +69,9 @@ android {
     lint {
         // MissingTranslation is an error by default, which meant `assembleRelease` could
         // not complete: app_name, action_check and action_check_held have never been
-        // translated in any of the 21 locales, and every string added from here on starts
-        // out untranslated too. An untranslated string falls back to English, which is a
-        // cosmetic gap, not a broken build -- so it is reported and not fatal.
+        // translated in any of the 20 non-English locales, and every string added from here
+        // on starts out untranslated too. An untranslated string falls back to English,
+        // which is a cosmetic gap, not a broken build -- so it is reported and not fatal.
         warning 'MissingTranslation'
 
         // Deliberate: the trackpad and the click buttons are driven from the raw touch
@@ -100,4 +100,50 @@ android {
 // kotpref (never referenced) and the support-library LocalBroadcastManager
 // (only ever used in commented-out code) were all dropped.
 dependencies {
+}
+
+// Stages one release into /release, which is gitignored and holds nothing durable.
+//
+// The directory is wiped on every run, which is the reason this is a task and not a few
+// manual copies: the previous version's APK sitting next to the new one is the mistake that
+// gets the wrong file uploaded. The lasting record of a release is the fastlane changelog
+// under fastlane/metadata/android/<locale>/changelogs/<versionCode>.txt, which is tracked.
+tasks.register('stageRelease') {
+    group = 'publishing'
+    description = 'Wipes /release, then stages the release APK and its SHA-256 for upload.'
+    dependsOn 'assembleRelease'
+
+    def apkDir = layout.buildDirectory.dir('outputs/apk/release')
+    def stagingDir = rootProject.layout.projectDirectory.dir('release').asFile
+    def versionName = android.defaultConfig.versionName
+    // Without a keystore.properties the release build is still produced, just unsigned, and
+    // AGP names it differently. Staging it anyway (clearly marked) beats failing here.
+    def signed = keystoreProperties.containsKey('storeFile')
+
+    doLast {
+        def apk = apkDir.get().file(signed ? 'app-release.apk' : 'app-release-unsigned.apk').asFile
+        if (!apk.exists()) {
+            throw new GradleException("assembleRelease produced no APK at ${apk}")
+        }
+
+        stagingDir.deleteDir()
+        stagingDir.mkdirs()
+
+        def name = "KuneLabKontroller-${versionName}${signed ? '' : '-unsigned'}.apk"
+        def staged = new File(stagingDir, name)
+        staged.bytes = apk.bytes
+
+        // sha256sum -b format, so `sha256sum -c <file>.sha256` verifies it as-is.
+        def hex = java.security.MessageDigest.getInstance('SHA-256')
+                .digest(staged.bytes)
+                .encodeHex()
+                .toString()
+        new File(stagingDir, "${name}.sha256").text = "${hex} *${name}\n"
+
+        logger.lifecycle("Staged release/${name} (${staged.length()} bytes)")
+        logger.lifecycle("sha256  ${hex}")
+        if (!signed) {
+            logger.warn('WARNING: no keystore.properties, so the staged APK is UNSIGNED.')
+        }
+    }
 }

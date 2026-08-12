@@ -10,6 +10,10 @@ package io.github.kunelab.kontroller
  * Selection is applied through the platform's per-app language support
  * (`LocaleManager`, API 33+). On older versions the app follows the system locale and the
  * picker is hidden.
+ *
+ * The current choice is read back from `LocaleManager`, not from a preference of our own, so
+ * unlike [ThemeMode] and [OrientationMode] this enum needs no `from(tag)` lookup. See
+ * `SettingsActivity.setUpLanguage`.
  */
 enum class AppLanguage(val tag: String, val nativeName: String) {
     SYSTEM("", "System default"),
@@ -33,10 +37,5 @@ enum class AppLanguage(val tag: String, val nativeName: String) {
     PL("pl", "Polski"),
     TH("th", "ไทย"),
     UK("uk", "Українська"),
-    NL("nl", "Nederlands");
-
-    companion object {
-        fun from(tag: String?): AppLanguage =
-            entries.firstOrNull { it.tag == tag } ?: SYSTEM
-    }
+    NL("nl", "Nederlands")
 }

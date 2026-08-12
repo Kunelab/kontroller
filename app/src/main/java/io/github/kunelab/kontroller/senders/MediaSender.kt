@@ -26,7 +26,6 @@ class MediaSender(
 
     fun next() = tap(BIT_NEXT)
     fun previous() = tap(BIT_PREVIOUS)
-    fun stop() = tap(BIT_STOP)
     fun playPause() = tap(BIT_PLAY_PAUSE)
     fun mute() = tap(BIT_MUTE)
     fun volumeUp() = tap(BIT_VOLUME_UP)
@@ -55,9 +54,11 @@ class MediaSender(
         /** Must match the REPORT_ID in the consumer collection of the HID descriptor. */
         const val ID = 10
 
+        // Bit numbers, matching the usage order in the consumer collection. Bit 2 is Stop,
+        // which the descriptor still declares but the media row has no button for, so
+        // nothing here sends it.
         private const val BIT_NEXT = 0
         private const val BIT_PREVIOUS = 1
-        private const val BIT_STOP = 2
         private const val BIT_PLAY_PAUSE = 3
         private const val BIT_MUTE = 4
         private const val BIT_VOLUME_UP = 5

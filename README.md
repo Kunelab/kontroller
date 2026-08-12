@@ -57,6 +57,22 @@ That record cannot be added retroactively, which is why it is on from the first 
 **Keep the keystore and its password.** Losing either means no future build can upgrade an
 installed copy in place: users would have to uninstall and lose their settings.
 
+### Cutting a release
+
+1. Raise `versionCode` and `versionName` in `app/build.gradle`. `versionCode` must increase
+   or Android refuses the upgrade.
+2. Write `fastlane/metadata/android/<locale>/changelogs/<versionCode>.txt` for each locale.
+   These are tracked, and they are the record of what a release contained.
+3. Stage the artefacts:
+   ```sh
+   ./gradlew stageRelease
+   ```
+   This wipes `/release` and writes the APK plus a `sha256sum -b` file into it. The wipe is
+   the point: a leftover APK from the previous version is how the wrong file gets uploaded.
+   `/release` is gitignored and holds nothing durable, so treat it as a staging area and
+   upload from it immediately.
+4. Commit, tag `<versionName>`, and attach the two staged files to the GitHub release.
+
 ## Using it
 
 | Action                           | Gesture                                                                                   |
@@ -359,8 +375,9 @@ cannot run on JDK 17.
   setters were correct, so the bug was latent.
 - `android:exported` added to the launcher activity (required from targetSdk 31, a hard
   build error).
-- The gyroscope is no longer `required="true"` in the manifest; it needlessly blocked
-  installation, and the sensor-based pointer path is not wired up.
+- The gyroscope is no longer `required="true"` in the manifest, which needlessly blocked
+  installation on phones without one. The gyro pointer is opt-in, so neither it nor the
+  accelerometer is required.
 
 ## Verified
 
@@ -388,104 +405,25 @@ Scroll, drag & drop and double click confirmed by hand.
   means editing `DescriptorCollection`, not just the report class.
 - `KeyboardReport` sends a single key at a time (`key1`); simultaneous key rollover is not
   implemented.
-- **No tests and no CI.** The report bit-packing, the `HostLayout` tables and `sendMove`'s
-  clamping are pure functions and the obvious place to start.
-- Strings added after the initial translation pass are English-only in the other 21 locales;
+- **No tests.** The report bit-packing, the `HostLayout` tables and `sendMove`'s clamping are
+  pure functions and the obvious place to start.
+- Strings added after the initial translation pass are English-only in the other 20 locales;
   `MissingTranslation` is reported as a warning rather than failing the build.
+- **Six characters are stranded on reassigned positions in `HostLayout`.** Each non-US table
+  is the US table plus overrides, so when a layout moves a character off a US position but
+  the character that used to live there gets no override of its own, it keeps pointing at
+  that position and the host prints whatever now sits there:
 
-## Post-review changes
+  | Layout | Character | Currently produces |
+  | ------ | --------- | ------------------ |
+  | `ch`   | `!`       | `+`                |
+  | `it`   | `` ` ``   | `\`                |
+  | `latam`| `^`       | `&`                |
+  | `latam`| `` ` ``   | `\|`               |
+  | `tr`   | `` ` ``   | `"`                |
+  | `tr`   | `~`       | `é`                |
 
-A review of the whole project produced the following. The findings each fix are described in
-the code, next to the thing they fix.
-
-**Package size.** `proguard-rules.pro` contained `-keep class **`, `-keepclassmembers class
-*{*;}` and `-keepattributes *`, so R8 ran but kept everything, kotlin-stdlib included: 2.19 MB
-of dex in a 2.32 MB APK. Those rules are gone and `shrinkResources` is on. **2377 KB → 330 KB.**
-
-**Lifecycle.**
-
-- `HidService.onDestroy` released the HID registration unconditionally, so turning "stay
-  connected" off and returning to the trackpad unregistered the HID app while the activity
-  was still using it, and the app silently stopped working until restarted.
-  `BluetoothController` now reference-counts its owners and only tears down when the last
-  one goes.
-- The three callbacks on `BluetoothController` capture the activity and were only cleared on
-  teardown (which was skipped in the default configuration) so every rotation and theme
-  change leaked a whole view hierarchy. They are now always cleared in `onDestroy`, and a
-  configuration change no longer drops the host's link.
-- `SelectDeviceActivity` re-checks the Bluetooth permissions in `onStart`. It is reachable
-  straight from the service notification, bypassing the gate in `SplashScreen`.
-
-**Edge to edge.** At `targetSdk` 36 Android no longer insets the window, and nothing in the
-app asked for insets, so the click buttons and media row drew behind the navigation bar.
-`SystemBars` applies them. _(Written against the framework API; not yet verified on a device.)_
-
-**Pointer.** Movement was sent straight from `ACTION_MOVE` (120-240 Hz of touch samples into
-a link that carries 50-100 reports a second) and rounded to whole pixels per event, so slow
-movement at low sensitivity was discarded entirely. `PointerPump` coalesces onto the frame
-clock and carries the sub-pixel remainder.
-
-**Gestures.** `GestureDetectListener` was rewritten. The two-finger right click listed above
-as unreliable now times from the second finger landing rather than the first, uses the
-300 ms double-tap window rather than the 100 ms single-tap one, and cancels if either
-pointer travels past the touch slop. The single tap that follows is identified by
-`MotionEvent.downTime` instead of a sticky flag that could swallow a later click.
-
-**Threads.** Clicks scheduled their release with `Timer().schedule`, spawning a non-daemon
-thread per click (three per double click) that mutated the shared report off the main
-thread. All timing is now on the main looper. Clipboard sending posts one self-reposting
-runnable instead of up to 5000 uncancellable messages.
-
-**Reconnection.** Every connection attempt was a single shot, so any lost link stayed lost:
-auto-connect ran once on registration and nothing retried, `onConnectionStateChanged` noticed
-`STATE_DISCONNECTED` and only updated the UI, and reopening the app did nothing at all when
-"stay connected" was on, because the registration was already up and no callback fired.
-`BluetoothController` now owns a bounded retry loop, see
-[Waking a sleeping host](#waking-a-sleeping-host) for why persistence rather than one attempt
-is the whole point. Deliberate disconnects are tracked so they are not chased, a loop that
-gives up sets a cooldown so its own trailing timeout is not read as a fresh drop (which would
-have restarted it forever), and disconnects go through `disconnectHost` rather than straight to
-`BluetoothHidDevice.disconnect` so the loop can tell a user's disconnect from a lost link.
-
-**Recovering from a Bluetooth restart.** Nothing watched `ACTION_STATE_CHANGED`, so toggling
-Bluetooth invalidated the profile proxy and the app had to be restarted to work again. This was
-particularly poor because the stuck-registration dialog _tells the user to toggle Bluetooth_ and
-then did not come back by itself. `BluetoothController` now drops its stale proxy when the
-adapter goes down and re-registers when it returns, unless nothing wants the registration any
-more.
-
-**Unpairing the pinned host.** A pin is a MAC address, and once the bond was gone the app went
-quietly dead: the pin restricts auto-connect to that address and nothing else, so there was no
-host, no attempts and no explanation. `ACTION_BOND_STATE_CHANGED` now drops the pin (and
-`lastHost`, or the retry loop chases a device it can no longer reach), persists that, and says
-so.
-
-**Reachable "Keep screen on".** The preference was read and applied from the first release and
-its strings were translated into all 21 locales, but `activity_settings.xml` never got the row,
-so a documented setting could not be reached and was permanently off.
-
-**A notification that says something.** The foreground service showed one fixed string, which
-made it the least informative surface in the app while being the _only_ surface once the app is
-closed: a phone that had silently lost its host looked identical to one that was working. It now
-tracks the link (connected to X, calling X, or not connected) through a new observer list that
-is deliberately separate from the single-slot sender callbacks, because `clearListeners()` runs
-when the activity goes away and would otherwise take the service's subscription with it.
-
-**A trackpad that is not silently dead.** The pad's touch listener was only attached once a host
-had connected, so with no host every touch did nothing at all: no movement, no message, no
-hint. Touching the pad or a click button now starts the wake loop, which is the closest thing to
-wiggling a sleeping mouse and the first thing anyone tries.
-
-**Host safety.** A host can be pinned from **Devices**; auto-connect then targets only that
-device instead of whichever bonded device appears first. The action bar names the connected
-host, and **Send clipboard** confirms first, naming the target.
-
-**Dead code.** Deleted `Sender`, `MouseReport`, `AbsMouseReport`, `TrackpadMouseReport`,
-`TestTrackpadMouseReport`, the empty `Kontroller` application class, ten unused HID
-descriptors (`DescriptorCollection` 769 → 164 lines), ~200 lines of commented-out code, the
-per-event debug logging in the touch path, twelve PNGs shadowed by `drawable-anydpi`
-vectors, and four unused launcher-icon resources.
-
-**Lint.** `assembleRelease` could not previously complete: `lintVital` fails on
-`MissingTranslation`, and `app_name` was untranslated in all 21 locales. Real errors
-(`MissingPermission` on all four HID send paths) are fixed and lint now runs clean.
+  Backtick and tilde may have no single-stroke position on some of these layouts at all, so
+  each needs checking against the real layout rather than guessing. The same fault affected
+  `'`, `/` and `+` on Turkish and is fixed, because the Turkish shifted digit row
+  (`! ' ^ + % & / ( ) =`) settles those three unambiguously.

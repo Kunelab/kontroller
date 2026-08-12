@@ -10,7 +10,7 @@
          height 0dp + weight 1 means it gives up exactly the space the click bar takes,
          so enabling the bar shrinks the pad automatically. -->
     <io.github.kunelab.kontroller.TrackpadView
-        android:id="@id/mouseView"
+        android:id="@+id/mouseView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

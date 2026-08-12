@@ -44,7 +44,7 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
     /** A snapshot of what to show. [attempt] is only meaningful for [LinkState.CALLING]. */
     data class Status(val state: LinkState, val host: BluetoothDevice?, val attempt: Int)
 
-    val featureReport = FeatureReport()
+    private val featureReport = FeatureReport()
 
     var btAdapter: BluetoothAdapter? = null
         private set
@@ -492,8 +492,7 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
      * Auto-connect only runs on registration, so once the user (or a misclick) has dropped
      * the link there is otherwise nothing that brings it back. Returns false when there is
      * no host to reconnect to.
-     */
-    /**
+     *
      * [userInitiated] separates "someone tapped Connect" from "the app happened to start".
      *
      * A tap is intent and overrides the cooldown; [SelectDeviceActivity.onStart] is not, and
