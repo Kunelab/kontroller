@@ -22,8 +22,8 @@ android {
         targetSdk 36
         // versionCode must increase for every published build or Android refuses the
         // upgrade. versionName is what users see and should match the release tag.
-        versionCode 7
-        versionName "0.3.1"
+        versionCode 8
+        versionName "0.3.2"
     }
 
     compileOptions {

@@ -1,0 +1,5 @@
+La connexion à un ordinateur épinglé fonctionne de nouveau : « Connexion automatique »
+cherchait au mauvais endroit et ne faisait rien.
+
+Un ordinateur joignable qui refuse le clavier est désormais expliqué, avec la marche à
+suivre dans l'aide, au lieu de vous laisser sur « non connecté ».

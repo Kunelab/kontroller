@@ -205,6 +205,54 @@ new connections. Toggle Bluetooth off and on on the phone:
 adb shell svc bluetooth disable && sleep 5 && adb shell svc bluetooth enable
 ```
 
+## Pairing with a Windows host
+
+Tested against Windows 10 Pro 22H2 with an Intel Wireless Bluetooth adapter.
+
+**Pair with this app open**, not from Windows' Bluetooth settings on its own. Windows resolves
+a device's Bluetooth services exactly once, when the device is added, and stores the result;
+it never asks again. The phone only advertises the keyboard/mouse service (HID, `0x1124`)
+while the app holds its HID registration, so a phone added while the app was closed is
+recorded as a handset — audio, contacts, file transfer — with no keyboard on it, and that
+record is what every later connection is checked against.
+
+1. Open the app and allow the discoverability prompt. Leave it open.
+2. **Settings → Bluetooth & devices → Add device → Bluetooth**, pick the phone, confirm the
+   passkey on both ends.
+3. In the app's overflow menu, open **Devices**, tap the PC, and star it as the preferred host.
+
+### Troubleshooting
+
+**Both sides say "paired" but the app never connects.** This is the failure the caching above
+produces, and it is the common one. The app now names it: _"… is reachable but will not accept
+a keyboard"_. Check what Windows recorded for the phone — run this in PowerShell and look for
+`{00001124-...}`:
+
+```powershell
+Get-PnpDevice -PresentOnly |
+  Where-Object InstanceId -like '*BTHENUM*' |
+  Select-Object Status,Class,FriendlyName,InstanceId | Format-Table -AutoSize
+```
+
+A working host has a `HIDClass` row like
+`BTHENUM\{00001124-0000-1000-8000-00805F9B34FB}_VID&...` for the phone. If every row for the
+phone is audio, PAN or PBAP and none is `1124`, Windows has no keyboard record for it and no
+amount of retrying will help. Windows has no equivalent of BlueZ's cache file, so the only way
+to make it browse again is to add the device again:
+
+1. **Settings → Bluetooth & devices → the phone → Remove device**.
+2. On the phone, forget the PC too, or the half-stale bond gets in the way.
+3. Redo the three pairing steps above, with the app open.
+
+On the wire the untreated case looks like this: the phone opens an L2CAP channel on PSM
+`0x0011`, Windows answers `Connection Pending` and never sends the final response, and the
+channel expires. The baseband link is up throughout, which is why it cannot be mistaken for a
+host that is switched off — and is exactly how the app tells the two apart.
+
+**The pointer works but the keyboard does nothing (or vice versa).** Windows cached the SDP
+record from an older build with a different HID descriptor. Remove and re-add the device as
+above; there is nothing to clear selectively.
+
 ## Waking a sleeping host
 
 A Bluetooth mouse wakes a PC with no special privilege: the host's controller stays powered

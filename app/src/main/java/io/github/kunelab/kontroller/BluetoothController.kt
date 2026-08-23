@@ -21,6 +21,7 @@ import android.util.Log
 import io.github.kunelab.kontroller.Prefs.preferredHost
 import io.github.kunelab.kontroller.reports.FeatureReport
 import java.util.concurrent.CopyOnWriteArrayList
+import java.util.concurrent.CopyOnWriteArraySet
 
 @Suppress("MemberVisibilityCanBePrivate")
 @SuppressLint("MissingPermission") // callers gate on AppPermissions in SplashScreen
@@ -162,6 +163,16 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
     private var connectedAt = 0L
 
     /**
+     * [SystemClock.uptimeMillis] when the current attempt entered `STATE_CONNECTING`, or 0.
+     *
+     * How long a failed attempt took is the second of the two signals that separate a host
+     * which is not there from one that is there and refusing -- see [aclConnected] for the
+     * first, and [HOST_ANSWERED_MS] for why the duration says anything at all.
+     */
+    @Volatile
+    private var attemptStartedAt = 0L
+
+    /**
      * How many times in a row the link has come up and collapsed within [LINK_STABLE_MS].
      *
      * Cleared by a link that holds, a deliberate disconnect, or the user asking for a fresh
@@ -170,6 +181,16 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
      */
     @Volatile
     private var flapCount = 0
+
+    /**
+     * Consecutive attempts where the host was reachable but would not take the HID channel.
+     *
+     * Cleared by a link that comes up, a deliberate disconnect, or the user asking for a
+     * fresh chase. At [MAX_REFUSALS] the loop stops and [hidRefusedListener] explains
+     * itself, because this is not a failure retrying can do anything about.
+     */
+    @Volatile
+    private var refusedCount = 0
 
     /**
      * Deadline of the chase that was running when the link came up, kept so a flap resumes
@@ -274,6 +295,7 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
         registrationFailedListener = null
         unpairedHostListener = null
         staleBondListener = null
+        hidRefusedListener = null
     }
 
     /**
@@ -349,9 +371,33 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
                 )
 
                 BluetoothDevice.ACTION_BOND_STATE_CHANGED -> onBondState(intent)
+
+                BluetoothDevice.ACTION_ACL_CONNECTED -> deviceFrom(intent)?.let {
+                    aclConnected += it.address
+                }
+
+                BluetoothDevice.ACTION_ACL_DISCONNECTED -> deviceFrom(intent)?.let {
+                    aclConnected -= it.address
+                }
             }
         }
     }
+
+    /**
+     * Addresses the phone currently holds a baseband (ACL) link to.
+     *
+     * This is what separates "the host is not there" from "the host is there and will not
+     * accept the keyboard". Both look identical through [onConnectionStateChanged], which
+     * reports a plain `STATE_DISCONNECTED` either way, and the difference decides whether
+     * paging again is the right answer:
+     *
+     *  - No ACL: the page found nothing. The host is off, asleep or out of range, and
+     *    retrying is exactly right -- it is how a Bluetooth mouse wakes a sleeping PC.
+     *  - ACL up, but the HID profile never reaches `STATE_CONNECTED`: the host answered and
+     *    then refused the HID channel. No amount of paging fixes that; it means the host has
+     *    no HID record for this phone, and the user has to be told. See [MAX_REFUSALS].
+     */
+    private val aclConnected = CopyOnWriteArraySet<String>()
 
     private var receiversRegistered = false
 
@@ -362,6 +408,8 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
         val filter = IntentFilter().apply {
             addAction(BluetoothAdapter.ACTION_STATE_CHANGED)
             addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED)
+            addAction(BluetoothDevice.ACTION_ACL_CONNECTED)
+            addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED)
         }
         // Both are protected system broadcasts, so RECEIVER_NOT_EXPORTED is correct and is
         // mandatory from API 34 for a context-registered receiver.
@@ -445,6 +493,24 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
 
     fun onStaleBondSuspected(callback: (BluetoothDevice) -> Unit) {
         staleBondListener = callback
+    }
+
+    /**
+     * Fired when the host is plainly there -- the phone holds a baseband link to it -- but
+     * has refused the HID channel [MAX_REFUSALS] times running.
+     *
+     * That means the host has no HID record for this phone, which is a host-side problem
+     * the app cannot page its way out of. It happens whenever the two were paired while the
+     * HID app was not registered: the host resolves the phone's services once, at pairing
+     * time, caches the answer, and never asks again -- so it knows the phone as a handset
+     * with no keyboard on it. Both sides still show "paired" and the connection attempt
+     * simply hangs and expires, which is indistinguishable from a sleeping PC unless
+     * somebody says so.
+     */
+    private var hidRefusedListener: ((BluetoothDevice) -> Unit)? = null
+
+    fun onHostRefusingHid(callback: (BluetoothDevice) -> Unit) {
+        hidRefusedListener = callback
     }
 
     private fun teardown() {
@@ -599,6 +665,7 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
             // The user asked again, so the flap budget starts over: they may well have just
             // re-paired and deserve a chase that is not primed to give up.
             flapCount = 0
+            refusedCount = 0
         }
 
         val extending = reconnecting && reconnectTarget?.address == target.address
@@ -760,8 +827,19 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
      */
     private fun autoTarget(): BluetoothDevice? {
         val pinned = preferredHost ?: return hostDevice ?: lastHost
-        return btAdapter?.bondedDevices?.firstOrNull { it.address == pinned }
+        return bondedDevice(pinned)
     }
+
+    /**
+     * Resolves a MAC address against the bond list.
+     *
+     * The bond list is the only place a pin can be looked up. A pin is an address the user
+     * picked in [DevicesActivity], which lists `bondedDevices`; none of the other device
+     * lists the Bluetooth APIs hand back is guaranteed to contain it, and reaching for one
+     * of those instead is what silently disabled auto-connect -- see [onAppStatusChanged].
+     */
+    private fun bondedDevice(address: String): BluetoothDevice? =
+        btAdapter?.bondedDevices?.firstOrNull { it.address == address }
 
     /**
      * Chases a link that dropped on its own -- the host suspended, went out of range, or
@@ -872,6 +950,8 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
                 hostDevice = device
                 lastHost = device
                 connectedAt = SystemClock.uptimeMillis()
+                // The host does take the HID channel after all.
+                refusedCount = 0
                 // Not proof of health yet: a host with a stale link key accepts the
                 // connection and drops it during encryption setup a moment later. Whether
                 // this link counts for anything is decided by how long it holds -- see the
@@ -890,12 +970,17 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
             } else {
                 Log.e(TAG, "Connected state with no device")
             }
+        } else if (state == BluetoothProfile.STATE_CONNECTING) {
+            attemptStartedAt = SystemClock.uptimeMillis()
         } else {
             hostDevice = null
             if (state == BluetoothProfile.STATE_DISCONNECTED) {
                 val heldFor =
                     if (connectedAt != 0L) SystemClock.uptimeMillis() - connectedAt else -1L
+                val attemptMs =
+                    if (attemptStartedAt != 0L) SystemClock.uptimeMillis() - attemptStartedAt else 0L
                 connectedAt = 0L
+                attemptStartedAt = 0L
                 notifyStatus()
                 disconnectListener?.invoke()
 
@@ -904,12 +989,23 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
                 val deliberate = userDisconnected
                 userDisconnected = false
                 when {
-                    deliberate -> flapCount = 0
+                    deliberate -> {
+                        flapCount = 0
+                        refusedCount = 0
+                    }
 
                     // The link never came up at all: either one failed page of a running
                     // chase, which chaseLostLink ignores because the loop is still going,
                     // or some drop with no connection on record, which it chases as before.
-                    heldFor < 0 -> chaseLostLink()
+                    //
+                    // Unless the host was right there while it happened -- see
+                    // [onHidChannelRefused], which is the case paging cannot fix.
+                    heldFor < 0 ->
+                        if (device != null && hostAnswered(device, attemptMs)) {
+                            onHidChannelRefused(device)
+                        } else {
+                            chaseLostLink()
+                        }
 
                     // The link held, which is the actual proof the host is reachable, so
                     // the drop deserves a fresh chase regardless of what any previous loop
@@ -971,6 +1067,56 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
         )
     }
 
+    /**
+     * Whether a failed attempt looks like it reached the host rather than nothing at all.
+     *
+     * Two independent signals, either sufficient, because neither is available in every
+     * case:
+     *
+     *  - The phone is holding a baseband link to it. Conclusive when it applies, but only
+     *    if the link came up while this process was watching -- an ACL that predates the app
+     *    (the host is also a paired speaker, say, or was already connected for audio) was
+     *    never announced to us.
+     *  - The attempt outlasted [HOST_ANSWERED_MS]. A page that finds nothing fails at the
+     *    page timeout, a handful of seconds; getting as far as an L2CAP exchange the host
+     *    then abandons costs the much longer response timeout.
+     *
+     * Both are heuristics, and they are deliberately biased towards saying "no": the cost of
+     * a false positive is telling someone to re-pair a host that was merely slow to answer,
+     * and it takes [MAX_REFUSALS] of them in a row before anything is said at all.
+     */
+    private fun hostAnswered(device: BluetoothDevice, attemptMs: Long): Boolean =
+        device.address in aclConnected || attemptMs >= HOST_ANSWERED_MS
+
+    /**
+     * Handles an attempt that failed while the host was demonstrably present.
+     *
+     * The phone had a baseband link to it -- so this was not a page into thin air -- and the
+     * HID channel still never opened. On the wire that is the host answering the L2CAP
+     * connect request on PSM 0x11 and never completing it, which is what a host with no HID
+     * record for this phone does.
+     *
+     * Tolerated a couple of times before saying anything, because a host that is mid-resume
+     * can legitimately have the ACL up and not be ready to take the channel yet. After that
+     * the chase is called off: paging a host that is refusing on purpose only burns radio
+     * on both ends, and the user needs to hear the one thing that fixes it.
+     */
+    private fun onHidChannelRefused(device: BluetoothDevice) {
+        refusedCount++
+        Log.w(TAG, "Host is present but refused the HID channel ($refusedCount of $MAX_REFUSALS)")
+
+        if (refusedCount < MAX_REFUSALS) {
+            chaseLostLink()
+            return
+        }
+
+        Log.e(TAG, "$device will not accept the HID channel -- no HID record for this phone?")
+        refusedCount = 0
+        stopReconnecting()
+        chaseBlockedUntil = SystemClock.uptimeMillis() + CHASE_COOLDOWN_MS
+        hidRefusedListener?.invoke(device)
+    }
+
     override fun onAppStatusChanged(pluggedDevice: BluetoothDevice?, registered: Boolean) {
         super.onAppStatusChanged(pluggedDevice, registered)
         appRegistered = registered
@@ -982,31 +1128,37 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
 
         registeredListener?.invoke()
 
-        // getDevicesMatchingConnectionStates() returns an empty list when nothing has
-        // ever been paired. Upstream indexed [0] unconditionally, so a first run with no
-        // paired host crashed here with IndexOutOfBoundsException.
-        val knownDevices = btHid?.getDevicesMatchingConnectionStates(
-            intArrayOf(
-                BluetoothProfile.STATE_CONNECTING,
-                BluetoothProfile.STATE_CONNECTED,
-                BluetoothProfile.STATE_DISCONNECTED,
-                BluetoothProfile.STATE_DISCONNECTING
-            )
-        ).orEmpty()
-        Log.d(TAG, "Known HID hosts: $knownDevices")
-
         if (!autoPairFlag) return
 
         // With a host pinned, that host or nothing. Without one, fall back to whatever the
         // stack offers -- which is convenient but means anything the phone has ever been
         // bonded with can become the keystroke sink, so DevicesActivity nudges towards
         // pinning one.
+        //
+        // Both halves used to be resolved from `getDevicesMatchingConnectionStates()` and
+        // [pluggedDevice], and neither is the bond list:
+        //
+        //  - `getDevicesMatchingConnectionStates()` on the HID *device* profile reports the
+        //    host the profile is currently talking to, not every device ever paired. On a
+        //    fresh registration -- which is exactly when this runs -- it is empty.
+        //  - [pluggedDevice] is whichever host the stack still has on record, routinely a
+        //    different machine from the pinned one and often one that is not even present.
+        //
+        // So a pin matched nothing and "Connect automatically" silently did nothing, while
+        // *without* a pin the stale [pluggedDevice] was preferred over everything else --
+        // handing the keyboard to a machine the user was not sitting at, which is the very
+        // hazard the pin exists to close. [autoTarget] had it right all along.
         val pinned = preferredHost
         val target = if (pinned != null) {
-            (knownDevices + listOfNotNull(pluggedDevice)).firstOrNull { it.address == pinned }
-                ?: return
+            bondedDevice(pinned) ?: run {
+                Log.w(TAG, "Pinned host $pinned is not in the bond list; not auto-connecting")
+                return
+            }
         } else {
-            pluggedDevice ?: knownDevices.firstOrNull() ?: return
+            lastHost
+                ?: pluggedDevice
+                ?: btAdapter?.bondedDevices?.firstOrNull()
+                ?: return
         }
 
         if (btHid?.getConnectionState(target) == BluetoothProfile.STATE_DISCONNECTED) {
@@ -1070,6 +1222,26 @@ object BluetoothController : BluetoothHidDevice.Callback(), BluetoothProfile.Ser
 
     /** Consecutive flaps tolerated before the loop stops and suggests re-pairing. */
     private const val MAX_FLAPS = 3
+
+    /**
+     * How long a failed attempt has to take before the host counts as having answered it.
+     *
+     * A page to a device that is not listening ends at the page timeout, which is 5.12 s by
+     * default and is what a switched-off or out-of-range host produces. An attempt that gets
+     * as far as opening an L2CAP channel and is then left hanging ends at the response
+     * timeout instead: the Windows host this was measured against took 16-17 s to fail that
+     * way, every time. This sits between the two, nearer the top of the first.
+     */
+    private const val HOST_ANSWERED_MS = 11_000L
+
+    /**
+     * Consecutive refusals tolerated before the loop stops and explains itself.
+     *
+     * Deliberately small. Unlike a flap, which can be a genuine race against a host that is
+     * still coming up, a refusal with the ACL already established is a settled answer, and
+     * each one costs the full L2CAP response timeout to discover.
+     */
+    private const val MAX_REFUSALS = 2
 
     /**
      * Budget for chasing a link that dropped by itself.

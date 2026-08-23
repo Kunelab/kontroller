@@ -1,0 +1,5 @@
+Connecting to a pinned host works again: "Connect automatically" was looking in the
+wrong place and quietly did nothing.
+
+A host that is reachable but refuses to accept a keyboard is now explained, with the
+steps to fix it in Help, instead of leaving you on "not connected".

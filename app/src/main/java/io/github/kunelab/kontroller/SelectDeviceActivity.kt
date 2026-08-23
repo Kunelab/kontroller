@@ -86,6 +86,9 @@ class SelectDeviceActivity : Activity() {
     /** The stuck-stack dialog is worth showing once, not on every retry. */
     private var stuckStackDialogShown = false
 
+    /** Likewise the refused-host dialog, which a chase can trigger several times over. */
+    private var hidRefusedDialogShown = false
+
     /** Throttles the nudge toast. See [nudgeReconnect]. */
     private var lastNudgeAt = 0L
 
@@ -270,6 +273,14 @@ class SelectDeviceActivity : Activity() {
                     Toast.LENGTH_LONG
                 ).show()
             }
+        }
+
+        // The other silent dead end, and the one a Windows host lands in: the PC answers,
+        // refuses the keyboard channel, and the app has nothing to show for it but "Not
+        // connected". A toast is not enough here -- unlike every other failure the app
+        // reports, the remedy is several steps long and none of them are on this phone.
+        BluetoothController.onHostRefusingHid { device ->
+            runOnUiThread { showHidRefusedDialog(device) }
         }
 
         // Opening the app with the link already down used to do nothing at all. Auto-connect
@@ -660,6 +671,30 @@ class SelectDeviceActivity : Activity() {
                 } catch (e: Exception) {
                     Log.e(TAG, "Could not open Bluetooth settings", e)
                 }
+            }
+            .show()
+    }
+
+    /**
+     * Explains a host that is reachable and still will not take a keyboard.
+     *
+     * Shown once per visit rather than per failed attempt: the chase makes several, and this
+     * is a dialog, not a toast. [BluetoothController] has already called the chase off by the
+     * time this runs, so there is nothing still happening behind it.
+     */
+    private fun showHidRefusedDialog(device: BluetoothDevice) {
+        if (isFinishing || isDestroyed || hidRefusedDialogShown) return
+        hidRefusedDialogShown = true
+
+        val name = device.name ?: device.address
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.hid_refused_title, name))
+            .setMessage(getString(R.string.hid_refused_message, name))
+            .setNegativeButton(android.R.string.ok, null)
+            .setPositiveButton(R.string.hid_refused_open_help) { _, _ ->
+                startActivity(
+                    HelpActivity.intent(this, section = HelpActivity.SECTION_NO_HOST_RECORD)
+                )
             }
             .show()
     }

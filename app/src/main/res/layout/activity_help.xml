@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <ScrollView
+        android:id="@+id/helpScroll"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
@@ -20,8 +21,12 @@
 
             <TextView style="@style/HelpBody" android:text="@string/help_intro" />
 
-            <TextView style="@style/HelpHeading" android:text="@string/help_pairing_title" />
+            <TextView
+                android:id="@+id/helpPairingHeading"
+                style="@style/HelpHeading"
+                android:text="@string/help_pairing_title" />
             <TextView style="@style/HelpBody" android:text="@string/help_pairing_body" />
+            <TextView style="@style/HelpBody" android:text="@string/help_pairing_note" />
 
             <TextView style="@style/HelpHeading" android:text="@string/help_gestures_title" />
             <TextView style="@style/HelpBody" android:text="@string/help_gestures_body" />
@@ -32,10 +37,22 @@
             <TextView style="@style/HelpHeading" android:text="@string/help_sleep_title" />
             <TextView style="@style/HelpBody" android:text="@string/help_sleep_body" />
 
-            <TextView style="@style/HelpHeading" android:text="@string/help_stuck_title" />
+            <TextView
+                android:id="@+id/helpStuckHeading"
+                style="@style/HelpHeading"
+                android:text="@string/help_stuck_title" />
             <TextView style="@style/HelpBody" android:text="@string/help_stuck_body" />
 
-            <TextView style="@style/HelpHeading" android:text="@string/help_trouble_title" />
+            <TextView
+                android:id="@+id/helpNoRecordHeading"
+                style="@style/HelpHeading"
+                android:text="@string/help_norecord_title" />
+            <TextView style="@style/HelpBody" android:text="@string/help_norecord_body" />
+
+            <TextView
+                android:id="@+id/helpTroubleHeading"
+                style="@style/HelpHeading"
+                android:text="@string/help_trouble_title" />
             <TextView style="@style/HelpBody" android:text="@string/help_trouble_body" />
 
         </LinearLayout>
