@@ -28,6 +28,3 @@
 # the `stageRelease` task in app/build.gradle. Nothing in it is durable, so nothing in it is
 # tracked. The record that outlives a release is fastlane/metadata/.../changelogs/<code>.txt.
 /release
-
-# Per-machine Claude Code settings.
-/.claude/settings.local.json
