@@ -1,0 +1,280 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 340" width="900" height="340"
+     role="img" aria-label="A phone acting as a Bluetooth keyboard and mouse: a finger drags on its trackpad, the pointer on a separate screen moves to a search field and clicks it, the phone shows a keyboard, and the word kunelab is typed into that field, which then shows results.">
+  <title>One phone, one screen, no cable: trackpad moves the pointer, keyboard types</title>
+
+  <!-- A 9s loop. Nothing is scripted: GitHub strips script from an SVG
+       but runs its CSS, so every moment below is a keyframe percentage of
+       those 9 seconds.
+
+         600ms  a finger lands on the pad
+         900-1900ms  it drags, and the pointer follows it
+         2100ms  tap: the field takes focus
+         2800ms  the pad becomes a keyboard
+         3300-4700ms  kunelab is typed, one key at a time
+         4800ms  enter, then the results arrive
+         7800ms  everything goes back and it starts again        -->
+  <style>
+    /* An SVG loaded as an image resolves prefers-color-scheme against the
+       reader's system, not against the GitHub theme they chose, and the two
+       can disagree. So the greys are translucent and sit on either
+       background; only ink and paper follow the scheme. */
+    :root{
+      --ink:#1F2328; --paper:#FFFFFF;
+      --muted:#8B949E; --accent:#F47521;
+      --line:rgba(128,128,128,.45); --surf:rgba(128,128,128,.10); --key:rgba(128,128,128,.18);
+    }
+    @media (prefers-color-scheme:dark){ :root{--ink:#E6EDF3; --paper:#0D1117} }
+
+    .shell{fill:var(--surf); stroke:var(--line)}
+    .sunk{fill:none; stroke:var(--line)}
+    .grip{fill:var(--line)}
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+    .tiny{fill:var(--muted); font-size:9px; letter-spacing:1.4px}
+    .dot{fill:var(--line)}
+
+    /* --- the finger, and the pointer it is pushing --- */
+    .finger{
+      fill:var(--accent); fill-opacity:.22; stroke:var(--accent);
+      animation:finger 9s linear infinite;
+    }
+    @keyframes finger{
+      0%,6.656%{opacity:0; transform:translate(0,0)}
+      6.667%{opacity:1; transform:translate(0,0)}
+      10%{opacity:1; transform:translate(0,0); animation-timing-function:ease-in-out}
+      21.111%,28.878%{opacity:1; transform:translate(-56.3px,-106.7px)}
+      28.889%,100%{opacity:0; transform:translate(-56.3px,-106.7px)}
+    }
+
+    .ripple{
+      fill:none; stroke:var(--accent); transform-box:fill-box; transform-origin:center;
+      animation:ripple 9s linear infinite;
+    }
+    @keyframes ripple{
+      0%,23.322%{opacity:0; transform:scale(.55)}
+      23.333%{opacity:.9; transform:scale(.55)}
+      28.444%,100%{opacity:0; transform:scale(2.4)}
+    }
+
+    .pointer{fill:var(--ink); stroke:var(--paper); stroke-width:1; stroke-linejoin:round;
+      animation:pointer 9s linear infinite}
+    @keyframes pointer{
+      0%,10%{transform:translate(0,0); animation-timing-function:ease-in-out}
+      21.111%,90%{transform:translate(-224.0px,-138.0px); animation-timing-function:ease-in-out}
+      92.222%,100%{transform:translate(0,0)}
+    }
+
+    /* --- pad and keyboard share the phone: the pad dims, it does not leave --- */
+    .padface{animation:dim 9s linear infinite}
+    @keyframes dim{
+      0%,31.111%{opacity:1}
+      35%,86.667%{opacity:.3}
+      92.222%,100%{opacity:1}
+    }
+
+    .keyboard{animation:slide 9s linear infinite}
+    @keyframes slide{
+      0%,31.111%{transform:translateY(110px)}
+      35%,86.667%{transform:translateY(0)}
+      92.222%,100%{transform:translateY(110px)}
+    }
+
+    .key{fill:var(--key); stroke:var(--line); stroke-width:.5}
+    .cap{fill:var(--muted); font-size:9px; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+    /* A lit key is one of the ones this run happens to press; its delay says
+       which, so all of them can share one 120ms flash. */
+    rect.lit{animation:hitKey 9s step-end infinite}
+    text.lit{animation:hitCap 9s step-end infinite}
+    @keyframes hitKey{0%{fill:var(--accent)} 1.33%,100%{fill:var(--key)}}
+    @keyframes hitCap{0%{fill:var(--paper)} 1.33%,100%{fill:var(--muted)}}
+
+    /* --- the radio --- */
+    .chip{fill:none; stroke:var(--line)}
+    .bt{fill:var(--muted); font-size:9px; letter-spacing:1px}
+    .flow{fill:var(--line); animation:flow 1.5s linear infinite}
+    @keyframes flow{0%,100%{fill:var(--line)} 40%{fill:var(--accent)}}
+    .report{fill:var(--accent); font-size:9px; letter-spacing:1.4px; opacity:0;
+      font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+      animation-duration:9s; animation-iteration-count:infinite;
+      animation-timing-function:step-end}
+    .r0{animation-name:say0}
+    @keyframes say0{
+      0%,9.989%{opacity:0}
+      10%,23.322%{opacity:1}
+      23.333%,100%{opacity:0}
+    }
+    .r1{animation-name:say1}
+    @keyframes say1{
+      0%,23.322%{opacity:0}
+      23.333%,28.878%{opacity:1}
+      28.889%,100%{opacity:0}
+    }
+    .r2{animation-name:say2}
+    @keyframes say2{
+      0%,36.656%{opacity:0}
+      36.667%,53.322%{opacity:1}
+      53.333%,100%{opacity:0}
+    }
+    .r3{animation-name:say3}
+    @keyframes say3{
+      0%,53.322%{opacity:0}
+      53.333%,55.544%{opacity:1}
+      55.556%,100%{opacity:0}
+    }
+
+    /* --- the field being typed into --- */
+    .ring{fill:none; stroke:var(--accent); animation:ring 9s step-end infinite}
+    @keyframes ring{
+      0%,23.322%{opacity:0}
+      23.333%,86.656%{opacity:1}
+      86.667%,100%{opacity:0}
+    }
+
+    /* The query is one string behind a clip that widens one character at a
+       time, so the letters cannot drift out of step with the caret. */
+    .reveal{transform-box:fill-box; transform-origin:left center;
+      animation:reveal 9s linear infinite}
+    @keyframes reveal{
+      0%,36.656%{transform:scaleX(0)}
+      36.667%{transform:scaleX(0); animation-timing-function:steps(7,end)}
+      52.222%,86.656%{transform:scaleX(1)}
+      86.667%,100%{transform:scaleX(0)}
+    }
+    .query{fill:var(--ink); font-size:16px}
+
+    .caret{fill:var(--accent);
+      animation:caretMove 9s linear infinite, caretBlink .9s step-end infinite}
+    @keyframes caretMove{
+      0%,23.322%{visibility:hidden; transform:translateX(0)}
+      23.333%,36.667%{visibility:visible; transform:translateX(0);
+        animation-timing-function:steps(7,end)}
+      52.222%,86.656%{visibility:visible; transform:translateX(67.2px)}
+      86.667%,100%{visibility:hidden; transform:translateX(0)}
+    }
+    @keyframes caretBlink{0%{opacity:1} 50%{opacity:0} 100%{opacity:1}}
+
+    .hit{fill:var(--line); animation:hits 9s linear infinite}
+    @keyframes hits{
+      0%,55.556%{opacity:0; transform:translateY(4px)}
+      58.889%,86.667%{opacity:1; transform:translateY(0)}
+      92.222%,100%{opacity:0; transform:translateY(4px)}
+    }
+  </style>
+
+  <clipPath id="typed">
+    <rect class="reveal" x="350" y="88" width="67.2" height="22"/>
+  </clipPath>
+
+  <!-- ============ the phone ============ -->
+  <rect class="shell" x="20" y="30" width="200" height="280" rx="16"/>
+  <rect class="grip" x="90" y="44" width="60" height="5" rx="2.5"/>
+  <rect class="grip" x="85" y="298" width="70" height="4" rx="2"/>
+
+  <g class="padface">
+    <rect class="sunk" x="32" y="60" width="176" height="232" rx="5"/>
+    <text class="mono tiny" x="42" y="78">TRACKPAD</text>
+  </g>
+
+  <circle class="ripple" cx="84.8" cy="120.3" r="15"/>
+  <circle class="finger" cx="141.1" cy="227.0" r="15"/>
+
+  <g class="keyboard">
+    <rect x="32" y="188" width="176" height="104" rx="5" fill="var(--surf)" stroke="var(--line)"/>
+    <rect class="key" x="36.00" y="195" width="14.55" height="21" rx="3"/>
+    <text class="cap" x="43.27" y="208.7" text-anchor="middle">q</text>
+    <rect class="key" x="53.05" y="195" width="14.55" height="21" rx="3"/>
+    <text class="cap" x="60.32" y="208.7" text-anchor="middle">w</text>
+    <rect class="key lit" style="animation-delay:3.90s" x="70.10" y="195" width="14.55" height="21" rx="3"/>
+    <text class="cap lit" style="animation-delay:3.90s" x="77.38" y="208.7" text-anchor="middle">e</text>
+    <rect class="key" x="87.15" y="195" width="14.55" height="21" rx="3"/>
+    <text class="cap" x="94.42" y="208.7" text-anchor="middle">r</text>
+    <rect class="key" x="104.20" y="195" width="14.55" height="21" rx="3"/>
+    <text class="cap" x="111.47" y="208.7" text-anchor="middle">t</text>
+    <rect class="key" x="121.25" y="195" width="14.55" height="21" rx="3"/>
+    <text class="cap" x="128.52" y="208.7" text-anchor="middle">y</text>
+    <rect class="key lit" style="animation-delay:3.50s" x="138.30" y="195" width="14.55" height="21" rx="3"/>
+    <text class="cap lit" style="animation-delay:3.50s" x="145.57" y="208.7" text-anchor="middle">u</text>
+    <rect class="key" x="155.35" y="195" width="14.55" height="21" rx="3"/>
+    <text class="cap" x="162.63" y="208.7" text-anchor="middle">i</text>
+    <rect class="key" x="172.40" y="195" width="14.55" height="21" rx="3"/>
+    <text class="cap" x="179.68" y="208.7" text-anchor="middle">o</text>
+    <rect class="key" x="189.45" y="195" width="14.55" height="21" rx="3"/>
+    <text class="cap" x="196.73" y="208.7" text-anchor="middle">p</text>
+    <rect class="key lit" style="animation-delay:4.30s" x="44.53" y="219" width="14.55" height="21" rx="3"/>
+    <text class="cap lit" style="animation-delay:4.30s" x="51.80" y="232.7" text-anchor="middle">a</text>
+    <rect class="key" x="61.58" y="219" width="14.55" height="21" rx="3"/>
+    <text class="cap" x="68.85" y="232.7" text-anchor="middle">s</text>
+    <rect class="key" x="78.63" y="219" width="14.55" height="21" rx="3"/>
+    <text class="cap" x="85.90" y="232.7" text-anchor="middle">d</text>
+    <rect class="key" x="95.67" y="219" width="14.55" height="21" rx="3"/>
+    <text class="cap" x="102.95" y="232.7" text-anchor="middle">f</text>
+    <rect class="key" x="112.72" y="219" width="14.55" height="21" rx="3"/>
+    <text class="cap" x="120.00" y="232.7" text-anchor="middle">g</text>
+    <rect class="key" x="129.78" y="219" width="14.55" height="21" rx="3"/>
+    <text class="cap" x="137.05" y="232.7" text-anchor="middle">h</text>
+    <rect class="key" x="146.83" y="219" width="14.55" height="21" rx="3"/>
+    <text class="cap" x="154.10" y="232.7" text-anchor="middle">j</text>
+    <rect class="key lit" style="animation-delay:3.30s" x="163.88" y="219" width="14.55" height="21" rx="3"/>
+    <text class="cap lit" style="animation-delay:3.30s" x="171.15" y="232.7" text-anchor="middle">k</text>
+    <rect class="key lit" style="animation-delay:4.10s" x="180.93" y="219" width="14.55" height="21" rx="3"/>
+    <text class="cap lit" style="animation-delay:4.10s" x="188.20" y="232.7" text-anchor="middle">l</text>
+    <rect class="key" x="39.08" y="243" width="20.00" height="21" rx="3"/>
+    <text class="cap" x="49.08" y="256.7" text-anchor="middle">⇧</text>
+    <rect class="key" x="61.58" y="243" width="14.55" height="21" rx="3"/>
+    <text class="cap" x="68.85" y="256.7" text-anchor="middle">z</text>
+    <rect class="key" x="78.63" y="243" width="14.55" height="21" rx="3"/>
+    <text class="cap" x="85.90" y="256.7" text-anchor="middle">x</text>
+    <rect class="key" x="95.68" y="243" width="14.55" height="21" rx="3"/>
+    <text class="cap" x="102.95" y="256.7" text-anchor="middle">c</text>
+    <rect class="key" x="112.73" y="243" width="14.55" height="21" rx="3"/>
+    <text class="cap" x="120.00" y="256.7" text-anchor="middle">v</text>
+    <rect class="key lit" style="animation-delay:4.50s" x="129.78" y="243" width="14.55" height="21" rx="3"/>
+    <text class="cap lit" style="animation-delay:4.50s" x="137.05" y="256.7" text-anchor="middle">b</text>
+    <rect class="key lit" style="animation-delay:3.70s" x="146.83" y="243" width="14.55" height="21" rx="3"/>
+    <text class="cap lit" style="animation-delay:3.70s" x="154.10" y="256.7" text-anchor="middle">n</text>
+    <rect class="key" x="163.88" y="243" width="14.55" height="21" rx="3"/>
+    <text class="cap" x="171.15" y="256.7" text-anchor="middle">m</text>
+    <rect class="key" x="180.93" y="243" width="20.00" height="21" rx="3"/>
+    <text class="cap" x="190.93" y="256.7" text-anchor="middle">⌫</text>
+    <rect class="key" x="48.75" y="267" width="100.00" height="21" rx="3"/>
+    <rect class="key lit" style="animation-delay:4.80s" x="151.25" y="267" width="40.00" height="21" rx="3"/>
+    <text class="cap lit" style="animation-delay:4.80s" x="171.25" y="280.7" text-anchor="middle">↵</text>
+  </g>
+
+  <!-- ============ the radio in between ============ -->
+  <rect class="chip" x="236" y="150" width="38" height="18" rx="3"/>
+  <text class="mono bt" x="255" y="163" text-anchor="middle">BT</text>
+  <circle class="flow" cx="243" cy="182" r="2.5"/>
+  <circle class="flow" cx="255" cy="182" r="2.5" style="animation-delay:.18s"/>
+  <circle class="flow" cx="267" cy="182" r="2.5" style="animation-delay:.36s"/>
+  <text class="report r0" x="255" y="204" text-anchor="middle">MOVE</text>
+  <text class="report r1" x="255" y="204" text-anchor="middle">CLICK</text>
+  <text class="report r2" x="255" y="204" text-anchor="middle">KEYS</text>
+  <text class="report r3" x="255" y="204" text-anchor="middle">ENTER</text>
+
+  <!-- ============ the screen, with nothing of ours on it ============ -->
+  <rect class="shell" x="290" y="30" width="590" height="280" rx="5"/>
+  <line x1="290" y1="58" x2="880" y2="58" stroke="var(--line)"/>
+  <circle class="dot" cx="304" cy="44" r="3.5"/>
+  <circle class="dot" cx="316" cy="44" r="3.5"/>
+  <circle class="dot" cx="328" cy="44" r="3.5"/>
+
+  <rect x="312" y="80" width="546" height="36" rx="18" fill="var(--surf)" stroke="var(--line)"/>
+  <rect class="ring" x="310.5" y="78.5" width="549" height="39" rx="19.5"/>
+  <circle cx="332" cy="97" r="6" fill="none" stroke="var(--muted)"/>
+  <line x1="336.5" y1="101.5" x2="340" y2="105" stroke="var(--muted)"/>
+
+  <g clip-path="url(#typed)">
+    <text class="mono query" x="350" y="104">kunelab</text>
+  </g>
+  <rect class="caret" x="351" y="90" width="2" height="18"/>
+
+  <rect class="hit" x="312" y="140" width="330" height="8" rx="4"/>
+  <rect class="hit" x="312" y="164" width="250" height="8" rx="4"/>
+  <rect class="hit" x="312" y="188" width="400" height="8" rx="4"/>
+
+  <!-- the group carries the starting point, the path carries the animation:
+       a CSS transform would otherwise replace the attribute, not add to it -->
+  <g transform="translate(700,236)">
+    <path class="pointer" d="M0 0 0 20 5.4 14.8 8.9 23 11.9 21.6 8.5 13.6 16 13.3z"/>
+  </g>
+</svg>

@@ -7,6 +7,10 @@ keyboard and mouse. Nothing has to be installed on the host, and because input a
 the kernel/evdev level it works regardless of whether the host runs X11, Wayland or no
 desktop at all.
 
+![A finger drags on the phone's trackpad and the pointer on a separate screen moves to a search field; the phone then shows a keyboard and types into it](docs/kontroller.svg)
+
+_Nothing runs on the far side. The screen sees a mouse, then a keyboard._
+
 KuneLab Kontroller is a modernised and extended fork of
 [raghavk92/Kontroller](https://github.com/raghavk92/Kontroller) (Apache-2.0), whose last
 code change was in November 2020 and which no longer builds or runs on current Android.
